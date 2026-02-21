@@ -1,0 +1,11 @@
+{
+    "title": "Fate / Rewritten",
+    "author": "YourName",
+    "chapters": [
+        { "id": "prologue", "title": "The Night Before", "file": "chapters/prologue.txt" },
+        { "id": "chapter-01", "title": "Summoning", "file": "chapters/chapter-01.txt" },
+        { "id": "chapter-02", "title": "First Blood", "file": "chapters/chapter-02.txt" },
+        { "id": "chapter-03", "title": "The Church on the Hill", "file": "chapters/chapter-03.txt" },
+        { "id": "chapter-04", "title": "Rules of Engagement", "file": "chapters/chapter-04.txt" }
+    ]
+}

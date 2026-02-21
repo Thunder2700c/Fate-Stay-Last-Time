@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading...</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="reader-body">
+
+    <!-- NAVIGATION -->
+    <nav class="main-nav scrolled">
+        <div class="nav-inner">
+            <a href="index.html" class="nav-logo">
+                <span class="logo-fate">FATE</span>
+                <span class="logo-slash">/</span>
+                <span class="logo-sub">REWRITTEN</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#chapters-section">Chapters</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html">Home</a>
+            <a href="index.html#chapters-section">Chapters</a>
+        </div>
+    </nav>
+
+    <!-- CHAPTER DRAWER -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleDrawer()"></div>
+    <aside class="chapter-drawer" id="chapterDrawer">
+        <div class="drawer-header">
+            <h3>CHAPTERS</h3>
+            <button onclick="toggleDrawer()" class="drawer-close">✕</button>
+        </div>
+        <div id="drawer-list" class="drawer-list"></div>
+    </aside>
+
+    <!-- READER -->
+    <main class="reader-main">
+        <button class="drawer-toggle" onclick="toggleDrawer()">
+            <span>☰</span>
+            <span>INDEX</span>
+        </button>
+
+        <div class="reader-header">
+            <span class="reader-label" id="chapter-label">CHAPTER</span>
+            <h1 id="chapter-title">Loading...</h1>
+            <div class="reader-divider">
+                <span class="divider-diamond">◆</span>
+            </div>
+        </div>
+
+        <article id="chapter-content" class="reader-content">
+            Loading chapter...
+        </article>
+
+        <div class="reader-end-divider">
+            <span class="divider-diamond">◆</span>
+        </div>
+
+        <div class="reader-nav">
+            <a href="#" id="prev-btn" class="reader-nav-btn prev">
+                <span class="nav-dir">← PREVIOUS</span>
+                <span class="nav-title" id="prev-title"></span>
+            </a>
+            <a href="index.html" class="reader-nav-btn home">
+                <span class="nav-dir">ALL CHAPTERS</span>
+            </a>
+            <a href="#" id="next-btn" class="reader-nav-btn next">
+                <span class="nav-dir">NEXT →</span>
+                <span class="nav-title" id="next-title"></span>
+            </a>
+        </div>
+    </main>
+
+    <!-- PROGRESS BAR -->
+    <div class="reading-progress" id="readingProgress"></div>
+
+    <script>
+        let chapters = [];
+        let currentIndex = 0;
+        const requestedCh = new URLSearchParams(window.location.search).get('ch') || 'prologue';
+
+        async function init() {
+            const res = await fetch('data/chapters.json');
+            const data = await res.json();
+            chapters = data.chapters;
+
+            currentIndex = chapters.findIndex(c => c.id === requestedCh);
+            if (currentIndex === -1) currentIndex = 0;
+
+            buildDrawer();
+            loadChapter(currentIndex);
+        }
+
+        async function loadChapter(index) {
+            const ch = chapters[index];
+            currentIndex = index;
+
+            const label = index === 0 ? 'PROLOGUE' : 'CHAPTER ' + index;
+            document.getElementById('chapter-label').textContent = label;
+            document.getElementById('chapter-title').textContent = ch.title;
+            document.title = `${ch.title} — Fate/Rewritten`;
+
+            try {
+                const res = await fetch(ch.file);
+                const text = await res.text();
+                document.getElementById('chapter-content').textContent = text;
+            } catch {
+                document.getElementById('chapter-content').textContent = 'Could not load chapter.';
+            }
+
+            // Prev
+            const prevBtn = document.getElementById('prev-btn');
+            if (index > 0) {
+                prevBtn.style.display = 'flex';
+                document.getElementById('prev-title').textContent = chapters[index - 1].title;
+                prevBtn.onclick = (e) => { e.preventDefault(); loadChapter(index - 1); window.scrollTo(0, 0); history.replaceState(null, '', `?ch=${chapters[index - 1].id}`); };
+            } else {
+                prevBtn.style.display = 'none';
+            }
+
+            // Next
+            const nextBtn = document.getElementById('next-btn');
+            if (index < chapters.length - 1) {
+                nextBtn.style.display = 'flex';
+                document.getElementById('next-title').textContent = chapters[index + 1].title;
+                nextBtn.onclick = (e) => { e.preventDefault(); loadChapter(index + 1); window.scrollTo(0, 0); history.replaceState(null, '', `?ch=${chapters[index + 1].id}`); };
+            } else {
+                nextBtn.style.display = 'none';
+            }
+
+            history.replaceState(null, '', `?ch=${ch.id}`);
+            window.scrollTo(0, 0);
+            highlightDrawer(index);
+        }
+
+        function buildDrawer() {
+            const list = document.getElementById('drawer-list');
+            list.innerHTML = '';
+            chapters.forEach((ch, i) => {
+                const link = document.createElement('a');
+                link.className = 'drawer-item';
+                link.href = `?ch=${ch.id}`;
+                link.innerHTML = `
+                    <span class="drawer-num">${i === 0 ? '00' : String(i).padStart(2, '0')}</span>
+                    <span class="drawer-title">${ch.title}</span>
+                `;
+                link.onclick = (e) => {
+                    e.preventDefault();
+                    loadChapter(i);
+                    toggleDrawer();
+                };
+                list.appendChild(link);
+            });
+        }
+
+        function highlightDrawer(index) {
+            document.querySelectorAll('.drawer-item').forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+        }
+
+        function toggleDrawer() {
+            document.getElementById('chapterDrawer').classList.toggle('open');
+            document.getElementById('drawerOverlay').classList.toggle('open');
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        }
+
+        // Reading progress bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('readingProgress').style.width = progress + '%';
+        });
+
+        // Keyboard nav
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                loadChapter(currentIndex - 1);
+                window.scrollTo(0, 0);
+                history.replaceState(null, '', `?ch=${chapters[currentIndex].id}`);
+            }
+            if (e.key === 'ArrowRight' && currentIndex < chapters.length - 1) {
+                loadChapter(currentIndex + 1);
+                window.scrollTo(0, 0);
+                history.replaceState(null, '', `?ch=${chapters[currentIndex].id}`);
+            }
+        });
+
+        init();
+    </script>
+
+</body>
+</html>

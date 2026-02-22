@@ -1,6 +1,6 @@
 /* ===================================================
    FATE/STAY LAST TIME — MASTER STYLESHEET
-   Inspired by Fate/stay night Visual Novel UI
+   Complete Build with GIF Loading Screen
    =================================================== */
 
 /* ===== IMPORTS ===== */
@@ -15,19 +15,16 @@
 
 /* ===== ROOT VARIABLES ===== */
 :root {
-    /* Fate color palette */
     --bg-void: #06060e;
     --bg-deep: #0a0b15;
     --bg-panel: #0f1021;
     --bg-card: #141630;
     --bg-dialogue: #0c0d1a;
 
-    /* Text */
     --text-primary: #d4d0c8;
     --text-secondary: #8a8698;
     --text-dim: #4a475e;
 
-    /* Accents */
     --gold: #c9a84c;
     --gold-bright: #f0d060;
     --gold-dim: #7a6a30;
@@ -40,17 +37,14 @@
     --command-seal: #c41e3a;
     --excalibur-gold: #ffd700;
 
-    /* Borders */
     --border-subtle: #1a1b30;
     --border-gold: rgba(201, 168, 76, 0.3);
     --border-glow: rgba(201, 168, 76, 0.15);
 
-    /* Fonts */
     --font-heading: 'Cinzel', serif;
     --font-body: 'Crimson Text', Georgia, serif;
     --font-mono: 'Share Tech Mono', 'Courier New', monospace;
 
-    /* Spacing */
     --max-width: 760px;
 }
 
@@ -65,7 +59,7 @@ body {
     position: relative;
 }
 
-/* Subtle parchment texture overlay */
+/* Ambient light overlay */
 body::before {
     content: '';
     position: fixed;
@@ -81,7 +75,193 @@ body::before {
     z-index: 0;
 }
 
-/* ===== PRANA PARTICLES CANVAS ===== */
+/* ===================================================
+   GIF LOADING SCREEN
+   =================================================== */
+.summoning-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-void);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+}
+
+.summoning-loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* GIF container */
+.magic-circle-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* The GIF itself */
+.magic-circle-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Pulsing glow behind the GIF */
+.magic-circle-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 280%;
+    height: 280%;
+    border-radius: 50%;
+    background: radial-gradient(
+        circle,
+        rgba(201, 168, 76, 0.1) 0%,
+        rgba(201, 168, 76, 0.04) 25%,
+        rgba(58, 123, 213, 0.02) 40%,
+        transparent 60%
+    );
+    animation: loader-glow 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+/* Outer ring pulse */
+.magic-circle-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 130%;
+    height: 130%;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 168, 76, 0.1);
+    animation: ring-expand 2.5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes loader-glow {
+    0%, 100% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.95);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
+}
+
+@keyframes ring-expand {
+    0% {
+        width: 110%;
+        height: 110%;
+        opacity: 0.5;
+    }
+    100% {
+        width: 180%;
+        height: 180%;
+        opacity: 0;
+    }
+}
+
+/* Loading text */
+.summoning-loader .load-text {
+    margin-top: 40px;
+    font-family: var(--font-heading);
+    font-size: 0.65em;
+    color: var(--gold-dim);
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    animation: text-breathe 2.5s ease-in-out infinite;
+}
+
+@keyframes text-breathe {
+    0%, 100% { opacity: 0.2; letter-spacing: 8px; }
+    50% { opacity: 0.7; letter-spacing: 10px; }
+}
+
+/* Three dots animation */
+.summoning-loader .load-text::after {
+    content: '';
+    animation: loading-dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes loading-dots {
+    0% { content: ''; }
+    25% { content: '.'; }
+    50% { content: '..'; }
+    75% { content: '...'; }
+}
+
+/* --- Color Variants --- */
+
+/* Gold (landing page) */
+.magic-circle-container.gold::before {
+    background: radial-gradient(
+        circle,
+        rgba(201, 168, 76, 0.12) 0%,
+        rgba(201, 168, 76, 0.04) 30%,
+        transparent 60%
+    );
+}
+
+.magic-circle-container.gold::after {
+    border-color: rgba(201, 168, 76, 0.15);
+}
+
+/* Blue (Saber chapters) */
+.magic-circle-container.blue::before {
+    background: radial-gradient(
+        circle,
+        rgba(58, 123, 213, 0.12) 0%,
+        rgba(58, 123, 213, 0.04) 30%,
+        transparent 60%
+    );
+}
+
+.magic-circle-container.blue::after {
+    border-color: rgba(58, 123, 213, 0.15);
+}
+
+.blue ~ .load-text {
+    color: var(--saber-blue-dim);
+}
+
+/* Red (blood / battle chapters) */
+.magic-circle-container.red::before {
+    background: radial-gradient(
+        circle,
+        rgba(196, 30, 58, 0.12) 0%,
+        rgba(196, 30, 58, 0.04) 30%,
+        transparent 60%
+    );
+}
+
+.magic-circle-container.red::after {
+    border-color: rgba(196, 30, 58, 0.15);
+}
+
+.red ~ .load-text {
+    color: var(--archer-red);
+}
+
+/* ===================================================
+   PRANA PARTICLES CANVAS
+   =================================================== */
 #prana-particles {
     position: fixed;
     top: 0;
@@ -92,7 +272,9 @@ body::before {
     z-index: 1;
 }
 
-/* ===== SCROLL PROGRESS — COMMAND SEAL ===== */
+/* ===================================================
+   COMMAND SEAL SCROLL PROGRESS
+   =================================================== */
 .command-seal-track {
     position: fixed;
     top: 0;
@@ -118,7 +300,9 @@ body::before {
     transition: height 0.1s linear;
 }
 
-/* ===== HOUR COUNTDOWN — FIXED SIDEBAR ===== */
+/* ===================================================
+   HOUR TRACKER SIDEBAR
+   =================================================== */
 .hour-tracker {
     position: fixed;
     top: 50%;
@@ -162,67 +346,9 @@ body::before {
     height: 10px;
 }
 
-/* ===== LOADING — SUMMONING CIRCLE ===== */
-.summoning-loader {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--bg-void);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10000;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
-}
-
-.summoning-loader.hidden {
-    opacity: 0;
-    visibility: hidden;
-}
-
-.summoning-circle {
-    width: 120px;
-    height: 120px;
-    border: 2px solid var(--gold-dim);
-    border-top: 2px solid var(--gold);
-    border-radius: 50%;
-    animation: summon-spin 1.5s linear infinite;
-    position: relative;
-}
-
-.summoning-circle::before {
-    content: '';
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    border: 1px solid var(--saber-blue-dim);
-    border-bottom: 1px solid var(--saber-blue);
-    border-radius: 50%;
-    animation: summon-spin 2s linear infinite reverse;
-}
-
-.summoning-circle::after {
-    content: '';
-    position: absolute;
-    top: 22px;
-    left: 22px;
-    right: 22px;
-    bottom: 22px;
-    border: 1px solid rgba(196, 30, 58, 0.3);
-    border-left: 1px solid var(--command-seal);
-    border-radius: 50%;
-    animation: summon-spin 1s linear infinite;
-}
-
-@keyframes summon-spin {
-    to { transform: rotate(360deg); }
-}
-
-/* ===== MAIN CONTAINER ===== */
+/* ===================================================
+   MAIN CONTAINER
+   =================================================== */
 .container {
     max-width: var(--max-width);
     margin: 0 auto;
@@ -231,7 +357,9 @@ body::before {
     z-index: 2;
 }
 
-/* ===== LANDING PAGE ===== */
+/* ===================================================
+   LANDING PAGE
+   =================================================== */
 
 /* --- Title Section --- */
 .landing-header {
@@ -433,7 +561,9 @@ body::before {
     font-size: 0.85em;
 }
 
-/* ===== CHAPTER PAGE ===== */
+/* ===================================================
+   CHAPTER PAGE
+   =================================================== */
 
 /* --- Chapter Header --- */
 .chapter-header {
@@ -489,7 +619,9 @@ body::before {
     margin: 35px auto 0;
 }
 
-/* ===== PROSE BODY ===== */
+/* ===================================================
+   PROSE BODY
+   =================================================== */
 .prose {
     margin-bottom: 60px;
 }
@@ -501,7 +633,9 @@ body::before {
     hyphens: auto;
 }
 
-/* ===== HOUR HEADINGS — EXCALIBUR GLOW ===== */
+/* ===================================================
+   HOUR HEADINGS — EXCALIBUR GLOW
+   =================================================== */
 .hour-heading {
     font-family: var(--font-heading);
     font-size: 1.25em;
@@ -522,7 +656,6 @@ body::before {
     top: 50%;
     width: 60px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-dim));
 }
 
 .hour-heading::before {
@@ -544,7 +677,9 @@ body::before {
     50% { text-shadow: 0 0 25px rgba(201, 168, 76, 0.4), 0 0 50px rgba(201, 168, 76, 0.1); }
 }
 
-/* ===== DROP CAP ===== */
+/* ===================================================
+   DROP CAP
+   =================================================== */
 .hour-heading + p {
     text-indent: 0;
 }
@@ -560,7 +695,9 @@ body::before {
     text-shadow: 0 0 15px rgba(201, 168, 76, 0.3);
 }
 
-/* ===== SCENE BREAK — BLOOD DRIP ===== */
+/* ===================================================
+   SCENE BREAK — BLOOD DRIP
+   =================================================== */
 .scene-break {
     text-align: center;
     margin: 50px 0;
@@ -601,11 +738,13 @@ body::before {
     100% { height: 0; opacity: 0; }
 }
 
-/* ===== DIALOGUE — VISUAL NOVEL STYLE ===== */
+/* ===================================================
+   DIALOGUE — VISUAL NOVEL STYLE
+   =================================================== */
 .dialogue-box {
     margin: 24px 0;
     padding: 0;
-    text-indent: 0;
+    text-indent: 0 !important;
     position: relative;
 }
 
@@ -649,6 +788,7 @@ body::before {
     margin-top: -1px;
     font-style: italic;
     line-height: 1.85;
+    text-indent: 0 !important;
     position: relative;
 }
 
@@ -662,28 +802,32 @@ body::before {
     border-radius: 2px;
 }
 
+/* Saber dialogue glow */
 .dialogue-box:has(.speaker.saber) .dialogue-text::before {
     background: var(--saber-blue);
     box-shadow: 0 0 8px rgba(58, 123, 213, 0.3);
 }
 
+/* Archer dialogue glow */
 .dialogue-box:has(.speaker.archer) .dialogue-text::before {
     background: var(--archer-red-bright);
     box-shadow: 0 0 8px rgba(212, 64, 84, 0.3);
 }
 
+/* Master dialogue glow */
 .dialogue-box:has(.speaker.master) .dialogue-text::before {
     background: var(--gold);
     box-shadow: 0 0 8px rgba(201, 168, 76, 0.3);
 }
 
+/* Cousin dialogue glow */
 .dialogue-box:has(.speaker.cousin) .dialogue-text::before {
     background: #4b5563;
 }
 
-/* Fallback simple dialogue (no speaker tag) */
+/* Fallback simple dialogue */
 .prose .dialogue {
-    text-indent: 0;
+    text-indent: 0 !important;
     font-style: italic;
     margin: 20px 0;
     padding: 14px 20px;
@@ -692,9 +836,11 @@ body::before {
     border-radius: 0 4px 4px 0;
 }
 
-/* ===== INTERNAL THOUGHT ===== */
+/* ===================================================
+   INTERNAL THOUGHT
+   =================================================== */
 .prose .thought {
-    text-indent: 0;
+    text-indent: 0 !important;
     font-style: italic;
     color: var(--text-secondary);
     text-align: center;
@@ -717,9 +863,11 @@ body::before {
 .prose .thought::before { top: 0; }
 .prose .thought::after { bottom: 0; }
 
-/* ===== INCANTATION — TYPED EFFECT ===== */
+/* ===================================================
+   INCANTATION
+   =================================================== */
 .prose .incantation {
-    text-indent: 0;
+    text-indent: 0 !important;
     text-align: center;
     font-style: italic;
     color: var(--gold);
@@ -756,9 +904,11 @@ body::before {
     to { transform: rotate(360deg); }
 }
 
-/* ===== SOUND EFFECTS — SCREEN SHAKE ===== */
+/* ===================================================
+   SOUND EFFECTS — SCREEN SHAKE
+   =================================================== */
 .prose .sound-effect {
-    text-indent: 0;
+    text-indent: 0 !important;
     text-align: center;
     font-weight: bold;
     font-size: 1.2em;
@@ -780,9 +930,11 @@ body::before {
     80% { transform: translateX(2px); }
 }
 
-/* ===== TERMINAL LINES ===== */
+/* ===================================================
+   TERMINAL LINES
+   =================================================== */
 .prose .terminal-line {
-    text-indent: 0;
+    text-indent: 0 !important;
     font-family: var(--font-mono);
     font-size: 0.9em;
     color: #4ade80;
@@ -799,9 +951,11 @@ body::before {
     opacity: 0.6;
 }
 
-/* ===== NOTIFICATIONS ===== */
+/* ===================================================
+   NOTIFICATIONS
+   =================================================== */
 .prose .notification {
-    text-indent: 0;
+    text-indent: 0 !important;
     font-family: var(--font-mono);
     font-size: 0.82em;
     color: var(--text-secondary);
@@ -810,17 +964,17 @@ body::before {
     border-radius: 10px;
     border: 1px solid var(--border-subtle);
     margin: 8px 0 8px 24px;
-    position: relative;
 }
 
 .prose .notification::before {
-    content: '📱';
-    margin-right: 8px;
+    content: '📱 ';
 }
 
-/* ===== VIDEO TITLE ===== */
+/* ===================================================
+   VIDEO TITLE
+   =================================================== */
 .prose .video-title {
-    text-indent: 0;
+    text-indent: 0 !important;
     text-align: center;
     font-family: var(--font-mono);
     font-size: 1em;
@@ -831,7 +985,6 @@ body::before {
     border: 1px solid var(--archer-red);
     border-radius: 6px;
     margin: 28px 0;
-    position: relative;
 }
 
 .prose .video-title::before {
@@ -839,9 +992,11 @@ body::before {
     color: var(--command-seal);
 }
 
-/* ===== METRICS ===== */
+/* ===================================================
+   METRICS
+   =================================================== */
 .prose .metrics {
-    text-indent: 0;
+    text-indent: 0 !important;
     font-family: var(--font-mono);
     font-size: 0.95em;
     color: var(--excalibur-gold);
@@ -851,7 +1006,9 @@ body::before {
     text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
 }
 
-/* ===== CHAPTER NAVIGATION ===== */
+/* ===================================================
+   CHAPTER NAVIGATION
+   =================================================== */
 .chapter-nav {
     display: flex;
     justify-content: space-between;
@@ -860,6 +1017,7 @@ body::before {
     padding: 24px 0;
     border-top: 1px solid var(--border-subtle);
     margin-top: 70px;
+    flex-wrap: wrap;
 }
 
 .chapter-nav a {
@@ -892,7 +1050,9 @@ body::before {
     border-color: var(--border-subtle);
 }
 
-/* ===== FOOTER ===== */
+/* ===================================================
+   FOOTER
+   =================================================== */
 footer {
     text-align: center;
     padding: 50px 0 30px;
@@ -908,7 +1068,34 @@ footer p {
     letter-spacing: 3px;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===================================================
+   SELECTION & SCROLLBAR
+   =================================================== */
+::selection {
+    background: rgba(201, 168, 76, 0.3);
+    color: var(--text-primary);
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-void);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-subtle);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-dim);
+}
+
+/* ===================================================
+   RESPONSIVE
+   =================================================== */
 @media (max-width: 768px) {
     body { font-size: 17px; }
 
@@ -942,34 +1129,20 @@ footer p {
     .hour-heading + p::first-letter {
         font-size: 2.8em;
     }
+
+    .magic-circle-container {
+        width: 150px;
+        height: 150px;
+    }
 }
 
 @media (max-width: 480px) {
     body { font-size: 16px; }
     .landing-header h1 { font-size: 1.8em; }
     .landing-header { padding: 50px 0 30px; }
-}
 
-/* ===== SELECTION COLOR ===== */
-::selection {
-    background: rgba(201, 168, 76, 0.3);
-    color: var(--text-primary);
-}
-
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-void);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--border-subtle);
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--gold-dim);
+    .magic-circle-container {
+        width: 120px;
+        height: 120px;
     }
+   }

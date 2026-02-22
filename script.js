@@ -193,6 +193,24 @@ document.addEventListener('DOMContentLoaded', () => {
         shakeElements.forEach(el => observer.observe(el));
     }
 
+       // ===== REALITY MARBLE SHAKE ON SCROLL =====
+    const rmDeclare = document.querySelectorAll('.reality-marble-declare');
+    if (rmDeclare.length > 0) {
+        const rmObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.dataset.shaken) {
+                    entry.target.dataset.shaken = 'true';
+                    entry.target.classList.add('shake-hard');
+                    setTimeout(() => {
+                        entry.target.classList.remove('shake-hard');
+                    }, 700);
+                }
+            });
+        }, { threshold: 0.6 });
+
+        rmDeclare.forEach(el => rmObserver.observe(el));
+    }
+
     // ===== 6. HOUR TRACKER DOTS =====
     const hourHeadings = document.querySelectorAll('.hour-heading');
     const hourDots = document.querySelectorAll('.hour-dot');

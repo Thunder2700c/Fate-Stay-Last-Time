@@ -7,9 +7,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <!-- Summoning Circle Loader -->
+    <div class="summoning-loader">
+        <div class="summoning-circle"></div>
+    </div>
+
+    <!-- Prana Particles -->
+    <canvas id="prana-particles"></canvas>
+
+    <!-- Command Seal Scroll Progress -->
+    <div class="command-seal-track">
+        <div class="command-seal-progress"></div>
+    </div>
+
     <div class="container">
-        <header>
-            <h1>Fate/Stay Last Time</h1>
+
+        <header class="landing-header">
+            <span class="fate-label">Type-Moon Fan Work</span>
+            <h1>Fate/Stay<br>Last Time</h1>
             <p class="subtitle">The Chronicle of the Pruned Timeline</p>
             <p class="tagline">70 Hours to Zero</p>
         </header>
@@ -17,14 +33,14 @@
         <section class="synopsis">
             <h2>Synopsis</h2>
             <p>
-                A single broken shoe at a wedding. A viral video that burned a man's dignity
-                to ash. A summoning circle drawn in fury. Two legendary Servants called forth
-                to wage war — not against other Masters, but against an entire world that chose
-                to laugh.
+                A single broken shoe at a wedding. A viral video that burned a man's
+                dignity to ash. A summoning circle drawn in fury. Two legendary Servants
+                called forth to wage war — not against other Masters, but against an
+                entire world that chose to laugh.
             </p>
             <p>
-                This is the story of Gurtej — a Master who decided that a timeline built on
-                cruelty deserves to be pruned from the Tree of Time.
+                This is the story of Gurtej — a Master who decided that a timeline built
+                on cruelty deserves to be pruned from the Tree of Time.
             </p>
         </section>
 
@@ -33,69 +49,69 @@
             <ul>
                 <li>
                     <a href="chapters/chapter-1.html">
-                        <span class="chapter-number">Chapter 1</span>
+                        <span class="chapter-number">Chapter 01</span>
                         <span class="chapter-title">The Flap of the Leather</span>
                         <span class="phase">Phase I — The Catalyst</span>
                     </a>
                 </li>
                 <li>
-    <a href="chapters/chapter-2.html">
-        <span class="chapter-number">Chapter 2</span>
-        <span class="chapter-title">Blood and the Catalyst</span>
-        <span class="phase">Phase II — The Summoning</span>
-    </a>
+                    <a href="chapters/chapter-2.html">
+                        <span class="chapter-number">Chapter 02</span>
+                        <span class="chapter-title">Blood and the Catalyst</span>
+                        <span class="phase">Phase II — The Summoning</span>
+                    </a>
                 </li>
                 <li>
-                    <a href="chapters/chapter-3.html">
-                        <span class="chapter-number">Chapter 3</span>
+                    <a href="chapters/chapter-3.html" class="locked">
+                        <span class="chapter-number">Chapter 03</span>
                         <span class="chapter-title">The Circle of Broken Leather</span>
                         <span class="phase">Phase II — The Summoning</span>
                     </a>
                 </li>
                 <li>
-                    <a href="chapters/chapter-4.html">
-                        <span class="chapter-number">Chapter 4</span>
+                    <a href="chapters/chapter-4.html" class="locked">
+                        <span class="chapter-number">Chapter 04</span>
                         <span class="chapter-title">Silver and Steel</span>
                         <span class="phase">Phase II — The Summoning</span>
                     </a>
                 </li>
                 <li>
-                    <a href="chapters/chapter-5.html">
-                        <span class="chapter-number">Chapter 5</span>
+                    <a href="chapters/chapter-5.html" class="locked">
+                        <span class="chapter-number">Chapter 05</span>
                         <span class="chapter-title">Ghost in the Machine</span>
-                        <span class="phase">Phase III — The War of the Grail</span>
+                        <span class="phase">Phase III — War of the Grail</span>
                     </a>
                 </li>
                 <li>
-                    <a href="chapters/chapter-6.html">
-                        <span class="chapter-number">Chapter 6</span>
+                    <a href="chapters/chapter-6.html" class="locked">
+                        <span class="chapter-number">Chapter 06</span>
                         <span class="chapter-title">The Price of Laughter</span>
-                        <span class="phase">Phase III — The War of the Grail</span>
+                        <span class="phase">Phase III — War of the Grail</span>
                     </a>
                 </li>
                 <li>
-                    <a href="chapters/chapter-7.html">
-                        <span class="chapter-number">Chapter 7</span>
+                    <a href="chapters/chapter-7.html" class="locked">
+                        <span class="chapter-number">Chapter 07</span>
                         <span class="chapter-title">Hrunting</span>
                         <span class="phase">Phase IV — The Siege</span>
                     </a>
                 </li>
                 <li>
-                    <a href="chapters/chapter-8.html">
-                        <span class="chapter-number">Chapter 8</span>
+                    <a href="chapters/chapter-8.html" class="locked">
+                        <span class="chapter-number">Chapter 08</span>
                         <span class="chapter-title">A Thousand Turrets</span>
                         <span class="phase">Phase IV — The Siege</span>
                     </a>
                 </li>
                 <li>
-                    <a href="chapters/chapter-9.html">
-                        <span class="chapter-number">Chapter 9</span>
+                    <a href="chapters/chapter-9.html" class="locked">
+                        <span class="chapter-number">Chapter 09</span>
                         <span class="chapter-title">Unlimited Blade Works — Inverted</span>
                         <span class="phase">Phase V — The Pruning</span>
                     </a>
                 </li>
                 <li>
-                    <a href="chapters/chapter-10.html">
+                    <a href="chapters/chapter-10.html" class="locked">
                         <span class="chapter-number">Chapter 10</span>
                         <span class="chapter-title">EX — CALIBUR</span>
                         <span class="phase">Phase V — The Pruning</span>
@@ -107,6 +123,10 @@
         <footer>
             <p>A fan work inspired by the Fate universe</p>
         </footer>
+
     </div>
+
+    <script src="script.js"></script>
+
 </body>
 </html>

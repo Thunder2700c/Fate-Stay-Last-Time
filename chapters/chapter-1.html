@@ -7,18 +7,42 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+
+    <!-- Summoning Circle Loader -->
+    <div class="summoning-loader">
+        <div class="summoning-circle"></div>
+    </div>
+
+    <!-- Prana Particles -->
+    <canvas id="prana-particles"></canvas>
+
+    <!-- Command Seal Scroll Progress -->
+    <div class="command-seal-track">
+        <div class="command-seal-progress"></div>
+    </div>
+
+    <!-- Hour Tracker Sidebar -->
+    <div class="hour-tracker">
+        <span class="label">Hours</span>
+        <div class="hour-dot" title="Hour 0"></div>
+        <div class="hour-dot" title="Hour 1"></div>
+        <div class="hour-dot" title="Hour 2–5"></div>
+        <div class="hour-dot" title="Hour 6–9"></div>
+        <div class="hour-dot" title="Hour 10–12"></div>
+    </div>
+
     <div class="container">
 
         <div class="chapter-header">
-            <p class="phase-label">Phase I — The Catalyst</p>
-            <p class="chapter-label">Chapter 1</p>
+            <span class="phase-label">Phase I — The Catalyst</span>
+            <span class="chapter-label">Chapter 1</span>
             <h1>The Flap of the Leather</h1>
             <p class="subtitle">Hour 0 – Part 1</p>
         </div>
 
         <div class="prose">
 
-            <!-- ========== HOUR 0: THE LUDHIANA TRAP ========== -->
+            <!-- ========== HOUR 0 ========== -->
             <h2 class="hour-heading">Hour 0: The Ludhiana Trap</h2>
 
             <p>The air in the Ludhiana banquet hall was a suffocating cocktail of heavy jasmine perfume, roasting spices, and the stifling, radiant body heat of six hundred people. The bass from the DJ's speakers vibrated through the marble floor, a rhythmic, relentless thumping that resonated in my chest. To anyone else, this was the pinnacle of celebration—a grand Punjabi wedding, dripping in gold jewelry, flashing lights, and forced smiles. To me, it was a sensory overload.</p>
@@ -49,7 +73,11 @@
 
             <p>I tried to walk faster, my panic rising. With every rushed movement, the ruined shoe acted like a demented flipper, violently smacking against the ground and rebounding against the top of my foot.</p>
 
-            <p class="dialogue">"Hey. Gurtej."</p>
+            <!-- VN Dialogue Box -->
+            <div class="dialogue-box">
+                <span class="speaker cousin">Cousin</span>
+                <p class="dialogue-text">"Hey. Gurtej."</p>
+            </div>
 
             <p>The voice cut through the ambient noise like a serrated blade. I stopped, the ruined shoe hanging limply from my foot. I turned my head slowly.</p>
 
@@ -57,15 +85,24 @@
 
             <p>His face was contorted into a grin so wide and unhinged it looked painful. His eyes were wide, gleaming with the malicious realization that he had just struck digital gold.</p>
 
-            <p class="dialogue">"Oh, man," he breathed, his voice trembling with suppressed laughter. "This is absolute gold."</p>
+            <div class="dialogue-box">
+                <span class="speaker cousin">Cousin</span>
+                <p class="dialogue-text">"Oh, man. This is absolute gold."</p>
+            </div>
 
             <p>He tapped the screen. A tiny red light blinked to life.</p>
 
-            <p class="dialogue">"Stop," I said, my voice barely a whisper, strained with sudden, desperate panic. I am not a confrontational person. My instinct was to withdraw, to diffuse. "Put the phone away. Seriously."</p>
+            <div class="dialogue-box">
+                <span class="speaker master">Gurtej</span>
+                <p class="dialogue-text">"Stop. Put the phone away. Seriously."</p>
+            </div>
 
             <p>He didn't listen. He took a step closer, angling the phone to get a clear, illuminated shot of the demolished jutti.</p>
 
-            <p class="dialogue">"Walk, bro," he goaded, his grin widening. "Come on, take a step. Let the people see the swagger."</p>
+            <div class="dialogue-box">
+                <span class="speaker cousin">Cousin</span>
+                <p class="dialogue-text">"Walk, bro. Come on, take a step. Let the people see the swagger."</p>
+            </div>
 
             <p>I turned away, my face burning with a heat that rivaled a furnace. I had to get out of the hall. I abandoned the shuffling strategy and power-walked toward the heavy glass exit doors.</p>
 
@@ -73,7 +110,10 @@
 
             <p>The noise was a rapid-fire drumbeat of humiliation. My cousin threw his head back and let out a braying, breathless roar of laughter. It was a cruel, infectious sound.</p>
 
-            <p class="dialogue">"Look at him!" my cousin shouted over the DJ's track, panning his camera up to catch my horrified, flushed face, then immediately snapping it back down to the flapping shoe. "The man is walking like a duck with a broken flipper! Absolute tragedy!"</p>
+            <div class="dialogue-box">
+                <span class="speaker cousin">Cousin</span>
+                <p class="dialogue-text">"Look at him! The man is walking like a duck with a broken flipper! Absolute tragedy!"</p>
+            </div>
 
             <p>The laughter spread. It rippled outward from my cousin, infecting the tables nearest to us. Uncles paused with drinks halfway to their mouths. Cousins pointed. Young children giggled at the funny sound. Dozens of eyes turned to watch the spectacle. A few more smartphones were raised, flashes blinding me in the dim ambient lighting of the hall.</p>
 
@@ -85,9 +125,12 @@
 
             <p>I had no idea the timer had just started. Earth had exactly 70 hours left.</p>
 
-            <div class="scene-break">⁂</div>
+            <!-- Blood Drip Scene Break -->
+            <div class="scene-break">
+                <span class="drip"></span>
+            </div>
 
-            <!-- ========== HOUR 1: THE COUNTERMEASURE ========== -->
+            <!-- ========== HOUR 1 ========== -->
             <h2 class="hour-heading">Hour 1: The Countermeasure</h2>
 
             <p>The drive back to my house was a blur of neon streetlights and blinding headlights. My mind was racing, cycling through the worst-case scenarios. I knew my cousin. I knew the way his mind worked. He wasn't going to just keep that video on his camera roll.</p>
@@ -132,9 +175,11 @@
 
             <p>I sat back in my chair, the green light of the terminal washing over my face. I had failed to stop it. The digital contagion had breached containment.</p>
 
-            <div class="scene-break">⁂</div>
+            <div class="scene-break">
+                <span class="drip"></span>
+            </div>
 
-            <!-- ========== HOUR 2 TO 5: THE ALGORITHMIC AVALANCHE ========== -->
+            <!-- ========== HOUR 2 TO 5 ========== -->
             <h2 class="hour-heading">Hour 2 to 5: The Algorithmic Avalanche</h2>
 
             <p>I didn't sleep. I couldn't. The glow of the monitor was the only light in my room, casting long, sharp shadows against the walls. By Hour 2, the video had breached the containment of our extended family's WhatsApp groups and bled into the local Ludhiana network.</p>
@@ -159,9 +204,11 @@
 
             <p>It was a terrifying realization of powerlessness. All my knowledge of web development, all the hours spent building sites for my web novel, <em>The Gods Rank Awakening</em>, all the Linux commands I had mastered—none of it could stop the sheer, crushing weight of human schadenfreude. The internet was a beast, and my cousin had just thrown me into its maw.</p>
 
-            <div class="scene-break">⁂</div>
+            <div class="scene-break">
+                <span class="drip"></span>
+            </div>
 
-            <!-- ========== HOUR 6 TO 9: GLOBAL CONTAGION ========== -->
+            <!-- ========== HOUR 6 TO 9 ========== -->
             <h2 class="hour-heading">Hour 6 to 9: Global Contagion</h2>
 
             <p>The sun began to rise over Ludhiana, casting a dull, smoggy orange light through my window blinds. The birds started their morning calls, completely ignorant of the fact that my life was effectively over.</p>
@@ -176,7 +223,10 @@
 
             <p>I clicked on his profile, a masochistic urge compelling me to watch. He was sitting in his air-conditioned room, grinning into the camera.</p>
 
-            <p class="dialogue">"Yeah, guys, that was my cousin!" he laughed, reading the chat. "The shoe just gave up! I swear, I've never seen a man try so hard to look cool while flapping like a penguin. The golden jutti, man. RIP."</p>
+            <div class="dialogue-box">
+                <span class="speaker cousin">Cousin</span>
+                <p class="dialogue-text">"Yeah, guys, that was my cousin! The shoe just gave up! I swear, I've never seen a man try so hard to look cool while flapping like a penguin. The golden jutti, man. RIP."</p>
+            </div>
 
             <p>Then, he did something that snapped the final tether holding my sanity to the concept of a peaceful resolution. He turned his phone screen to the camera, showing his analytics dashboard.</p>
 
@@ -185,11 +235,16 @@
 
             <p>He was getting rich. He was building an empire on the ruins of my dignity.</p>
 
-            <p class="dialogue">"Keep sharing, guys!" he cheered. "Let's hit a billion!"</p>
+            <div class="dialogue-box">
+                <span class="speaker cousin">Cousin</span>
+                <p class="dialogue-text">"Keep sharing, guys! Let's hit a billion!"</p>
+            </div>
 
-            <div class="scene-break">⁂</div>
+            <div class="scene-break">
+                <span class="drip"></span>
+            </div>
 
-            <!-- ========== HOUR 10 TO 12: THE BREAKING POINT ========== -->
+            <!-- ========== HOUR 10 TO 12 ========== -->
             <h2 class="hour-heading">Hour 10 to 12: The Breaking Point and the Descent</h2>
 
             <p>A billion. A thousand million people. One-eighth of the human population.</p>
@@ -230,5 +285,8 @@
         </footer>
 
     </div>
+
+    <script src="../script.js"></script>
+
 </body>
-</html>
+    </html>

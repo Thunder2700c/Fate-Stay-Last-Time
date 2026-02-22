@@ -1265,3 +1265,49 @@ footer p {
     .landing-header { padding: 50px 0 30px; }
     .magic-circle-container { width: 120px; height: 120px; }
    }
+
+/* ===================================================
+   ENFORCER SPEAKERS — CLOCK TOWER MAGI
+   =================================================== */
+
+/* --- Lead Enforcer: Toxic Green (Magic Circle Specialist) --- */
+.dialogue-box .speaker.enforcer-lead {
+    color: #4ade80;
+    border-bottom: 2px solid #166534;
+}
+
+body.theme-avalon .dialogue-box .speaker.enforcer-lead {
+    color: #15803d;
+    border-bottom-color: #86efac;
+}
+
+.dialogue-box:has(.speaker.enforcer-lead) .dialogue-text::before {
+    background: #4ade80;
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.3);
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.enforcer-lead) .dialogue-text::before {
+    background: #15803d;
+    box-shadow: 0 0 4px rgba(21, 128, 61, 0.15);
+}
+
+/* --- Second Enforcer: Aristocratic Cold Blue --- */
+.dialogue-box .speaker.enforcer-second {
+    color: #7dd3fc;
+    border-bottom: 2px solid #0c4a6e;
+}
+
+body.theme-avalon .dialogue-box .speaker.enforcer-second {
+    color: #0369a1;
+    border-bottom-color: #7dd3fc;
+}
+
+.dialogue-box:has(.speaker.enforcer-second) .dialogue-text::before {
+    background: #7dd3fc;
+    box-shadow: 0 0 8px rgba(125, 211, 252, 0.3);
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.enforcer-second) .dialogue-text::before {
+    background: #0369a1;
+    box-shadow: 0 0 4px rgba(3, 105, 161, 0.15);
+}

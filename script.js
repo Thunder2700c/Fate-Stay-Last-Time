@@ -1,10 +1,48 @@
 /* ===================================================
    FATE/STAY LAST TIME — INTERACTIVE ENGINE
+   Theme System + Particles + Scroll + Shake + Typing
    =================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ===== 1. LOADING SCREEN =====
+    // ===== 1. THEME SYSTEM =====
+    const themeToggle = document.querySelector('.theme-toggle');
+    const STORAGE_KEY = 'fate-theme';
+
+    function getStoredTheme() {
+        return localStorage.getItem(STORAGE_KEY) || 'void';
+    }
+
+    function setTheme(theme) {
+        document.body.className = '';
+        document.body.classList.add('theme-' + theme);
+        localStorage.setItem(STORAGE_KEY, theme);
+        updateToggleButton(theme);
+        updateParticleColors(theme);
+    }
+
+    function updateToggleButton(theme) {
+        if (!themeToggle) return;
+        if (theme === 'void') {
+            themeToggle.setAttribute('data-tooltip', 'Switch to Avalon');
+        } else {
+            themeToggle.setAttribute('data-tooltip', 'Switch to Void');
+        }
+    }
+
+    // Apply stored theme immediately
+    setTheme(getStoredTheme());
+
+    // Toggle on click
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const current = getStoredTheme();
+            const next = current === 'void' ? 'avalon' : 'void';
+            setTheme(next);
+        });
+    }
+
+    // ===== 2. LOADING SCREEN =====
     const loader = document.querySelector('.summoning-loader');
     if (loader) {
         window.addEventListener('load', () => {
@@ -14,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== 2. COMMAND SEAL SCROLL PROGRESS =====
+    // ===== 3. COMMAND SEAL SCROLL PROGRESS =====
     const progressBar = document.querySelector('.command-seal-progress');
     if (progressBar) {
         window.addEventListener('scroll', () => {
@@ -25,12 +63,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ===== 3. PRANA PARTICLES =====
+    // ===== 4. PRANA PARTICLES =====
     const canvas = document.getElementById('prana-particles');
+    let particles = [];
+    let particleColors = [];
+    const PARTICLE_COUNT = 35;
+
+    function getThemeParticleColors() {
+        const style = getComputedStyle(document.body);
+        return [
+            {
+                r: parseInt(style.getPropertyValue('--particle-1-r')),
+                g: parseInt(style.getPropertyValue('--particle-1-g')),
+                b: parseInt(style.getPropertyValue('--particle-1-b'))
+            },
+            {
+                r: parseInt(style.getPropertyValue('--particle-2-r')),
+                g: parseInt(style.getPropertyValue('--particle-2-g')),
+                b: parseInt(style.getPropertyValue('--particle-2-b'))
+            },
+            {
+                r: parseInt(style.getPropertyValue('--particle-3-r')),
+                g: parseInt(style.getPropertyValue('--particle-3-g')),
+                b: parseInt(style.getPropertyValue('--particle-3-b'))
+            }
+        ];
+    }
+
+    function updateParticleColors(theme) {
+        // Small delay to let CSS variables update
+        setTimeout(() => {
+            particleColors = getThemeParticleColors();
+            particles.forEach(p => {
+                p.color = particleColors[Math.floor(Math.random() * particleColors.length)];
+            });
+        }, 100);
+    }
+
     if (canvas) {
         const ctx = canvas.getContext('2d');
-        let particles = [];
-        const PARTICLE_COUNT = 35;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -39,6 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
+
+        particleColors = getThemeParticleColors();
 
         class Particle {
             constructor() {
@@ -54,13 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.opacity = Math.random() * 0.4 + 0.1;
                 this.fadeSpeed = Math.random() * 0.003 + 0.001;
                 this.growing = true;
-
-                const colors = [
-                    { r: 201, g: 168, b: 76 },
-                    { r: 58, g: 123, b: 213 },
-                    { r: 64, g: 224, b: 208 },
-                ];
-                this.color = colors[Math.floor(Math.random() * colors.length)];
+                this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
             }
 
             update() {
@@ -109,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         animateParticles();
     }
 
-    // ===== 4. SOUND EFFECT SHAKE ON SCROLL =====
+    // ===== 5. SOUND EFFECT SHAKE ON SCROLL =====
     const shakeElements = document.querySelectorAll('.sound-effect');
     if (shakeElements.length > 0) {
         const observer = new IntersectionObserver((entries) => {
@@ -126,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
         shakeElements.forEach(el => observer.observe(el));
     }
 
-    // ===== 5. HOUR TRACKER DOTS =====
+    // ===== 6. HOUR TRACKER DOTS =====
     const hourHeadings = document.querySelectorAll('.hour-heading');
     const hourDots = document.querySelectorAll('.hour-dot');
 
@@ -153,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hourHeadings.forEach(h => hourObserver.observe(h));
     }
 
-    // ===== 6. INCANTATION TYPING EFFECT =====
+    // ===== 7. INCANTATION TYPING EFFECT =====
     const incantations = document.querySelectorAll('.incantation[data-typed]');
     if (incantations.length > 0) {
         const typedObserver = new IntersectionObserver((entries) => {

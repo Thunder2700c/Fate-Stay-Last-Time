@@ -410,3 +410,26 @@ footer {
     color: inherit;
     font-weight: inherit;
 }
+
+/* ===== THREE-LINK CHAPTER NAV ===== */
+.chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 60px;
+    flex-wrap: wrap;
+}
+
+.chapter-nav a:nth-child(2) {
+    font-size: 0.8em;
+    color: var(--text-secondary);
+    border-color: transparent;
+}
+
+.chapter-nav a:nth-child(2):hover {
+    color: var(--accent-gold);
+    border-color: var(--border);
+}

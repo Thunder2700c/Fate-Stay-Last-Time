@@ -1311,3 +1311,273 @@ body.theme-avalon .dialogue-box:has(.speaker.enforcer-second) .dialogue-text::be
     background: #0369a1;
     box-shadow: 0 0 4px rgba(3, 105, 161, 0.15);
 }
+
+/* ===================================================
+   GILGAMESH — THE KING OF HEROES
+   =================================================== */
+
+/* --- Speaker Tag --- */
+.dialogue-box .speaker.gilgamesh {
+    color: #ffd700;
+    border-bottom: 2px solid #8b0000;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+body.theme-avalon .dialogue-box .speaker.gilgamesh {
+    color: #b8860b;
+    border-bottom-color: #8b0000;
+    text-shadow: none;
+}
+
+/* --- Dialogue Border Glow --- */
+.dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
+    border-color: rgba(139, 0, 0, 0.3);
+}
+
+.dialogue-box:has(.speaker.gilgamesh) .dialogue-text::before {
+    background: linear-gradient(180deg, #ffd700, #8b0000);
+    box-shadow:
+        0 0 8px rgba(255, 215, 0, 0.4),
+        0 0 20px rgba(139, 0, 0, 0.2);
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text::before {
+    background: linear-gradient(180deg, #b8860b, #8b0000);
+    box-shadow: 0 0 4px rgba(184, 134, 11, 0.2);
+}
+
+/* --- Gilgamesh dialogue has a subtle golden background tint --- */
+.dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
+    background: linear-gradient(
+        135deg,
+        rgba(255, 215, 0, 0.03),
+        var(--bg-dialogue),
+        rgba(139, 0, 0, 0.03)
+    );
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
+    background: linear-gradient(
+        135deg,
+        rgba(184, 134, 11, 0.04),
+        var(--bg-dialogue),
+        rgba(139, 0, 0, 0.03)
+    );
+}
+
+/* ===================================================
+   UBW INCANTATION VARIANT
+   Fiery sorrowful blue for Archer's Reality Marble
+   =================================================== */
+.prose .incantation.ubw {
+    color: #60a5fa;
+    border-color: rgba(59, 130, 246, 0.3);
+    background: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.06),
+        rgba(15, 23, 42, 0.8),
+        rgba(234, 88, 12, 0.04),
+        rgba(59, 130, 246, 0.06)
+    );
+    text-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Override the rotating conic gradient with UBW fire-blue */
+.prose .incantation.ubw::before {
+    background: conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(59, 130, 246, 0.06),
+        transparent,
+        rgba(234, 88, 12, 0.04),
+        transparent,
+        rgba(59, 130, 246, 0.06),
+        transparent
+    );
+    animation: incantation-rotate 6s linear infinite;
+}
+
+/* Inner ember glow at the bottom */
+.prose .incantation.ubw::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(
+        0deg,
+        rgba(234, 88, 12, 0.06),
+        transparent
+    );
+    pointer-events: none;
+    animation: ember-flicker 3s ease-in-out infinite;
+}
+
+@keyframes ember-flicker {
+    0%, 100% { opacity: 0.4; }
+    30% { opacity: 0.8; }
+    60% { opacity: 0.3; }
+    80% { opacity: 0.7; }
+}
+
+/* Avalon theme variant */
+body.theme-avalon .prose .incantation.ubw {
+    color: #1d4ed8;
+    border-color: rgba(29, 78, 216, 0.25);
+    background: linear-gradient(
+        135deg,
+        rgba(29, 78, 216, 0.05),
+        var(--bg-dialogue),
+        rgba(194, 65, 12, 0.03),
+        rgba(29, 78, 216, 0.05)
+    );
+    text-shadow: none;
+}
+
+body.theme-avalon .prose .incantation.ubw::before {
+    background: conic-gradient(
+        from 0deg,
+        transparent,
+        rgba(29, 78, 216, 0.04),
+        transparent,
+        rgba(194, 65, 12, 0.03),
+        transparent
+    );
+}
+
+body.theme-avalon .prose .incantation.ubw::after {
+    background: linear-gradient(0deg, rgba(194, 65, 12, 0.04), transparent);
+}
+
+/* ===================================================
+   UNLIMITED BLADE WORKS — REALITY MARBLE DECLARATION
+   The climactic screen-shaking title text
+   =================================================== */
+.reality-marble-declare {
+    text-indent: 0 !important;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 2.2em;
+    font-weight: 700;
+    color: #60a5fa;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    margin: 50px 0;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+    line-height: 1.4;
+
+    text-shadow:
+        0 0 10px rgba(59, 130, 246, 0.5),
+        0 0 30px rgba(59, 130, 246, 0.3),
+        0 0 60px rgba(59, 130, 246, 0.15),
+        0 0 100px rgba(234, 88, 12, 0.1);
+
+    background: linear-gradient(
+        135deg,
+        rgba(59, 130, 246, 0.04),
+        transparent,
+        rgba(234, 88, 12, 0.03),
+        transparent,
+        rgba(59, 130, 246, 0.04)
+    );
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* Gear-turning background */
+.reality-marble-declare::before {
+    content: '⚙';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 8em;
+    color: rgba(59, 130, 246, 0.04);
+    animation: gear-spin 20s linear infinite;
+    pointer-events: none;
+    line-height: 1;
+}
+
+/* Second gear (opposite rotation) */
+.reality-marble-declare::after {
+    content: '⚙';
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+    font-size: 5em;
+    color: rgba(234, 88, 12, 0.03);
+    animation: gear-spin 15s linear infinite reverse;
+    pointer-events: none;
+    line-height: 1;
+}
+
+@keyframes gear-spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Screen shake on scroll into view */
+.reality-marble-declare.shake-hard {
+    animation: ubw-shake 0.6s ease-in-out;
+}
+
+@keyframes ubw-shake {
+    0%, 100% { transform: translateX(0) translateY(0); }
+    10% { transform: translateX(-6px) translateY(-2px); }
+    20% { transform: translateX(6px) translateY(2px); }
+    30% { transform: translateX(-5px) translateY(-1px); }
+    40% { transform: translateX(5px) translateY(1px); }
+    50% { transform: translateX(-4px) translateY(-2px); }
+    60% { transform: translateX(4px) translateY(1px); }
+    70% { transform: translateX(-3px); }
+    80% { transform: translateX(2px); }
+    90% { transform: translateX(-1px); }
+}
+
+/* Avalon theme */
+body.theme-avalon .reality-marble-declare {
+    color: #1d4ed8;
+    text-shadow:
+        0 0 8px rgba(29, 78, 216, 0.2),
+        0 0 20px rgba(29, 78, 216, 0.1);
+    border-color: rgba(29, 78, 216, 0.15);
+    background: linear-gradient(
+        135deg,
+        rgba(29, 78, 216, 0.03),
+        transparent,
+        rgba(194, 65, 12, 0.02),
+        transparent
+    );
+}
+
+body.theme-avalon .reality-marble-declare::before {
+    color: rgba(29, 78, 216, 0.03);
+}
+
+body.theme-avalon .reality-marble-declare::after {
+    color: rgba(194, 65, 12, 0.02);
+}
+
+/* ===================================================
+   SUBTITLE LINE FOR REALITY MARBLE
+   "I am the bone of my sword" etc.
+   =================================================== */
+.reality-marble-declare .rm-subtitle {
+    display: block;
+    font-size: 0.35em;
+    font-weight: 400;
+    letter-spacing: 4px;
+    color: rgba(96, 165, 250, 0.5);
+    margin-top: 10px;
+    font-style: italic;
+}
+
+body.theme-avalon .reality-marble-declare .rm-subtitle {
+    color: rgba(29, 78, 216, 0.35);
+}

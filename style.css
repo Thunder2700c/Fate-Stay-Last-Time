@@ -1,9 +1,8 @@
 /* ===================================================
    FATE/STAY LAST TIME — MASTER STYLESHEET
-   Complete Build with GIF Loading Screen
+   Two Themes: Void (Dark) + Avalon (Light)
    =================================================== */
 
-/* ===== IMPORTS ===== */
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Share+Tech+Mono&display=swap');
 
 /* ===== RESET ===== */
@@ -13,8 +12,11 @@
     box-sizing: border-box;
 }
 
-/* ===== ROOT VARIABLES ===== */
-:root {
+/* ===================================================
+   THEME: VOID (DARK — DEFAULT)
+   =================================================== */
+:root,
+body.theme-void {
     --bg-void: #06060e;
     --bg-deep: #0a0b15;
     --bg-panel: #0f1021;
@@ -36,30 +38,149 @@
     --prana-cyan: #40e0d0;
     --command-seal: #c41e3a;
     --excalibur-gold: #ffd700;
+    --enemy-purple: #a855f7;
+    --enemy-purple-dim: #6b21a8;
 
     --border-subtle: #1a1b30;
     --border-gold: rgba(201, 168, 76, 0.3);
-    --border-glow: rgba(201, 168, 76, 0.15);
 
-    --font-heading: 'Cinzel', serif;
-    --font-body: 'Crimson Text', Georgia, serif;
-    --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+    --shadow-soft: 0 2px 15px rgba(0, 0, 0, 0.3);
+    --shadow-glow-gold: 0 0 30px rgba(201, 168, 76, 0.3), 0 0 60px rgba(201, 168, 76, 0.1);
+    --shadow-glow-blue: 0 0 8px rgba(58, 123, 213, 0.3);
+    --shadow-glow-red: 0 0 8px rgba(212, 64, 84, 0.3);
+    --shadow-glow-master: 0 0 8px rgba(201, 168, 76, 0.3);
+    --shadow-glow-enemy: 0 0 8px rgba(168, 85, 247, 0.3);
 
-    --max-width: 760px;
+    --terminal-color: #4ade80;
+    --terminal-bg: rgba(0, 0, 0, 0.5);
+    --terminal-border: #4ade80;
+    --terminal-prefix: #22c55e;
+
+    --notification-bg: rgba(255, 255, 255, 0.03);
+    --video-title-bg: rgba(139, 47, 58, 0.1);
+    --metrics-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+
+    --incantation-bg: linear-gradient(135deg, rgba(201, 168, 76, 0.03), transparent, rgba(201, 168, 76, 0.03));
+    --incantation-conic: rgba(201, 168, 76, 0.05);
+
+    --loader-glow-1: rgba(201, 168, 76, 0.1);
+    --loader-glow-2: rgba(201, 168, 76, 0.04);
+    --loader-ring: rgba(201, 168, 76, 0.15);
+
+    --scene-break-gradient: linear-gradient(90deg, transparent, #6b1020, #c41e3a, #6b1020, transparent);
+    --scene-drip-color: #c41e3a;
+
+    --chapter-hover-sweep: linear-gradient(90deg, rgba(201, 168, 76, 0.05), transparent);
+    --synopsis-quote-color: rgba(122, 106, 48, 0.3);
+
+    --ambient-1: rgba(201, 168, 76, 0.03);
+    --ambient-2: rgba(58, 123, 213, 0.03);
+    --ambient-3: rgba(196, 30, 58, 0.02);
+
+    --scrollbar-track: #06060e;
+    --scrollbar-thumb: #1a1b30;
+    --scrollbar-hover: #7a6a30;
+    --selection-bg: rgba(201, 168, 76, 0.3);
+
+    --particle-1-r: 201; --particle-1-g: 168; --particle-1-b: 76;
+    --particle-2-r: 58;  --particle-2-g: 123; --particle-2-b: 213;
+    --particle-3-r: 64;  --particle-3-g: 224; --particle-3-b: 208;
+
+    --thought-line: var(--text-dim);
+    --heading-line: var(--gold-dim);
 }
 
-/* ===== BODY ===== */
+/* ===================================================
+   THEME: AVALON (LIGHT)
+   =================================================== */
+body.theme-avalon {
+    --bg-void: #f0ebe0;
+    --bg-deep: #e8e2d4;
+    --bg-panel: #ebe5d8;
+    --bg-card: #f5f0e5;
+    --bg-dialogue: #f8f4eb;
+
+    --text-primary: #1a1a2e;
+    --text-secondary: #4a4560;
+    --text-dim: #9a95a8;
+
+    --gold: #2a4494;
+    --gold-bright: #1a3478;
+    --gold-dim: #6a80b8;
+    --saber-blue: #2a5aaa;
+    --saber-blue-dim: #8aa4d0;
+    --archer-red: #8b2f3a;
+    --archer-red-bright: #a83848;
+    --blood-red: #9b3040;
+    --prana-cyan: #2a8a80;
+    --command-seal: #a82040;
+    --excalibur-gold: #b8942a;
+    --enemy-purple: #7a40b0;
+    --enemy-purple-dim: #a880d0;
+
+    --border-subtle: #d0cab8;
+    --border-gold: rgba(42, 68, 148, 0.25);
+
+    --shadow-soft: 0 2px 15px rgba(0, 0, 0, 0.08);
+    --shadow-glow-gold: none;
+    --shadow-glow-blue: 0 0 4px rgba(42, 90, 170, 0.15);
+    --shadow-glow-red: 0 0 4px rgba(168, 56, 72, 0.15);
+    --shadow-glow-master: 0 0 4px rgba(42, 68, 148, 0.15);
+    --shadow-glow-enemy: 0 0 4px rgba(122, 64, 176, 0.15);
+
+    --terminal-color: #1a6a30;
+    --terminal-bg: rgba(0, 0, 0, 0.04);
+    --terminal-border: #2a8a40;
+    --terminal-prefix: #1a6a30;
+
+    --notification-bg: rgba(0, 0, 0, 0.03);
+    --video-title-bg: rgba(168, 56, 72, 0.08);
+    --metrics-shadow: none;
+
+    --incantation-bg: linear-gradient(135deg, rgba(42, 68, 148, 0.04), transparent, rgba(42, 68, 148, 0.04));
+    --incantation-conic: rgba(42, 68, 148, 0.04);
+
+    --loader-glow-1: rgba(42, 68, 148, 0.08);
+    --loader-glow-2: rgba(42, 68, 148, 0.03);
+    --loader-ring: rgba(42, 68, 148, 0.12);
+
+    --scene-break-gradient: linear-gradient(90deg, transparent, #c0a860, #b8942a, #c0a860, transparent);
+    --scene-drip-color: #b8942a;
+
+    --chapter-hover-sweep: linear-gradient(90deg, rgba(42, 68, 148, 0.05), transparent);
+    --synopsis-quote-color: rgba(42, 68, 148, 0.15);
+
+    --ambient-1: rgba(42, 68, 148, 0.02);
+    --ambient-2: rgba(184, 148, 42, 0.02);
+    --ambient-3: rgba(168, 32, 64, 0.01);
+
+    --scrollbar-track: #e8e2d4;
+    --scrollbar-thumb: #c8c0b0;
+    --scrollbar-hover: #6a80b8;
+    --selection-bg: rgba(42, 68, 148, 0.2);
+
+    --particle-1-r: 184; --particle-1-g: 148; --particle-1-b: 42;
+    --particle-2-r: 42;  --particle-2-g: 90;  --particle-2-b: 170;
+    --particle-3-r: 168; --particle-3-g: 130; --particle-3-b: 50;
+
+    --thought-line: var(--text-dim);
+    --heading-line: var(--gold-dim);
+}
+
+/* ===================================================
+   BODY
+   =================================================== */
 body {
     background-color: var(--bg-void);
     color: var(--text-primary);
-    font-family: var(--font-body);
+    font-family: 'Crimson Text', Georgia, serif;
     font-size: 19px;
     line-height: 1.95;
     overflow-x: hidden;
     position: relative;
+    transition: background-color 0.6s ease, color 0.6s ease;
 }
 
-/* Ambient light overlay */
 body::before {
     content: '';
     position: fixed;
@@ -68,11 +189,80 @@ body::before {
     width: 100%;
     height: 100%;
     background:
-        radial-gradient(ellipse at 20% 50%, rgba(201, 168, 76, 0.03) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 50%, rgba(58, 123, 213, 0.03) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 0%, rgba(196, 30, 58, 0.02) 0%, transparent 40%);
+        radial-gradient(ellipse at 20% 50%, var(--ambient-1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, var(--ambient-2) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 0%, var(--ambient-3) 0%, transparent 40%);
     pointer-events: none;
     z-index: 0;
+    transition: background 0.6s ease;
+}
+
+/* ===================================================
+   THEME TOGGLE BUTTON
+   =================================================== */
+.theme-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-panel);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3em;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-soft);
+}
+
+.theme-toggle:hover {
+    border-color: var(--gold);
+    transform: scale(1.1);
+}
+
+/* Dark theme shows sun icon (click to go light) */
+body.theme-void .theme-toggle .icon-sun { display: block; }
+body.theme-void .theme-toggle .icon-moon { display: none; }
+
+/* Light theme shows moon icon (click to go dark) */
+body.theme-avalon .theme-toggle .icon-sun { display: none; }
+body.theme-avalon .theme-toggle .icon-moon { display: block; }
+
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+    line-height: 1;
+    pointer-events: none;
+}
+
+/* Tooltip */
+.theme-toggle::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    right: 0;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55em;
+    color: var(--text-dim);
+    background: var(--bg-deep);
+    border: 1px solid var(--border-subtle);
+    padding: 4px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+.theme-toggle:hover::after {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* ===================================================
@@ -101,7 +291,6 @@ body::before {
     pointer-events: none;
 }
 
-/* GIF container */
 .magic-circle-container {
     position: relative;
     width: 200px;
@@ -111,14 +300,12 @@ body::before {
     justify-content: center;
 }
 
-/* The GIF itself */
 .magic-circle-container img {
     width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-/* Pulsing glow behind the GIF */
 .magic-circle-container::before {
     content: '';
     position: absolute;
@@ -130,16 +317,14 @@ body::before {
     border-radius: 50%;
     background: radial-gradient(
         circle,
-        rgba(201, 168, 76, 0.1) 0%,
-        rgba(201, 168, 76, 0.04) 25%,
-        rgba(58, 123, 213, 0.02) 40%,
+        var(--loader-glow-1) 0%,
+        var(--loader-glow-2) 25%,
         transparent 60%
     );
     animation: loader-glow 3s ease-in-out infinite;
     pointer-events: none;
 }
 
-/* Outer ring pulse */
 .magic-circle-container::after {
     content: '';
     position: absolute;
@@ -149,39 +334,24 @@ body::before {
     width: 130%;
     height: 130%;
     border-radius: 50%;
-    border: 1px solid rgba(201, 168, 76, 0.1);
+    border: 1px solid var(--loader-ring);
     animation: ring-expand 2.5s ease-in-out infinite;
     pointer-events: none;
 }
 
 @keyframes loader-glow {
-    0%, 100% {
-        opacity: 0.3;
-        transform: translate(-50%, -50%) scale(0.95);
-    }
-    50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.05);
-    }
+    0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.95); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); }
 }
 
 @keyframes ring-expand {
-    0% {
-        width: 110%;
-        height: 110%;
-        opacity: 0.5;
-    }
-    100% {
-        width: 180%;
-        height: 180%;
-        opacity: 0;
-    }
+    0% { width: 110%; height: 110%; opacity: 0.5; }
+    100% { width: 180%; height: 180%; opacity: 0; }
 }
 
-/* Loading text */
 .summoning-loader .load-text {
     margin-top: 40px;
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
     font-size: 0.65em;
     color: var(--gold-dim);
     text-transform: uppercase;
@@ -194,73 +364,29 @@ body::before {
     50% { opacity: 0.7; letter-spacing: 10px; }
 }
 
-/* Three dots animation */
-.summoning-loader .load-text::after {
-    content: '';
-    animation: loading-dots 1.5s steps(4, end) infinite;
-}
-
-@keyframes loading-dots {
-    0% { content: ''; }
-    25% { content: '.'; }
-    50% { content: '..'; }
-    75% { content: '...'; }
-}
-
-/* --- Color Variants --- */
-
-/* Gold (landing page) */
+/* Color variants */
 .magic-circle-container.gold::before {
-    background: radial-gradient(
-        circle,
-        rgba(201, 168, 76, 0.12) 0%,
-        rgba(201, 168, 76, 0.04) 30%,
-        transparent 60%
-    );
+    background: radial-gradient(circle, var(--loader-glow-1) 0%, var(--loader-glow-2) 30%, transparent 60%);
 }
 
-.magic-circle-container.gold::after {
-    border-color: rgba(201, 168, 76, 0.15);
-}
-
-/* Blue (Saber chapters) */
 .magic-circle-container.blue::before {
-    background: radial-gradient(
-        circle,
-        rgba(58, 123, 213, 0.12) 0%,
-        rgba(58, 123, 213, 0.04) 30%,
-        transparent 60%
-    );
+    background: radial-gradient(circle, rgba(58, 123, 213, 0.12) 0%, rgba(58, 123, 213, 0.04) 30%, transparent 60%);
 }
 
 .magic-circle-container.blue::after {
     border-color: rgba(58, 123, 213, 0.15);
 }
 
-.blue ~ .load-text {
-    color: var(--saber-blue-dim);
-}
-
-/* Red (blood / battle chapters) */
 .magic-circle-container.red::before {
-    background: radial-gradient(
-        circle,
-        rgba(196, 30, 58, 0.12) 0%,
-        rgba(196, 30, 58, 0.04) 30%,
-        transparent 60%
-    );
+    background: radial-gradient(circle, rgba(196, 30, 58, 0.12) 0%, rgba(196, 30, 58, 0.04) 30%, transparent 60%);
 }
 
 .magic-circle-container.red::after {
     border-color: rgba(196, 30, 58, 0.15);
 }
 
-.red ~ .load-text {
-    color: var(--archer-red);
-}
-
 /* ===================================================
-   PRANA PARTICLES CANVAS
+   PRANA PARTICLES
    =================================================== */
 #prana-particles {
     position: fixed;
@@ -283,21 +409,20 @@ body::before {
     height: 100%;
     background: var(--bg-deep);
     z-index: 1000;
+    transition: background 0.6s ease;
 }
 
 .command-seal-progress {
     width: 100%;
     height: 0%;
-    background: linear-gradient(
-        180deg,
-        var(--command-seal) 0%,
-        var(--archer-red-bright) 50%,
-        var(--excalibur-gold) 100%
-    );
-    box-shadow:
-        0 0 8px var(--command-seal),
-        0 0 20px rgba(196, 30, 58, 0.4);
+    background: linear-gradient(180deg, var(--command-seal) 0%, var(--archer-red-bright) 50%, var(--excalibur-gold) 100%);
+    box-shadow: 0 0 8px var(--command-seal), 0 0 20px rgba(196, 30, 58, 0.4);
     transition: height 0.1s linear;
+}
+
+body.theme-avalon .command-seal-progress {
+    background: linear-gradient(180deg, var(--saber-blue) 0%, var(--gold) 50%, var(--excalibur-gold) 100%);
+    box-shadow: 0 0 6px rgba(42, 68, 148, 0.3);
 }
 
 /* ===================================================
@@ -316,7 +441,7 @@ body::before {
 }
 
 .hour-tracker .label {
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.6em;
     color: var(--text-dim);
     text-transform: uppercase;
@@ -336,21 +461,21 @@ body::before {
 
 .hour-tracker .hour-dot.active {
     background: var(--gold);
-    box-shadow: 0 0 6px var(--gold), 0 0 15px rgba(201, 168, 76, 0.3);
+    box-shadow: 0 0 6px var(--gold);
 }
 
 .hour-tracker .hour-dot.current {
     background: var(--command-seal);
-    box-shadow: 0 0 8px var(--command-seal), 0 0 20px rgba(196, 30, 58, 0.5);
+    box-shadow: 0 0 8px var(--command-seal);
     width: 10px;
     height: 10px;
 }
 
 /* ===================================================
-   MAIN CONTAINER
+   CONTAINER
    =================================================== */
 .container {
-    max-width: var(--max-width);
+    max-width: 760px;
     margin: 0 auto;
     padding: 40px 24px;
     position: relative;
@@ -360,8 +485,6 @@ body::before {
 /* ===================================================
    LANDING PAGE
    =================================================== */
-
-/* --- Title Section --- */
 .landing-header {
     text-align: center;
     padding: 80px 0 50px;
@@ -380,7 +503,7 @@ body::before {
 }
 
 .landing-header .fate-label {
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.7em;
     color: var(--gold-dim);
     text-transform: uppercase;
@@ -390,7 +513,7 @@ body::before {
 }
 
 .landing-header h1 {
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
     font-size: 3.2em;
     font-weight: 700;
     color: var(--gold);
@@ -398,13 +521,12 @@ body::before {
     text-transform: uppercase;
     line-height: 1.2;
     margin-bottom: 16px;
-    text-shadow:
-        0 0 30px rgba(201, 168, 76, 0.3),
-        0 0 60px rgba(201, 168, 76, 0.1);
+    text-shadow: var(--shadow-glow-gold);
+    transition: color 0.6s ease, text-shadow 0.6s ease;
 }
 
 .landing-header .subtitle {
-    font-family: var(--font-body);
+    font-family: 'Crimson Text', Georgia, serif;
     font-size: 1.15em;
     color: var(--text-secondary);
     font-style: italic;
@@ -412,7 +534,7 @@ body::before {
 }
 
 .landing-header .tagline {
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.8em;
     color: var(--command-seal);
     letter-spacing: 5px;
@@ -436,6 +558,7 @@ body::before {
     border-left: 3px solid var(--gold-dim);
     border-radius: 2px;
     position: relative;
+    transition: background 0.6s ease;
 }
 
 .synopsis::before {
@@ -443,15 +566,14 @@ body::before {
     position: absolute;
     top: -10px;
     left: 15px;
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
     font-size: 4em;
-    color: var(--gold-dim);
-    opacity: 0.3;
+    color: var(--synopsis-quote-color);
     line-height: 1;
 }
 
 .synopsis h2 {
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
     font-size: 0.85em;
     color: var(--gold);
     text-transform: uppercase;
@@ -471,7 +593,7 @@ body::before {
 }
 
 .chapter-list h2 {
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
     font-size: 0.85em;
     color: var(--gold);
     text-transform: uppercase;
@@ -510,7 +632,7 @@ body::before {
     left: 0;
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, rgba(201, 168, 76, 0.05), transparent);
+    background: var(--chapter-hover-sweep);
     transition: width 0.4s ease;
 }
 
@@ -524,7 +646,7 @@ body::before {
 }
 
 .chapter-number {
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.72em;
     color: var(--gold-dim);
     text-transform: uppercase;
@@ -532,14 +654,14 @@ body::before {
 }
 
 .chapter-title {
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
     font-size: 1em;
     font-weight: 400;
     letter-spacing: 0.5px;
 }
 
 .phase {
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.65em;
     color: var(--text-dim);
     text-transform: uppercase;
@@ -547,7 +669,6 @@ body::before {
     text-align: right;
 }
 
-/* Locked chapters */
 .chapter-list a.locked {
     opacity: 0.35;
     pointer-events: none;
@@ -556,16 +677,14 @@ body::before {
 .chapter-list a.locked .chapter-title::after {
     content: ' — Coming Soon';
     font-style: italic;
-    font-family: var(--font-body);
+    font-family: 'Crimson Text', serif;
     color: var(--text-dim);
     font-size: 0.85em;
 }
 
 /* ===================================================
-   CHAPTER PAGE
+   CHAPTER HEADER
    =================================================== */
-
-/* --- Chapter Header --- */
 .chapter-header {
     text-align: center;
     padding: 70px 0 40px;
@@ -573,7 +692,7 @@ body::before {
 }
 
 .chapter-header .phase-label {
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.65em;
     color: var(--command-seal);
     text-transform: uppercase;
@@ -583,7 +702,7 @@ body::before {
 }
 
 .chapter-header .chapter-label {
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.75em;
     color: var(--text-dim);
     text-transform: uppercase;
@@ -593,18 +712,19 @@ body::before {
 }
 
 .chapter-header h1 {
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
     font-size: 2.4em;
     font-weight: 700;
     color: var(--gold);
     letter-spacing: 2px;
     line-height: 1.3;
     margin-bottom: 10px;
-    text-shadow: 0 0 25px rgba(201, 168, 76, 0.25);
+    text-shadow: var(--shadow-glow-gold);
+    transition: color 0.6s ease, text-shadow 0.6s ease;
 }
 
 .chapter-header .subtitle {
-    font-family: var(--font-body);
+    font-family: 'Crimson Text', Georgia, serif;
     font-size: 1em;
     color: var(--text-secondary);
     font-style: italic;
@@ -615,12 +735,12 @@ body::before {
     display: block;
     width: 100px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    background: linear-gradient(90deg, transparent, var(--heading-line), transparent);
     margin: 35px auto 0;
 }
 
 /* ===================================================
-   PROSE BODY
+   PROSE
    =================================================== */
 .prose {
     margin-bottom: 60px;
@@ -634,10 +754,10 @@ body::before {
 }
 
 /* ===================================================
-   HOUR HEADINGS — EXCALIBUR GLOW
+   HOUR HEADINGS
    =================================================== */
 .hour-heading {
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
     font-size: 1.25em;
     font-weight: 600;
     color: var(--gold);
@@ -660,12 +780,12 @@ body::before {
 
 .hour-heading::before {
     right: calc(100% + 15px);
-    background: linear-gradient(90deg, transparent, var(--gold-dim));
+    background: linear-gradient(90deg, transparent, var(--heading-line));
 }
 
 .hour-heading::after {
     left: calc(100% + 15px);
-    background: linear-gradient(270deg, transparent, var(--gold-dim));
+    background: linear-gradient(270deg, transparent, var(--heading-line));
 }
 
 .hour-heading:first-of-type {
@@ -677,6 +797,15 @@ body::before {
     50% { text-shadow: 0 0 25px rgba(201, 168, 76, 0.4), 0 0 50px rgba(201, 168, 76, 0.1); }
 }
 
+body.theme-avalon .hour-heading {
+    animation: avalon-pulse 4s ease-in-out infinite;
+}
+
+@keyframes avalon-pulse {
+    0%, 100% { text-shadow: none; }
+    50% { text-shadow: 0 0 15px rgba(42, 68, 148, 0.15); }
+}
+
 /* ===================================================
    DROP CAP
    =================================================== */
@@ -685,18 +814,23 @@ body::before {
 }
 
 .hour-heading + p::first-letter {
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
     font-size: 3.5em;
     float: left;
     line-height: 0.85;
     margin-right: 10px;
     margin-top: 6px;
     color: var(--gold);
-    text-shadow: 0 0 15px rgba(201, 168, 76, 0.3);
+    text-shadow: var(--shadow-glow-gold);
+    transition: color 0.6s ease;
+}
+
+body.theme-avalon .hour-heading + p::first-letter {
+    text-shadow: none;
 }
 
 /* ===================================================
-   SCENE BREAK — BLOOD DRIP
+   SCENE BREAK
    =================================================== */
 .scene-break {
     text-align: center;
@@ -712,21 +846,14 @@ body::before {
     content: '';
     width: 200px;
     height: 1px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--blood-red),
-        var(--command-seal),
-        var(--blood-red),
-        transparent
-    );
+    background: var(--scene-break-gradient);
 }
 
 .scene-break .drip {
     position: absolute;
     width: 4px;
     height: 0;
-    background: linear-gradient(180deg, var(--command-seal), transparent);
+    background: linear-gradient(180deg, var(--scene-drip-color), transparent);
     border-radius: 0 0 50% 50%;
     animation: blood-drip 3s ease-in-out infinite;
 }
@@ -738,8 +865,21 @@ body::before {
     100% { height: 0; opacity: 0; }
 }
 
+/* Avalon: golden light pulse instead of blood drip */
+body.theme-avalon .scene-break .drip {
+    width: 6px;
+    border-radius: 50%;
+    animation: light-pulse 3s ease-in-out infinite;
+}
+
+@keyframes light-pulse {
+    0% { height: 6px; opacity: 0; transform: scale(0.5); }
+    50% { height: 6px; opacity: 0.8; transform: scale(1.2); }
+    100% { height: 6px; opacity: 0; transform: scale(0.5); }
+}
+
 /* ===================================================
-   DIALOGUE — VISUAL NOVEL STYLE
+   DIALOGUE BOXES
    =================================================== */
 .dialogue-box {
     margin: 24px 0;
@@ -749,7 +889,7 @@ body::before {
 }
 
 .dialogue-box .speaker {
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
     font-size: 0.72em;
     text-transform: uppercase;
     letter-spacing: 3px;
@@ -780,6 +920,16 @@ body::before {
     border-bottom: 2px solid #374151;
 }
 
+body.theme-avalon .dialogue-box .speaker.cousin {
+    color: #6b7280;
+    border-bottom-color: #d0ccc0;
+}
+
+.dialogue-box .speaker.enemy {
+    color: var(--enemy-purple);
+    border-bottom: 2px solid var(--enemy-purple-dim);
+}
+
 .dialogue-box .dialogue-text {
     background: var(--bg-dialogue);
     border: 1px solid var(--border-subtle);
@@ -790,6 +940,7 @@ body::before {
     line-height: 1.85;
     text-indent: 0 !important;
     position: relative;
+    transition: background 0.6s ease, border-color 0.6s ease;
 }
 
 .dialogue-box .dialogue-text::before {
@@ -802,30 +953,35 @@ body::before {
     border-radius: 2px;
 }
 
-/* Saber dialogue glow */
 .dialogue-box:has(.speaker.saber) .dialogue-text::before {
     background: var(--saber-blue);
-    box-shadow: 0 0 8px rgba(58, 123, 213, 0.3);
+    box-shadow: var(--shadow-glow-blue);
 }
 
-/* Archer dialogue glow */
 .dialogue-box:has(.speaker.archer) .dialogue-text::before {
     background: var(--archer-red-bright);
-    box-shadow: 0 0 8px rgba(212, 64, 84, 0.3);
+    box-shadow: var(--shadow-glow-red);
 }
 
-/* Master dialogue glow */
 .dialogue-box:has(.speaker.master) .dialogue-text::before {
     background: var(--gold);
-    box-shadow: 0 0 8px rgba(201, 168, 76, 0.3);
+    box-shadow: var(--shadow-glow-master);
 }
 
-/* Cousin dialogue glow */
 .dialogue-box:has(.speaker.cousin) .dialogue-text::before {
     background: #4b5563;
 }
 
-/* Fallback simple dialogue */
+.dialogue-box:has(.speaker.enemy) .dialogue-text::before {
+    background: var(--enemy-purple);
+    box-shadow: var(--shadow-glow-enemy);
+}
+
+body.theme-avalon .dialogue-box .dialogue-text {
+    box-shadow: var(--shadow-soft);
+}
+
+/* Fallback dialogue */
 .prose .dialogue {
     text-indent: 0 !important;
     font-style: italic;
@@ -837,7 +993,7 @@ body::before {
 }
 
 /* ===================================================
-   INTERNAL THOUGHT
+   THOUGHT
    =================================================== */
 .prose .thought {
     text-indent: 0 !important;
@@ -857,7 +1013,7 @@ body::before {
     transform: translateX(-50%);
     width: 40px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--text-dim), transparent);
+    background: linear-gradient(90deg, transparent, var(--thought-line), transparent);
 }
 
 .prose .thought::before { top: 0; }
@@ -875,7 +1031,7 @@ body::before {
     padding: 25px 20px;
     line-height: 2.4;
     font-size: 1.05em;
-    background: linear-gradient(135deg, rgba(201, 168, 76, 0.03), transparent, rgba(201, 168, 76, 0.03));
+    background: var(--incantation-bg);
     border: 1px solid var(--border-gold);
     border-radius: 4px;
     position: relative;
@@ -889,14 +1045,7 @@ body::before {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: conic-gradient(
-        from 0deg,
-        transparent,
-        rgba(201, 168, 76, 0.05),
-        transparent,
-        rgba(201, 168, 76, 0.05),
-        transparent
-    );
+    background: conic-gradient(from 0deg, transparent, var(--incantation-conic), transparent, var(--incantation-conic), transparent);
     animation: incantation-rotate 8s linear infinite;
 }
 
@@ -905,7 +1054,7 @@ body::before {
 }
 
 /* ===================================================
-   SOUND EFFECTS — SCREEN SHAKE
+   SOUND EFFECTS
    =================================================== */
 .prose .sound-effect {
     text-indent: 0 !important;
@@ -915,7 +1064,7 @@ body::before {
     color: var(--gold-bright);
     margin: 28px 0;
     letter-spacing: 3px;
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
 }
 
 .prose .sound-effect.shake {
@@ -930,24 +1079,34 @@ body::before {
     80% { transform: translateX(2px); }
 }
 
+body.theme-avalon .prose .sound-effect.shake {
+    animation: subtle-bounce 0.4s ease-in-out;
+}
+
+@keyframes subtle-bounce {
+    0%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-3px); }
+    60% { transform: translateY(2px); }
+}
+
 /* ===================================================
-   TERMINAL LINES
+   TERMINAL
    =================================================== */
 .prose .terminal-line {
     text-indent: 0 !important;
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.9em;
-    color: #4ade80;
-    background: rgba(0, 0, 0, 0.5);
+    color: var(--terminal-color);
+    background: var(--terminal-bg);
     padding: 8px 16px;
-    border-left: 3px solid #4ade80;
+    border-left: 3px solid var(--terminal-border);
     margin: 12px 0;
     border-radius: 0 3px 3px 0;
 }
 
 .prose .terminal-line::before {
     content: '> ';
-    color: #22c55e;
+    color: var(--terminal-prefix);
     opacity: 0.6;
 }
 
@@ -956,10 +1115,10 @@ body::before {
    =================================================== */
 .prose .notification {
     text-indent: 0 !important;
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.82em;
     color: var(--text-secondary);
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--notification-bg);
     padding: 12px 18px;
     border-radius: 10px;
     border: 1px solid var(--border-subtle);
@@ -976,11 +1135,11 @@ body::before {
 .prose .video-title {
     text-indent: 0 !important;
     text-align: center;
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 1em;
     font-weight: bold;
     color: var(--archer-red-bright);
-    background: rgba(139, 47, 58, 0.1);
+    background: var(--video-title-bg);
     padding: 16px 22px;
     border: 1px solid var(--archer-red);
     border-radius: 6px;
@@ -997,13 +1156,13 @@ body::before {
    =================================================== */
 .prose .metrics {
     text-indent: 0 !important;
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.95em;
     color: var(--excalibur-gold);
     text-align: center;
     margin: 8px 0;
     letter-spacing: 1px;
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+    text-shadow: var(--metrics-shadow);
 }
 
 /* ===================================================
@@ -1021,7 +1180,7 @@ body::before {
 }
 
 .chapter-nav a {
-    font-family: var(--font-heading);
+    font-family: 'Cinzel', serif;
     font-size: 0.75em;
     color: var(--gold-dim);
     text-decoration: none;
@@ -1036,7 +1195,6 @@ body::before {
 .chapter-nav a:hover {
     color: var(--gold);
     border-color: var(--gold-dim);
-    box-shadow: 0 0 15px rgba(201, 168, 76, 0.1);
 }
 
 .chapter-nav a:nth-child(2) {
@@ -1061,7 +1219,7 @@ footer {
 }
 
 footer p {
-    font-family: var(--font-mono);
+    font-family: 'Share Tech Mono', monospace;
     font-size: 0.7em;
     color: var(--text-dim);
     text-transform: uppercase;
@@ -1072,88 +1230,38 @@ footer p {
    SELECTION & SCROLLBAR
    =================================================== */
 ::selection {
-    background: rgba(201, 168, 76, 0.3);
+    background: var(--selection-bg);
     color: var(--text-primary);
 }
 
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: var(--bg-void);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--border-subtle);
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--gold-dim);
-}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-hover); }
 
 /* ===================================================
    RESPONSIVE
    =================================================== */
 @media (max-width: 768px) {
     body { font-size: 17px; }
-
     .landing-header h1 { font-size: 2.2em; }
-
     .chapter-header h1 { font-size: 1.8em; }
-
-    .chapter-list a {
-        grid-template-columns: 1fr;
-        gap: 4px;
-    }
-
+    .chapter-list a { grid-template-columns: 1fr; gap: 4px; }
     .phase { text-align: left; }
-
-    .hour-heading::before,
-    .hour-heading::after { display: none; }
-
+    .hour-heading::before, .hour-heading::after { display: none; }
     .hour-tracker { display: none; }
-
-    .chapter-nav {
-        flex-direction: column;
-        gap: 8px;
-    }
-
+    .chapter-nav { flex-direction: column; gap: 8px; }
     .chapter-nav a { width: 100%; text-align: center; }
-
     .dialogue-box .dialogue-text { padding: 14px 16px; }
-
     .prose .thought { margin: 25px 15px; }
-
-    .hour-heading + p::first-letter {
-        font-size: 2.8em;
-    }
-
-    .magic-circle-container {
-        width: 150px;
-        height: 150px;
-    }
+    .hour-heading + p::first-letter { font-size: 2.8em; }
+    .magic-circle-container { width: 150px; height: 150px; }
+    .theme-toggle { width: 42px; height: 42px; font-size: 1.1em; bottom: 18px; right: 18px; }
 }
 
 @media (max-width: 480px) {
     body { font-size: 16px; }
     .landing-header h1 { font-size: 1.8em; }
     .landing-header { padding: 50px 0 30px; }
-
-    .magic-circle-container {
-        width: 120px;
-        height: 120px;
-    }
+    .magic-circle-container { width: 120px; height: 120px; }
    }
-
-/* ===== ENFORCER / ENEMY SPEAKER ===== */
-.dialogue-box .speaker.enemy {
-    color: #a855f7;
-    border-bottom: 2px solid #6b21a8;
-}
-
-.dialogue-box:has(.speaker.enemy) .dialogue-text::before {
-    background: #a855f7;
-    box-shadow: 0 0 8px rgba(168, 85, 247, 0.3);
-}

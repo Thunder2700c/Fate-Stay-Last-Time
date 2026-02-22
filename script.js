@@ -4,13 +4,13 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ===== 1. SUMMONING CIRCLE LOADER =====
+    // ===== 1. LOADING SCREEN =====
     const loader = document.querySelector('.summoning-loader');
     if (loader) {
         window.addEventListener('load', () => {
             setTimeout(() => {
                 loader.classList.add('hidden');
-            }, 800);
+            }, 1200);
         });
     }
 
@@ -55,11 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.fadeSpeed = Math.random() * 0.003 + 0.001;
                 this.growing = true;
 
-                // Randomly choose gold, blue, or cyan
                 const colors = [
-                    { r: 201, g: 168, b: 76 },   // gold
-                    { r: 58, g: 123, b: 213 },    // saber blue
-                    { r: 64, g: 224, b: 208 },    // prana cyan
+                    { r: 201, g: 168, b: 76 },
+                    { r: 58, g: 123, b: 213 },
+                    { r: 64, g: 224, b: 208 },
                 ];
                 this.color = colors[Math.floor(Math.random() * colors.length)];
             }
@@ -87,7 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`;
                 ctx.fill();
 
-                // Glow
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
                 ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity * 0.15})`;
@@ -118,7 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('shake');
-                    // Remove after animation ends so it can retrigger
                     setTimeout(() => {
                         entry.target.classList.remove('shake');
                     }, 500);
@@ -139,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const index = Array.from(hourHeadings).indexOf(entry.target);
                 if (index >= 0 && index < hourDots.length) {
                     if (entry.isIntersecting) {
-                        // Mark all previous as active, current as current
                         hourDots.forEach((dot, i) => {
                             dot.classList.remove('current');
                             if (i < index) {
@@ -183,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function typeChar() {
             if (i < html.length) {
-                // Handle HTML tags
                 if (html[i] === '<') {
                     const closeIndex = html.indexOf('>', i);
                     output += html.substring(i, closeIndex + 1);

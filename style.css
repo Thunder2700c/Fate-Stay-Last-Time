@@ -310,3 +310,103 @@ footer {
         font-size: 2.5em;
     }
 }
+
+/* ===== HOUR HEADINGS ===== */
+.hour-heading {
+    font-family: var(--font-heading);
+    font-size: 1.4em;
+    color: var(--accent-gold);
+    text-align: center;
+    margin: 50px 0 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 1px;
+}
+
+.hour-heading:first-of-type {
+    margin-top: 0;
+}
+
+/* ===== SOUND EFFECTS ===== */
+.prose .sound-effect {
+    text-indent: 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.15em;
+    color: var(--accent-gold);
+    margin: 25px 0;
+    letter-spacing: 2px;
+}
+
+/* ===== TERMINAL / REFRESH LINES ===== */
+.prose .terminal-line {
+    text-indent: 0;
+    font-family: 'Courier New', 'Consolas', monospace;
+    color: #4ade80;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 6px 14px;
+    border-left: 3px solid #4ade80;
+    margin: 10px 0;
+    font-size: 0.95em;
+}
+
+/* ===== NOTIFICATIONS ===== */
+.prose .notification {
+    text-indent: 0;
+    font-family: var(--font-heading);
+    font-size: 0.9em;
+    color: #a0a0b0;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin: 8px 0 8px 20px;
+}
+
+/* ===== VIDEO TITLE ===== */
+.prose .video-title {
+    text-indent: 0;
+    text-align: center;
+    font-family: var(--font-heading);
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #ef4444;
+    background: rgba(139, 47, 58, 0.15);
+    padding: 14px 20px;
+    border: 1px solid var(--accent-red);
+    border-radius: 6px;
+    margin: 25px 0;
+}
+
+/* ===== METRICS / STATS ===== */
+.prose .metrics {
+    text-indent: 0;
+    font-family: 'Courier New', 'Consolas', monospace;
+    font-size: 1em;
+    color: #f59e0b;
+    text-align: center;
+    margin: 6px 0;
+    letter-spacing: 1px;
+}
+
+/* ===== OVERRIDE: Drop cap only on very first paragraph after hour-heading ===== */
+.hour-heading + p::first-letter {
+    font-size: 3.2em;
+    float: left;
+    line-height: 1;
+    margin-right: 8px;
+    margin-top: 4px;
+    color: var(--accent-gold);
+    font-weight: bold;
+}
+
+/* Remove drop cap from all other paragraphs */
+.prose p:first-of-type::first-letter {
+    font-size: inherit;
+    float: none;
+    line-height: inherit;
+    margin-right: 0;
+    margin-top: 0;
+    color: inherit;
+    font-weight: inherit;
+}

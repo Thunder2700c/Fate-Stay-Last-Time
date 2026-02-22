@@ -3,157 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fate / Rewritten</title>
+    <title>Fate/Stay Last Time</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="container">
+        <header>
+            <h1>Fate/Stay Last Time</h1>
+            <p class="subtitle">The Chronicle of the Pruned Timeline</p>
+            <p class="tagline">70 Hours to Zero</p>
+        </header>
 
-    <!-- NAVIGATION -->
-    <nav class="main-nav">
-        <div class="nav-inner">
-            <a href="index.html" class="nav-logo">
-                <span class="logo-fate">FATE</span>
-                <span class="logo-slash">/</span>
-                <span class="logo-sub">REWRITTEN</span>
-            </a>
-            <div class="nav-links">
-                <a href="index.html" class="active">Home</a>
-                <a href="#chapters-section">Chapters</a>
-                <a href="#about-section">About</a>
-            </div>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
-        </div>
-        <div class="mobile-menu" id="mobileMenu">
-            <a href="index.html">Home</a>
-            <a href="#chapters-section">Chapters</a>
-            <a href="#about-section">About</a>
-        </div>
-    </nav>
-
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-bg-effects">
-            <div class="magic-circle"></div>
-            <div class="magic-circle circle-2"></div>
-        </div>
-        <div class="hero-content">
-            <div class="hero-emblem">⟡</div>
-            <h1 class="hero-title">
-                <span class="title-top">FATE</span>
-                <span class="title-divider"></span>
-                <span class="title-bottom">REWRITTEN</span>
-            </h1>
-            <p class="hero-tagline">A retelling of the Holy Grail War</p>
-            <a href="#chapters-section" class="hero-btn">
-                <span>BEGIN READING</span>
-                <span class="btn-arrow">→</span>
-            </a>
-        </div>
-        <div class="hero-scroll-indicator">
-            <span>SCROLL</span>
-            <div class="scroll-line"></div>
-        </div>
-    </section>
-
-    <!-- SYNOPSIS -->
-    <section class="synopsis" id="about-section">
-        <div class="section-container">
-            <div class="section-header">
-                <div class="header-line"></div>
-                <h2>The Story</h2>
-                <div class="header-line"></div>
-            </div>
-            <div class="synopsis-content">
-                <div class="synopsis-border">
-                    <p>
-                        Fuyuki City. A war fought in shadows, where seven Masters 
-                        summon seven Servants — heroic spirits from across history — 
-                        to battle for the Holy Grail.
-                    </p>
-                    <p>
-                        Shirou Emiya, a boy who dreams of being a hero, is pulled 
-                        into this war against his will. What he finds is not glory, 
-                        but the weight of ideals that may have been flawed from 
-                        the start.
-                    </p>
-                    <p>
-                        This is that story — rewritten.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CHAPTERS -->
-    <section class="chapters-section" id="chapters-section">
-        <div class="section-container">
-            <div class="section-header">
-                <div class="header-line"></div>
-                <h2>Chapters</h2>
-                <div class="header-line"></div>
-            </div>
-            <div id="chapter-list" class="chapter-grid">
-                <!-- JS fills this -->
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-logo">
-                <span class="logo-fate">FATE</span>
-                <span class="logo-slash">/</span>
-                <span class="logo-sub">REWRITTEN</span>
-            </div>
-            <p class="footer-disclaimer">
-                Fan fiction. Fate/stay night is owned by Type-Moon. 
-                This is a non-commercial fan project.
+        <section class="synopsis">
+            <h2>Synopsis</h2>
+            <p>
+                A single broken shoe at a wedding. A viral video that burned a man's dignity
+                to ash. A summoning circle drawn in fury. Two legendary Servants called forth
+                to wage war — not against other Masters, but against an entire world that chose
+                to laugh.
             </p>
-            <div class="footer-line"></div>
-            <p class="footer-copy">2025</p>
-        </div>
-    </footer>
+            <p>
+                This is the story of Gurtej — a Master who decided that a timeline built on
+                cruelty deserves to be pruned from the Tree of Time.
+            </p>
+        </section>
 
-    <script>
-        async function loadChapters() {
-            const res = await fetch('data/chapters.json');
-            const data = await res.json();
-            const list = document.getElementById('chapter-list');
+        <nav class="chapter-list">
+            <h2>Chapters</h2>
+            <ul>
+                <li>
+                    <a href="chapters/chapter-1.html">
+                        <span class="chapter-number">Chapter 1</span>
+                        <span class="chapter-title">The Flap of the Leather</span>
+                        <span class="phase">Phase I — The Catalyst</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chapters/chapter-2.html">
+                        <span class="chapter-number">Chapter 2</span>
+                        <span class="chapter-title">Ten Thousand Eyes</span>
+                        <span class="phase">Phase I — The Catalyst</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chapters/chapter-3.html">
+                        <span class="chapter-number">Chapter 3</span>
+                        <span class="chapter-title">The Circle of Broken Leather</span>
+                        <span class="phase">Phase II — The Summoning</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chapters/chapter-4.html">
+                        <span class="chapter-number">Chapter 4</span>
+                        <span class="chapter-title">Silver and Steel</span>
+                        <span class="phase">Phase II — The Summoning</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chapters/chapter-5.html">
+                        <span class="chapter-number">Chapter 5</span>
+                        <span class="chapter-title">Ghost in the Machine</span>
+                        <span class="phase">Phase III — The War of the Grail</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chapters/chapter-6.html">
+                        <span class="chapter-number">Chapter 6</span>
+                        <span class="chapter-title">The Price of Laughter</span>
+                        <span class="phase">Phase III — The War of the Grail</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chapters/chapter-7.html">
+                        <span class="chapter-number">Chapter 7</span>
+                        <span class="chapter-title">Hrunting</span>
+                        <span class="phase">Phase IV — The Siege</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chapters/chapter-8.html">
+                        <span class="chapter-number">Chapter 8</span>
+                        <span class="chapter-title">A Thousand Turrets</span>
+                        <span class="phase">Phase IV — The Siege</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chapters/chapter-9.html">
+                        <span class="chapter-number">Chapter 9</span>
+                        <span class="chapter-title">Unlimited Blade Works — Inverted</span>
+                        <span class="phase">Phase V — The Pruning</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chapters/chapter-10.html">
+                        <span class="chapter-number">Chapter 10</span>
+                        <span class="chapter-title">EX — CALIBUR</span>
+                        <span class="phase">Phase V — The Pruning</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
-            data.chapters.forEach((ch, i) => {
-                const card = document.createElement('a');
-                card.href = `reader.html?ch=${ch.id}`;
-                card.className = 'chapter-card';
-                card.innerHTML = `
-                    <div class="card-number">${i === 0 ? '00' : String(i).padStart(2, '0')}</div>
-                    <div class="card-info">
-                        <span class="card-label">${i === 0 ? 'PROLOGUE' : 'CHAPTER ' + i}</span>
-                        <h3 class="card-title">${ch.title}</h3>
-                    </div>
-                    <div class="card-arrow">→</div>
-                `;
-                list.appendChild(card);
-            });
-        }
-
-        function toggleMobileMenu() {
-            document.getElementById('mobileMenu').classList.toggle('open');
-        }
-
-        // Navbar background on scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('.main-nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
-
-        loadChapters();
-    </script>
-
+        <footer>
+            <p>A fan work inspired by the Fate universe</p>
+        </footer>
+    </div>
 </body>
 </html>

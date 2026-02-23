@@ -224,11 +224,8 @@ body::before {
     transform: scale(1.1);
 }
 
-/* Dark theme shows sun icon (click to go light) */
 body.theme-void .theme-toggle .icon-sun { display: block; }
 body.theme-void .theme-toggle .icon-moon { display: none; }
-
-/* Light theme shows moon icon (click to go dark) */
 body.theme-avalon .theme-toggle .icon-sun { display: none; }
 body.theme-avalon .theme-toggle .icon-moon { display: block; }
 
@@ -238,7 +235,6 @@ body.theme-avalon .theme-toggle .icon-moon { display: block; }
     pointer-events: none;
 }
 
-/* Tooltip */
 .theme-toggle::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -364,7 +360,6 @@ body.theme-avalon .theme-toggle .icon-moon { display: block; }
     50% { opacity: 0.7; letter-spacing: 10px; }
 }
 
-/* Color variants */
 .magic-circle-container.gold::before {
     background: radial-gradient(circle, var(--loader-glow-1) 0%, var(--loader-glow-2) 30%, transparent 60%);
 }
@@ -587,7 +582,308 @@ body.theme-avalon .command-seal-progress {
     font-style: italic;
 }
 
-/* --- Chapter List --- */
+/* ===================================================
+   TIMELINE PROGRESS BAR
+   =================================================== */
+.timeline-progress {
+    margin: 50px 0;
+    padding: 25px 28px;
+    background: linear-gradient(135deg, var(--bg-panel), var(--bg-deep));
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    transition: background 0.6s ease;
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 18px;
+}
+
+.timeline-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85em;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.timeline-stats {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7em;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+}
+
+.timeline-bar {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background: var(--border-subtle);
+    border-radius: 3px;
+    margin-bottom: 14px;
+    overflow: visible;
+}
+
+.timeline-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(
+        90deg,
+        var(--saber-blue),
+        var(--gold),
+        var(--command-seal)
+    );
+    position: relative;
+    transition: width 1.5s ease;
+    box-shadow: 0 0 8px rgba(201, 168, 76, 0.3);
+}
+
+body.theme-avalon .timeline-fill {
+    box-shadow: 0 0 4px rgba(42, 68, 148, 0.2);
+}
+
+.timeline-marker {
+    position: absolute;
+    top: -4px;
+    width: 3px;
+    height: 14px;
+    background: var(--gold-dim);
+    border-radius: 1px;
+    transform: translateX(-50%);
+}
+
+.timeline-marker::after {
+    content: attr(data-label);
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55em;
+    color: var(--text-dim);
+    white-space: nowrap;
+}
+
+.timeline-end {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55em;
+    color: var(--command-seal);
+    font-weight: bold;
+}
+
+.timeline-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 28px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.timeline-labels span {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    flex: 1;
+}
+
+/* ===================================================
+   SERVANT ROSTER
+   =================================================== */
+.servant-roster {
+    margin: 50px 0;
+}
+
+.servant-roster h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85em;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.roster-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.roster-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 20px 14px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-top: 3px solid transparent;
+    border-radius: 4px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.roster-card:hover {
+    background: var(--bg-card);
+    transform: translateY(-2px);
+}
+
+.roster-card.saber-card { border-top-color: var(--saber-blue); }
+.roster-card.archer-card { border-top-color: var(--archer-red-bright); }
+.roster-card.gilgamesh-card { border-top-color: #ffd700; }
+body.theme-avalon .roster-card.gilgamesh-card { border-top-color: #b8860b; }
+
+.roster-class {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.roster-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.95em;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.roster-title {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.8em;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.roster-status {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-top: 4px;
+}
+
+.roster-status.active {
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    background: rgba(74, 222, 128, 0.05);
+}
+
+.roster-status.enemy {
+    color: var(--command-seal);
+    border: 1px solid rgba(196, 30, 58, 0.3);
+    background: rgba(196, 30, 58, 0.05);
+}
+
+body.theme-avalon .roster-status.active {
+    color: #15803d;
+    border-color: rgba(21, 128, 61, 0.3);
+    background: rgba(21, 128, 61, 0.05);
+}
+
+body.theme-avalon .roster-status.enemy {
+    color: #9f1239;
+    border-color: rgba(159, 18, 57, 0.3);
+    background: rgba(159, 18, 57, 0.05);
+}
+
+/* ===================================================
+   PHASE DIVIDERS
+   =================================================== */
+.phase-divider {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    margin: 25px 0 10px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.phase-divider:first-of-type {
+    margin-top: 0;
+}
+
+.phase-divider-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75em;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+.phase-divider-hours {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+}
+
+/* ===================================================
+   LATEST CHAPTER BADGE
+   =================================================== */
+.chapter-list a.latest {
+    border-left-color: var(--gold);
+    background: var(--bg-card);
+    position: relative;
+}
+
+.chapter-list a.latest::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(201, 168, 76, 0.04),
+        transparent
+    );
+    pointer-events: none;
+}
+
+body.theme-avalon .chapter-list a.latest::after {
+    background: linear-gradient(
+        90deg,
+        rgba(42, 68, 148, 0.04),
+        transparent
+    );
+}
+
+.latest-badge {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55em;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 2px 8px;
+    border: 1px solid var(--border-gold);
+    border-radius: 2px;
+    animation: badge-pulse 3s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* ===================================================
+   CHAPTER LIST
+   =================================================== */
 .chapter-list {
     margin: 50px 0;
 }
@@ -865,7 +1161,6 @@ body.theme-avalon .hour-heading + p::first-letter {
     100% { height: 0; opacity: 0; }
 }
 
-/* Avalon: golden light pulse instead of blood drip */
 body.theme-avalon .scene-break .drip {
     width: 6px;
     border-radius: 50%;
@@ -981,7 +1276,6 @@ body.theme-avalon .dialogue-box .dialogue-text {
     box-shadow: var(--shadow-soft);
 }
 
-/* Fallback dialogue */
 .prose .dialogue {
     text-indent: 0 !important;
     font-style: italic;
@@ -1209,6 +1503,21 @@ body.theme-avalon .prose .sound-effect.shake {
 }
 
 /* ===================================================
+   DISABLED NAV LINK
+   =================================================== */
+.chapter-nav a.disabled {
+    color: var(--text-dim);
+    border-color: var(--border-subtle);
+    opacity: 0.35;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+body.theme-avalon .chapter-nav a.disabled {
+    opacity: 0.4;
+}
+
+/* ===================================================
    FOOTER
    =================================================== */
 footer {
@@ -1224,6 +1533,15 @@ footer p {
     color: var(--text-dim);
     text-transform: uppercase;
     letter-spacing: 3px;
+}
+
+.footer-sub {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.75em;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-top: 8px;
+    letter-spacing: 1px;
 }
 
 /* ===================================================
@@ -1257,6 +1575,49 @@ footer p {
     .hour-heading + p::first-letter { font-size: 2.8em; }
     .magic-circle-container { width: 150px; height: 150px; }
     .theme-toggle { width: 42px; height: 42px; font-size: 1.1em; bottom: 18px; right: 18px; }
+
+    .roster-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .roster-card {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 14px 18px;
+        border-top: none;
+        border-left: 3px solid transparent;
+    }
+
+    .roster-card.saber-card { border-left-color: var(--saber-blue); }
+    .roster-card.archer-card { border-left-color: var(--archer-red-bright); }
+    .roster-card.gilgamesh-card { border-left-color: #ffd700; }
+
+    .timeline-labels {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
+    .timeline-labels span {
+        flex: none;
+        font-size: 0.5em;
+    }
+
+    .timeline-header {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .phase-divider {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+    }
+
+    .latest-badge {
+        position: static;
+        margin-top: 4px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1264,13 +1625,11 @@ footer p {
     .landing-header h1 { font-size: 1.8em; }
     .landing-header { padding: 50px 0 30px; }
     .magic-circle-container { width: 120px; height: 120px; }
-   }
+}
 
 /* ===================================================
    ENFORCER SPEAKERS — CLOCK TOWER MAGI
    =================================================== */
-
-/* --- Lead Enforcer: Toxic Green (Magic Circle Specialist) --- */
 .dialogue-box .speaker.enforcer-lead {
     color: #4ade80;
     border-bottom: 2px solid #166534;
@@ -1291,7 +1650,6 @@ body.theme-avalon .dialogue-box:has(.speaker.enforcer-lead) .dialogue-text::befo
     box-shadow: 0 0 4px rgba(21, 128, 61, 0.15);
 }
 
-/* --- Second Enforcer: Aristocratic Cold Blue --- */
 .dialogue-box .speaker.enforcer-second {
     color: #7dd3fc;
     border-bottom: 2px solid #0c4a6e;
@@ -1315,8 +1673,6 @@ body.theme-avalon .dialogue-box:has(.speaker.enforcer-second) .dialogue-text::be
 /* ===================================================
    GILGAMESH — THE KING OF HEROES
    =================================================== */
-
-/* --- Speaker Tag --- */
 .dialogue-box .speaker.gilgamesh {
     color: #ffd700;
     border-bottom: 2px solid #8b0000;
@@ -1329,7 +1685,6 @@ body.theme-avalon .dialogue-box .speaker.gilgamesh {
     text-shadow: none;
 }
 
-/* --- Dialogue Border Glow --- */
 .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
     border-color: rgba(139, 0, 0, 0.3);
 }
@@ -1346,7 +1701,6 @@ body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text::before {
     box-shadow: 0 0 4px rgba(184, 134, 11, 0.2);
 }
 
-/* --- Gilgamesh dialogue has a subtle golden background tint --- */
 .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
     background: linear-gradient(
         135deg,
@@ -1367,7 +1721,6 @@ body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
 
 /* ===================================================
    UBW INCANTATION VARIANT
-   Fiery sorrowful blue for Archer's Reality Marble
    =================================================== */
 .prose .incantation.ubw {
     color: #60a5fa;
@@ -1384,7 +1737,6 @@ body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
     overflow: hidden;
 }
 
-/* Override the rotating conic gradient with UBW fire-blue */
 .prose .incantation.ubw::before {
     background: conic-gradient(
         from 0deg,
@@ -1399,7 +1751,6 @@ body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
     animation: incantation-rotate 6s linear infinite;
 }
 
-/* Inner ember glow at the bottom */
 .prose .incantation.ubw::after {
     content: '';
     position: absolute;
@@ -1423,7 +1774,6 @@ body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
     80% { opacity: 0.7; }
 }
 
-/* Avalon theme variant */
 body.theme-avalon .prose .incantation.ubw {
     color: #1d4ed8;
     border-color: rgba(29, 78, 216, 0.25);
@@ -1454,7 +1804,6 @@ body.theme-avalon .prose .incantation.ubw::after {
 
 /* ===================================================
    UNLIMITED BLADE WORKS — REALITY MARBLE DECLARATION
-   The climactic screen-shaking title text
    =================================================== */
 .reality-marble-declare {
     text-indent: 0 !important;
@@ -1470,13 +1819,11 @@ body.theme-avalon .prose .incantation.ubw::after {
     position: relative;
     overflow: hidden;
     line-height: 1.4;
-
     text-shadow:
         0 0 10px rgba(59, 130, 246, 0.5),
         0 0 30px rgba(59, 130, 246, 0.3),
         0 0 60px rgba(59, 130, 246, 0.15),
         0 0 100px rgba(234, 88, 12, 0.1);
-
     background: linear-gradient(
         135deg,
         rgba(59, 130, 246, 0.04),
@@ -1489,7 +1836,6 @@ body.theme-avalon .prose .incantation.ubw::after {
     border-bottom: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-/* Gear-turning background */
 .reality-marble-declare::before {
     content: '⚙';
     position: absolute;
@@ -1503,7 +1849,6 @@ body.theme-avalon .prose .incantation.ubw::after {
     line-height: 1;
 }
 
-/* Second gear (opposite rotation) */
 .reality-marble-declare::after {
     content: '⚙';
     position: absolute;
@@ -1522,7 +1867,6 @@ body.theme-avalon .prose .incantation.ubw::after {
     to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Screen shake on scroll into view */
 .reality-marble-declare.shake-hard {
     animation: ubw-shake 0.6s ease-in-out;
 }
@@ -1540,7 +1884,6 @@ body.theme-avalon .prose .incantation.ubw::after {
     90% { transform: translateX(-1px); }
 }
 
-/* Avalon theme */
 body.theme-avalon .reality-marble-declare {
     color: #1d4ed8;
     text-shadow:
@@ -1564,10 +1907,6 @@ body.theme-avalon .reality-marble-declare::after {
     color: rgba(194, 65, 12, 0.02);
 }
 
-/* ===================================================
-   SUBTITLE LINE FOR REALITY MARBLE
-   "I am the bone of my sword" etc.
-   =================================================== */
 .reality-marble-declare .rm-subtitle {
     display: block;
     font-size: 0.35em;
@@ -1580,4 +1919,4 @@ body.theme-avalon .reality-marble-declare::after {
 
 body.theme-avalon .reality-marble-declare .rm-subtitle {
     color: rgba(29, 78, 216, 0.35);
-}
+       }

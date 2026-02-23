@@ -1,7 +1,7 @@
 /* ===================================================
    FATE/STAY LAST TIME — INTERACTIVE ENGINE
-   Theme System + Particles + Scroll + Shake + Typing
-   + Three-Phase Reality Marble Shake
+   Theme + Particles + Scroll + Shake + Typing
+   + Three-Phase Reality Marble
    =================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -199,22 +199,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (entry.isIntersecting && !entry.target.dataset.shaken) {
                     entry.target.dataset.shaken = 'true';
 
-                    // Phase 1: Buildup vibration (0ms)
+                    // Phase 1: Buildup vibration
                     entry.target.classList.add('shake-buildup');
 
-                    // Phase 2: Main impact (800ms)
+                    // Phase 2: Main impact
                     setTimeout(() => {
                         entry.target.classList.remove('shake-buildup');
                         entry.target.classList.add('shake-impact');
                     }, 800);
 
-                    // Phase 3: Aftershock settle (1300ms)
+                    // Phase 3: Aftershock settle
                     setTimeout(() => {
                         entry.target.classList.remove('shake-impact');
                         entry.target.classList.add('shake-settle');
                     }, 1300);
 
-                    // Reveal subtitle with fade-in (1800ms)
+                    // Reveal subtitle
                     setTimeout(() => {
                         entry.target.classList.remove('shake-settle');
                         entry.target.classList.add('revealed');

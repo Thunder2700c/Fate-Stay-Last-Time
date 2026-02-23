@@ -1,6 +1,7 @@
 /* ===================================================
    FATE/STAY LAST TIME — INTERACTIVE ENGINE
    Theme System + Particles + Scroll + Shake + Typing
+   + Three-Phase Reality Marble Shake
    =================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -30,10 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Apply stored theme immediately
     setTheme(getStoredTheme());
 
-    // Toggle on click
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
             const current = getStoredTheme();
@@ -91,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateParticleColors(theme) {
-        // Small delay to let CSS variables update
         setTimeout(() => {
             particleColors = getThemeParticleColors();
             particles.forEach(p => {
@@ -179,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ===== 5. SOUND EFFECT SHAKE ON SCROLL =====
     const shakeElements = document.querySelectorAll('.sound-effect');
     if (shakeElements.length > 0) {
-        const observer = new IntersectionObserver((entries) => {
+        const shakeObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('shake');
@@ -190,20 +188,37 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, { threshold: 0.8 });
 
-        shakeElements.forEach(el => observer.observe(el));
+        shakeElements.forEach(el => shakeObserver.observe(el));
     }
 
-       // ===== REALITY MARBLE SHAKE ON SCROLL =====
+    // ===== 6. REALITY MARBLE — THREE-PHASE SHAKE =====
     const rmDeclare = document.querySelectorAll('.reality-marble-declare');
     if (rmDeclare.length > 0) {
         const rmObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !entry.target.dataset.shaken) {
                     entry.target.dataset.shaken = 'true';
-                    entry.target.classList.add('shake-hard');
+
+                    // Phase 1: Buildup vibration (0ms)
+                    entry.target.classList.add('shake-buildup');
+
+                    // Phase 2: Main impact (800ms)
                     setTimeout(() => {
-                        entry.target.classList.remove('shake-hard');
-                    }, 700);
+                        entry.target.classList.remove('shake-buildup');
+                        entry.target.classList.add('shake-impact');
+                    }, 800);
+
+                    // Phase 3: Aftershock settle (1300ms)
+                    setTimeout(() => {
+                        entry.target.classList.remove('shake-impact');
+                        entry.target.classList.add('shake-settle');
+                    }, 1300);
+
+                    // Reveal subtitle with fade-in (1800ms)
+                    setTimeout(() => {
+                        entry.target.classList.remove('shake-settle');
+                        entry.target.classList.add('revealed');
+                    }, 1800);
                 }
             });
         }, { threshold: 0.6 });
@@ -211,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rmDeclare.forEach(el => rmObserver.observe(el));
     }
 
-    // ===== 6. HOUR TRACKER DOTS =====
+    // ===== 7. HOUR TRACKER DOTS =====
     const hourHeadings = document.querySelectorAll('.hour-heading');
     const hourDots = document.querySelectorAll('.hour-dot');
 
@@ -238,7 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hourHeadings.forEach(h => hourObserver.observe(h));
     }
 
-    // ===== 7. INCANTATION TYPING EFFECT =====
+    // ===== 8. INCANTATION TYPING EFFECT =====
     const incantations = document.querySelectorAll('.incantation[data-typed]');
     if (incantations.length > 0) {
         const typedObserver = new IntersectionObserver((entries) => {

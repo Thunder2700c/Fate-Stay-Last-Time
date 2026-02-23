@@ -47,77 +47,173 @@
             </p>
         </section>
 
+        <!-- ===== TIMELINE PROGRESS BAR ===== -->
+        <section class="timeline-progress">
+            <div class="timeline-header">
+                <h2>Timeline</h2>
+                <span class="timeline-stats">Hour 60 of 70 — 85% Complete</span>
+            </div>
+            <div class="timeline-bar">
+                <div class="timeline-fill" style="width: 85%;">
+                    <span class="timeline-marker" style="left: 0%;" data-label="0"></span>
+                    <span class="timeline-marker" style="left: 17%;" data-label="12"></span>
+                    <span class="timeline-marker" style="left: 34%;" data-label="24"></span>
+                    <span class="timeline-marker" style="left: 51%;" data-label="36"></span>
+                    <span class="timeline-marker" style="left: 68%;" data-label="48"></span>
+                    <span class="timeline-marker" style="left: 85%;" data-label="60"></span>
+                </div>
+                <span class="timeline-end">70</span>
+            </div>
+            <div class="timeline-labels">
+                <span>The Catalyst</span>
+                <span>The Summoning</span>
+                <span>War of the Grail</span>
+                <span>The Siege</span>
+                <span>The Pruning</span>
+            </div>
+        </section>
+
+        <!-- ===== SERVANT ROSTER ===== -->
+        <section class="servant-roster">
+            <h2>Active Servants</h2>
+            <div class="roster-grid">
+                <div class="roster-card saber-card">
+                    <span class="roster-class">Saber</span>
+                    <span class="roster-name">Artoria Pendragon</span>
+                    <span class="roster-title">King of Knights</span>
+                    <span class="roster-status active">Active</span>
+                </div>
+                <div class="roster-card archer-card">
+                    <span class="roster-class">Archer</span>
+                    <span class="roster-name">EMIYA</span>
+                    <span class="roster-title">Wrought Iron Hero</span>
+                    <span class="roster-status active">Active</span>
+                </div>
+                <div class="roster-card gilgamesh-card">
+                    <span class="roster-class">Archer</span>
+                    <span class="roster-name">Gilgamesh</span>
+                    <span class="roster-title">King of Heroes</span>
+                    <span class="roster-status enemy">Enemy</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CHAPTER LIST ===== -->
         <nav class="chapter-list">
             <h2>Chapters</h2>
+
+            <!-- Phase I -->
+            <div class="phase-divider">
+                <span class="phase-divider-label">Phase I — The Catalyst</span>
+                <span class="phase-divider-hours">Hours 0 – 12</span>
+            </div>
+
             <ul>
                 <li>
                     <a href="chapters/chapter-1.html">
                         <span class="chapter-number">Chapter 01</span>
                         <span class="chapter-title">The Flap of the Leather</span>
-                        <span class="phase">Phase I — The Catalyst</span>
+                        <span class="phase">Hours 0 – 12</span>
                     </a>
                 </li>
+            </ul>
+
+            <!-- Phase II -->
+            <div class="phase-divider">
+                <span class="phase-divider-label">Phase II — The Summoning</span>
+                <span class="phase-divider-hours">Hours 13 – 24</span>
+            </div>
+
+            <ul>
                 <li>
                     <a href="chapters/chapter-2.html">
                         <span class="chapter-number">Chapter 02</span>
                         <span class="chapter-title">Blood and the Catalyst</span>
-                        <span class="phase">Phase II — The Summoning</span>
+                        <span class="phase">Hours 13 – 24</span>
                     </a>
                 </li>
+            </ul>
+
+            <!-- Phase III -->
+            <div class="phase-divider">
+                <span class="phase-divider-label">Phase III — War of the Grail</span>
+                <span class="phase-divider-hours">Hours 25 – 60</span>
+            </div>
+
+            <ul>
                 <li>
                     <a href="chapters/chapter-3.html">
                         <span class="chapter-number">Chapter 03</span>
-                        <span class="chapter-title">The Circle of Broken Leather</span>
-                        <span class="phase">Phase II — The Summoning</span>
+                        <span class="chapter-title">The Ghost in the Machine</span>
+                        <span class="phase">Hours 25 – 36</span>
                     </a>
                 </li>
                 <li>
                     <a href="chapters/chapter-4.html">
                         <span class="chapter-number">Chapter 04</span>
-                        <span class="chapter-title">Silver and Steel</span>
-                        <span class="phase">Phase II — The Summoning</span>
+                        <span class="chapter-title">The Price of Laughter</span>
+                        <span class="phase">Hours 37 – 48</span>
                     </a>
                 </li>
                 <li>
-                    <a href="chapters/chapter-5.html">
+                    <a href="chapters/chapter-5.html" class="latest">
                         <span class="chapter-number">Chapter 05</span>
-                        <span class="chapter-title">Ghost in the Machine</span>
-                        <span class="phase">Phase III — War of the Grail</span>
+                        <span class="chapter-title">The Golden Bastard and the Forge of the Soul</span>
+                        <span class="phase">Hours 49 – 60</span>
+                        <span class="latest-badge">Latest</span>
                     </a>
                 </li>
+            </ul>
+
+            <!-- Phase IV -->
+            <div class="phase-divider">
+                <span class="phase-divider-label">Phase IV — The Siege</span>
+                <span class="phase-divider-hours">Hours 61 – 65</span>
+            </div>
+
+            <ul>
                 <li>
                     <a href="chapters/chapter-6.html" class="locked">
                         <span class="chapter-number">Chapter 06</span>
-                        <span class="chapter-title">The Price of Laughter</span>
-                        <span class="phase">Phase III — War of the Grail</span>
+                        <span class="chapter-title">The Fall of the Golden King</span>
+                        <span class="phase">Hours 61 – 65</span>
                     </a>
                 </li>
                 <li>
                     <a href="chapters/chapter-7.html" class="locked">
                         <span class="chapter-number">Chapter 07</span>
-                        <span class="chapter-title">Hrunting</span>
-                        <span class="phase">Phase IV — The Siege</span>
+                        <span class="chapter-title">Hrunting — The Hound of the Red Plains</span>
+                        <span class="phase">Hours 65 – 67</span>
                     </a>
                 </li>
+            </ul>
+
+            <!-- Phase V -->
+            <div class="phase-divider">
+                <span class="phase-divider-label">Phase V — The Pruning</span>
+                <span class="phase-divider-hours">Hours 66 – 70</span>
+            </div>
+
+            <ul>
                 <li>
                     <a href="chapters/chapter-8.html" class="locked">
                         <span class="chapter-number">Chapter 08</span>
-                        <span class="chapter-title">A Thousand Turrets</span>
-                        <span class="phase">Phase IV — The Siege</span>
+                        <span class="chapter-title">The Conceptual Zero</span>
+                        <span class="phase">Hours 66 – 68</span>
                     </a>
                 </li>
                 <li>
                     <a href="chapters/chapter-9.html" class="locked">
                         <span class="chapter-number">Chapter 09</span>
                         <span class="chapter-title">Unlimited Blade Works — Inverted</span>
-                        <span class="phase">Phase V — The Pruning</span>
+                        <span class="phase">Hours 68 – 69</span>
                     </a>
                 </li>
                 <li>
                     <a href="chapters/chapter-10.html" class="locked">
                         <span class="chapter-number">Chapter 10</span>
                         <span class="chapter-title">EX — CALIBUR</span>
-                        <span class="phase">Phase V — The Pruning</span>
+                        <span class="phase">Hour 70 — Zero</span>
                     </a>
                 </li>
             </ul>
@@ -125,7 +221,9 @@
 
         <footer>
             <p>A fan work inspired by the Fate universe</p>
+            <p class="footer-sub">No images. No illustrations. Only words and war.</p>
         </footer>
+
     </div>
 
     <!-- Theme Toggle -->

@@ -1804,119 +1804,586 @@ body.theme-avalon .prose .incantation.ubw::after {
 
 /* ===================================================
    UNLIMITED BLADE WORKS — REALITY MARBLE DECLARATION
+   Complete Overhaul — Mechanical Clockwork Gears
    =================================================== */
 .reality-marble-declare {
     text-indent: 0 !important;
     text-align: center;
     font-family: 'Cinzel', serif;
-    font-size: 2.2em;
+    font-size: 2.4em;
     font-weight: 700;
     color: #60a5fa;
-    letter-spacing: 8px;
+    letter-spacing: 10px;
     text-transform: uppercase;
-    margin: 50px 0;
-    padding: 40px 20px;
+    margin: 60px 0;
+    padding: 60px 20px;
     position: relative;
     overflow: hidden;
     line-height: 1.4;
+    isolation: isolate;
+
     text-shadow:
-        0 0 10px rgba(59, 130, 246, 0.5),
-        0 0 30px rgba(59, 130, 246, 0.3),
-        0 0 60px rgba(59, 130, 246, 0.15),
+        0 0 10px rgba(59, 130, 246, 0.6),
+        0 0 30px rgba(59, 130, 246, 0.4),
+        0 0 60px rgba(59, 130, 246, 0.2),
         0 0 100px rgba(234, 88, 12, 0.1);
+
     background: linear-gradient(
-        135deg,
-        rgba(59, 130, 246, 0.04),
-        transparent,
-        rgba(234, 88, 12, 0.03),
-        transparent,
-        rgba(59, 130, 246, 0.04)
+        180deg,
+        rgba(15, 23, 42, 0.6),
+        rgba(59, 130, 246, 0.03),
+        rgba(234, 88, 12, 0.02),
+        rgba(15, 23, 42, 0.6)
     );
-    border-top: 1px solid rgba(59, 130, 246, 0.2);
-    border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+
+    border-top: 1px solid rgba(59, 130, 246, 0.25);
+    border-bottom: 1px solid rgba(59, 130, 246, 0.25);
 }
 
-.reality-marble-declare::before {
-    content: '⚙';
+/* ===== GEAR LAYER 1 — Large center gear ===== */
+.reality-marble-declare .gear-layer {
     position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.reality-marble-declare .gear {
+    position: absolute;
+    border-radius: 50%;
+    border-style: solid;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+/* Gear 1 — Large, center, slow clockwise */
+.reality-marble-declare .gear-1 {
+    width: 300px;
+    height: 300px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 8em;
-    color: rgba(59, 130, 246, 0.04);
-    animation: gear-spin 20s linear infinite;
-    pointer-events: none;
-    line-height: 1;
+    border-width: 2px;
+    border-color: rgba(59, 130, 246, 0.08);
+    animation:
+        gear-fade-in 0.5s ease forwards,
+        gear-tick-cw 4s steps(60, end) infinite;
 }
 
-.reality-marble-declare::after {
-    content: '⚙';
+/* Gear 1 inner ring */
+.reality-marble-declare .gear-1::before {
+    content: '';
     position: absolute;
-    top: 50%;
-    left: 30%;
-    transform: translate(-50%, -50%);
-    font-size: 5em;
-    color: rgba(234, 88, 12, 0.03);
-    animation: gear-spin 15s linear infinite reverse;
-    pointer-events: none;
-    line-height: 1;
+    top: 15%;
+    left: 15%;
+    width: 70%;
+    height: 70%;
+    border: 1px solid rgba(59, 130, 246, 0.06);
+    border-radius: 50%;
+    animation: gear-tick-ccw 3s steps(48, end) infinite;
 }
 
-@keyframes gear-spin {
+/* Gear 1 innermost ring */
+.reality-marble-declare .gear-1::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    width: 40%;
+    height: 40%;
+    border: 1px solid rgba(59, 130, 246, 0.04);
+    border-radius: 50%;
+    animation: gear-tick-cw 2s steps(36, end) infinite;
+}
+
+/* Gear 2 — Medium, offset left, counter-clockwise */
+.reality-marble-declare .gear-2 {
+    width: 180px;
+    height: 180px;
+    top: 20%;
+    left: 10%;
+    border-width: 1px;
+    border-color: rgba(234, 88, 12, 0.06);
+    animation:
+        gear-fade-in 0.8s ease forwards,
+        gear-tick-ccw 5s steps(40, end) infinite;
+    animation-delay: 0.3s;
+}
+
+.reality-marble-declare .gear-2::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 20%;
+    width: 60%;
+    height: 60%;
+    border: 1px solid rgba(234, 88, 12, 0.04);
+    border-radius: 50%;
+    animation: gear-tick-cw 3.5s steps(30, end) infinite;
+}
+
+/* Gear 3 — Small, offset right, clockwise */
+.reality-marble-declare .gear-3 {
+    width: 120px;
+    height: 120px;
+    top: 15%;
+    right: 15%;
+    left: auto;
+    border-width: 1px;
+    border-color: rgba(59, 130, 246, 0.05);
+    animation:
+        gear-fade-in 1s ease forwards,
+        gear-tick-cw 3s steps(24, end) infinite;
+    animation-delay: 0.6s;
+}
+
+/* Gear 4 — Tiny, bottom left */
+.reality-marble-declare .gear-4 {
+    width: 80px;
+    height: 80px;
+    bottom: 10%;
+    left: 20%;
+    top: auto;
+    border-width: 1px;
+    border-color: rgba(234, 88, 12, 0.04);
+    animation:
+        gear-fade-in 1.2s ease forwards,
+        gear-tick-ccw 2.5s steps(20, end) infinite;
+    animation-delay: 0.9s;
+}
+
+/* Gear 5 — Tiny, bottom right */
+.reality-marble-declare .gear-5 {
+    width: 100px;
+    height: 100px;
+    bottom: 15%;
+    right: 10%;
+    top: auto;
+    left: auto;
+    border-width: 1px;
+    border-color: rgba(59, 130, 246, 0.04);
+    animation:
+        gear-fade-in 1.4s ease forwards,
+        gear-tick-cw 3.2s steps(28, end) infinite;
+    animation-delay: 1.2s;
+}
+
+/* ===== GEAR TICK ANIMATIONS — Stepped for clock feel ===== */
+@keyframes gear-tick-cw {
     from { transform: translate(-50%, -50%) rotate(0deg); }
     to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-.reality-marble-declare.shake-hard {
-    animation: ubw-shake 0.6s ease-in-out;
+@keyframes gear-tick-ccw {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(-360deg); }
 }
 
-@keyframes ubw-shake {
-    0%, 100% { transform: translateX(0) translateY(0); }
-    10% { transform: translateX(-6px) translateY(-2px); }
-    20% { transform: translateX(6px) translateY(2px); }
-    30% { transform: translateX(-5px) translateY(-1px); }
-    40% { transform: translateX(5px) translateY(1px); }
-    50% { transform: translateX(-4px) translateY(-2px); }
-    60% { transform: translateX(4px) translateY(1px); }
+/* For gears without translate centering */
+.reality-marble-declare .gear-2,
+.reality-marble-declare .gear-3,
+.reality-marble-declare .gear-4,
+.reality-marble-declare .gear-5 {
+    transform-origin: center center;
+}
+
+.reality-marble-declare .gear-2 {
+    animation:
+        gear-fade-in 0.8s ease forwards,
+        gear-rotate-ccw 5s steps(40, end) infinite;
+    animation-delay: 0.3s;
+}
+
+.reality-marble-declare .gear-3 {
+    animation:
+        gear-fade-in 1s ease forwards,
+        gear-rotate-cw 3s steps(24, end) infinite;
+    animation-delay: 0.6s;
+}
+
+.reality-marble-declare .gear-4 {
+    animation:
+        gear-fade-in 1.2s ease forwards,
+        gear-rotate-ccw 2.5s steps(20, end) infinite;
+    animation-delay: 0.9s;
+}
+
+.reality-marble-declare .gear-5 {
+    animation:
+        gear-fade-in 1.4s ease forwards,
+        gear-rotate-cw 3.2s steps(28, end) infinite;
+    animation-delay: 1.2s;
+}
+
+@keyframes gear-rotate-cw {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes gear-rotate-ccw {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+}
+
+@keyframes gear-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ===== TICK-TOCK PULSE — Mimics clock mechanism ===== */
+.reality-marble-declare .tick-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.reality-marble-declare .tick-pulse::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.6);
+    box-shadow:
+        0 0 10px rgba(59, 130, 246, 0.4),
+        0 0 30px rgba(59, 130, 246, 0.2);
+    animation: tick-tock 1s ease-in-out infinite;
+}
+
+@keyframes tick-tock {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+        box-shadow:
+            0 0 10px rgba(59, 130, 246, 0.2),
+            0 0 30px rgba(59, 130, 246, 0.1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.5);
+        opacity: 0.8;
+        box-shadow:
+            0 0 15px rgba(59, 130, 246, 0.5),
+            0 0 40px rgba(59, 130, 246, 0.3),
+            0 0 80px rgba(59, 130, 246, 0.1);
+    }
+}
+
+/* ===== SWORD SILHOUETTES RISING FROM BOTTOM ===== */
+.reality-marble-declare .sword-field {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.reality-marble-declare .sword-field::before {
+    content: '⚔ ⚔ ⚔ ⚔ ⚔ ⚔ ⚔ ⚔ ⚔ ⚔ ⚔ ⚔';
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 200%;
+    font-size: 1.2em;
+    letter-spacing: 15px;
+    color: rgba(59, 130, 246, 0.04);
+    animation: sword-drift 20s linear infinite;
+    white-space: nowrap;
+}
+
+.reality-marble-declare .sword-field::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        0deg,
+        rgba(234, 88, 12, 0.04) 0%,
+        transparent 60%
+    );
+    animation: ember-flicker-rm 3s ease-in-out infinite;
+}
+
+@keyframes sword-drift {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+
+@keyframes ember-flicker-rm {
+    0%, 100% { opacity: 0.3; }
+    30% { opacity: 0.7; }
+    60% { opacity: 0.2; }
+    80% { opacity: 0.6; }
+}
+
+/* ===== HORIZONTAL SCAN LINE — Mechanical feel ===== */
+.reality-marble-declare .scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(59, 130, 246, 0.15),
+        rgba(59, 130, 246, 0.3),
+        rgba(59, 130, 246, 0.15),
+        transparent
+    );
+    animation: scan-move 4s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes scan-move {
+    0% { top: 0; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* ===== MAIN TEXT — World Snap Effect ===== */
+.reality-marble-declare .rm-text {
+    position: relative;
+    z-index: 2;
+    display: inline-block;
+}
+
+/* ===== THREE-PHASE SHAKE ===== */
+
+/* Phase 1: Buildup vibration */
+.reality-marble-declare.shake-buildup {
+    animation: rm-buildup 0.8s ease-in;
+}
+
+@keyframes rm-buildup {
+    0% { transform: translateX(0); }
+    10% { transform: translateX(-1px); }
+    20% { transform: translateX(1px); }
+    30% { transform: translateX(-2px); }
+    40% { transform: translateX(2px); }
+    50% { transform: translateX(-2px); }
+    60% { transform: translateX(3px); }
     70% { transform: translateX(-3px); }
-    80% { transform: translateX(2px); }
-    90% { transform: translateX(-1px); }
+    80% { transform: translateX(3px); }
+    90% { transform: translateX(-4px); }
+    100% { transform: translateX(0); }
 }
 
+/* Phase 2: Main impact */
+.reality-marble-declare.shake-impact {
+    animation: rm-impact 0.5s ease-out;
+}
+
+@keyframes rm-impact {
+    0% { transform: translateX(0) translateY(0) scale(1); }
+    15% { transform: translateX(-8px) translateY(-4px) scale(1.02); }
+    30% { transform: translateX(8px) translateY(3px) scale(0.98); }
+    45% { transform: translateX(-6px) translateY(-2px) scale(1.01); }
+    60% { transform: translateX(5px) translateY(2px) scale(0.99); }
+    75% { transform: translateX(-3px) translateY(-1px); }
+    90% { transform: translateX(2px) translateY(1px); }
+    100% { transform: translateX(0) translateY(0) scale(1); }
+}
+
+/* Phase 3: Aftershock settle */
+.reality-marble-declare.shake-settle {
+    animation: rm-settle 1s ease-out;
+}
+
+@keyframes rm-settle {
+    0% { transform: translateX(0); letter-spacing: 10px; }
+    20% { transform: translateX(-2px); letter-spacing: 11px; }
+    40% { transform: translateX(1px); letter-spacing: 10px; }
+    60% { transform: translateX(-1px); letter-spacing: 10px; }
+    100% { transform: translateX(0); letter-spacing: 10px; }
+}
+
+/* ===== SUBTITLE — Delayed fade-in ===== */
+.reality-marble-declare .rm-subtitle {
+    display: block;
+    font-size: 0.32em;
+    font-weight: 400;
+    letter-spacing: 4px;
+    color: rgba(96, 165, 250, 0);
+    margin-top: 14px;
+    font-style: italic;
+    transition: color 1.5s ease;
+}
+
+.reality-marble-declare.revealed .rm-subtitle {
+    color: rgba(96, 165, 250, 0.5);
+}
+
+/* ===== CORNER MARKERS — Technical/mechanical frame ===== */
+.reality-marble-declare .corner-tl,
+.reality-marble-declare .corner-tr,
+.reality-marble-declare .corner-bl,
+.reality-marble-declare .corner-br {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.reality-marble-declare .corner-tl {
+    top: 8px;
+    left: 8px;
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+    border-left: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.reality-marble-declare .corner-tr {
+    top: 8px;
+    right: 8px;
+    border-top: 1px solid rgba(59, 130, 246, 0.2);
+    border-right: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.reality-marble-declare .corner-bl {
+    bottom: 8px;
+    left: 8px;
+    border-bottom: 1px solid rgba(234, 88, 12, 0.15);
+    border-left: 1px solid rgba(234, 88, 12, 0.15);
+}
+
+.reality-marble-declare .corner-br {
+    bottom: 8px;
+    right: 8px;
+    border-bottom: 1px solid rgba(234, 88, 12, 0.15);
+    border-right: 1px solid rgba(234, 88, 12, 0.15);
+}
+
+/* ===================================================
+   AVALON THEME OVERRIDES
+   =================================================== */
 body.theme-avalon .reality-marble-declare {
     color: #1d4ed8;
     text-shadow:
-        0 0 8px rgba(29, 78, 216, 0.2),
-        0 0 20px rgba(29, 78, 216, 0.1);
+        0 0 8px rgba(29, 78, 216, 0.25),
+        0 0 20px rgba(29, 78, 216, 0.12);
     border-color: rgba(29, 78, 216, 0.15);
     background: linear-gradient(
-        135deg,
+        180deg,
+        rgba(240, 235, 224, 0.6),
         rgba(29, 78, 216, 0.03),
-        transparent,
         rgba(194, 65, 12, 0.02),
+        rgba(240, 235, 224, 0.6)
+    );
+}
+
+body.theme-avalon .reality-marble-declare .gear {
+    border-color: rgba(29, 78, 216, 0.06);
+}
+
+body.theme-avalon .reality-marble-declare .gear-1::before,
+body.theme-avalon .reality-marble-declare .gear-1::after {
+    border-color: rgba(29, 78, 216, 0.04);
+}
+
+body.theme-avalon .reality-marble-declare .gear-2 {
+    border-color: rgba(194, 65, 12, 0.04);
+}
+
+body.theme-avalon .reality-marble-declare .gear-2::before {
+    border-color: rgba(194, 65, 12, 0.03);
+}
+
+body.theme-avalon .reality-marble-declare .tick-pulse::before {
+    background: rgba(29, 78, 216, 0.4);
+    box-shadow:
+        0 0 8px rgba(29, 78, 216, 0.2),
+        0 0 20px rgba(29, 78, 216, 0.1);
+}
+
+body.theme-avalon .reality-marble-declare .sword-field::before {
+    color: rgba(29, 78, 216, 0.03);
+}
+
+body.theme-avalon .reality-marble-declare .sword-field::after {
+    background: linear-gradient(0deg, rgba(194, 65, 12, 0.03), transparent);
+}
+
+body.theme-avalon .reality-marble-declare .scan-line {
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(29, 78, 216, 0.1),
+        rgba(29, 78, 216, 0.2),
+        rgba(29, 78, 216, 0.1),
         transparent
     );
 }
 
-body.theme-avalon .reality-marble-declare::before {
-    color: rgba(29, 78, 216, 0.03);
+body.theme-avalon .reality-marble-declare .corner-tl,
+body.theme-avalon .reality-marble-declare .corner-tr {
+    border-color: rgba(29, 78, 216, 0.15);
 }
 
-body.theme-avalon .reality-marble-declare::after {
-    color: rgba(194, 65, 12, 0.02);
-}
-
-.reality-marble-declare .rm-subtitle {
-    display: block;
-    font-size: 0.35em;
-    font-weight: 400;
-    letter-spacing: 4px;
-    color: rgba(96, 165, 250, 0.5);
-    margin-top: 10px;
-    font-style: italic;
+body.theme-avalon .reality-marble-declare .corner-bl,
+body.theme-avalon .reality-marble-declare .corner-br {
+    border-color: rgba(194, 65, 12, 0.1);
 }
 
 body.theme-avalon .reality-marble-declare .rm-subtitle {
+    color: rgba(29, 78, 216, 0);
+}
+
+body.theme-avalon .reality-marble-declare.revealed .rm-subtitle {
     color: rgba(29, 78, 216, 0.35);
-       }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .reality-marble-declare {
+        font-size: 1.6em;
+        letter-spacing: 6px;
+        padding: 40px 15px;
+    }
+
+    .reality-marble-declare .gear-1 {
+        width: 200px;
+        height: 200px;
+    }
+
+    .reality-marble-declare .gear-2 {
+        width: 120px;
+        height: 120px;
+    }
+
+    .reality-marble-declare .gear-3 {
+        width: 80px;
+        height: 80px;
+    }
+
+    .reality-marble-declare .gear-4,
+    .reality-marble-declare .gear-5 {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .reality-marble-declare {
+        font-size: 1.2em;
+        letter-spacing: 4px;
+        padding: 30px 10px;
+    }
+   }

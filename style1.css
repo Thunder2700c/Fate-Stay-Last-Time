@@ -1,6 +1,7 @@
 /* ===================================================
    FATE/STAY LAST TIME — EXTENDED COMPONENTS
    style1.css — Battle UI, Speakers, Gauges, Alerts
+   (FIXED: Fully visible without JS scroll triggers)
    =================================================== */
 
 /* ===================================================
@@ -128,6 +129,7 @@ body.theme-avalon .dialogue-box:has(.speaker.npc) .dialogue-text::before {
     border-radius: 4px;
     position: relative;
     overflow: hidden;
+    opacity: 1; /* Fixed visibility */
 }
 
 .battle-status::before {
@@ -234,12 +236,8 @@ body.theme-avalon .bs-card.bs-enemy { border-left-color: #b8860b; }
 .bs-fill {
     height: 100%;
     border-radius: 2px;
-    width: 0%;
+    width: var(--hp); /* Fixed: Shows HP immediately */
     transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.battle-status.bs-revealed .bs-fill {
-    width: var(--hp);
 }
 
 .bs-saber .bs-fill { background: var(--saber-blue); box-shadow: 0 0 6px rgba(58, 123, 213, 0.4); }
@@ -268,6 +266,7 @@ body.theme-avalon .bs-fill { box-shadow: none; }
     border: 1px solid var(--border-subtle);
     border-left: 3px solid var(--command-seal);
     border-radius: 0 4px 4px 0;
+    opacity: 1; /* Fixed visibility */
 }
 
 .prana-gauge .pg-label {
@@ -291,12 +290,8 @@ body.theme-avalon .bs-fill { box-shadow: none; }
 .pg-fill {
     height: 100%;
     border-radius: 4px;
-    width: 100%;
+    width: var(--prana); /* Fixed: Shows immediately */
     transition: width 2s ease;
-}
-
-.prana-gauge.pg-revealed .pg-fill {
-    width: var(--prana);
 }
 
 .pg-fill.pg-critical {
@@ -342,14 +337,7 @@ body.theme-avalon .pg-fill.pg-critical { animation: none; }
         var(--bg-deep) 100%);
     border-left: 3px solid #6b21a8;
     border-radius: 0 4px 4px 0;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 1s ease, transform 1s ease;
-}
-
-.shadow-emergence.se-revealed {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1; /* Fixed visibility */
 }
 
 body.theme-avalon .shadow-emergence {
@@ -423,14 +411,7 @@ body.theme-avalon .shadow-emergence .se-name {
     margin: 45px 0;
     padding: 30px 20px;
     position: relative;
-    opacity: 0;
-    transform: scale(0.95);
-    transition: opacity 1.2s ease, transform 1.2s ease;
-}
-
-.golden-dissolution.gd-revealed {
-    opacity: 1;
-    transform: scale(1);
+    opacity: 1; /* Fixed visibility */
 }
 
 .golden-dissolution .gd-name {
@@ -454,9 +435,6 @@ body.theme-avalon .shadow-emergence .se-name {
 body.theme-avalon .golden-dissolution .gd-name {
     color: #b8860b;
     text-shadow: none;
-}
-
-body.theme-avalon .golden-dissolution .gd-name {
     animation-name: gd-fade-avalon;
 }
 
@@ -486,14 +464,7 @@ body.theme-avalon .golden-dissolution .gd-name {
     border: 1px solid rgba(196, 30, 58, 0.25);
     border-radius: 4px;
     overflow: hidden;
-    opacity: 0;
-    transform: translateY(15px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.breaking-news.bn-revealed {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1; /* Fixed visibility */
 }
 
 .bn-bar {
@@ -558,14 +529,7 @@ body.theme-avalon .bn-bar {
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     margin: 30px 0;
-    opacity: 0;
-    transform: translateY(15px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.threat-grid.tg-revealed {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1; /* Fixed visibility */
 }
 
 .threat-card {
@@ -633,14 +597,7 @@ body.theme-avalon .threat-card .tc-class {
         rgba(8, 10, 20, 0.9) 100%);
     border-top: 1px solid rgba(58, 123, 213, 0.15);
     border-bottom: 1px solid rgba(196, 30, 58, 0.2);
-    opacity: 0;
-    transform: scale(0.92);
-    transition: opacity 1.2s ease, transform 1.2s ease;
-}
-
-.saber-break.sb-revealed {
-    opacity: 1;
-    transform: scale(1);
+    opacity: 1; /* Fixed visibility */
 }
 
 body.theme-avalon .saber-break {
@@ -702,26 +659,15 @@ body.theme-avalon .sb-corner-br { border-color: rgba(168, 32, 64, 0.08); }
     font-family: 'Cinzel', serif;
     font-size: 1.6em;
     font-weight: 600;
-    color: var(--saber-blue);
+    color: var(--command-seal); /* Fixed: Shows broken color instantly */
     letter-spacing: 3px;
     line-height: 1.5;
-    text-shadow: 0 0 20px rgba(58, 123, 213, 0.4);
+    text-shadow: 0 0 20px rgba(196, 30, 58, 0.5); /* Fixed */
     position: relative;
     z-index: 2;
-    transition: color 3s ease, text-shadow 3s ease;
-}
-
-.saber-break.sb-revealed .sb-text {
-    color: var(--command-seal);
-    text-shadow: 0 0 20px rgba(196, 30, 58, 0.5);
 }
 
 body.theme-avalon .saber-break .sb-text {
-    text-shadow: none;
-}
-
-body.theme-avalon .saber-break.sb-revealed .sb-text {
-    color: var(--command-seal);
     text-shadow: 0 0 8px rgba(168, 32, 64, 0.1);
 }
 
@@ -734,14 +680,7 @@ body.theme-avalon .saber-break.sb-revealed .sb-text {
     margin-top: 16px;
     position: relative;
     z-index: 2;
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 1.5s ease 2s, transform 1.5s ease 2s;
-}
-
-.saber-break.sb-revealed .sb-sub {
-    opacity: 0.6;
-    transform: translateY(0);
+    opacity: 0.6; /* Fixed visibility */
 }
 
 /* ===================================================
@@ -758,14 +697,7 @@ body.theme-avalon .saber-break.sb-revealed .sb-text {
     padding: 20px 0;
     letter-spacing: 1px;
     position: relative;
-    opacity: 0;
-    transform: translateY(15px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.impact-line.il-revealed {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 1; /* Fixed visibility */
 }
 
 .impact-line::before,

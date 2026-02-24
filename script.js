@@ -433,3 +433,47 @@
     }
 
 })();
+
+    // ═══════════════════════════════════════════════
+    //  9. CHAPTER 6+ BATTLE COMPONENTS
+    // ═══════════════════════════════════════════════
+
+    // ── Battle Status: animate HP bars on scroll ──
+    observeOnce($$('.battle-status'), el => {
+        el.classList.add('bs-revealed');
+    }, { threshold: 0.3 });
+
+    // ── Prana Gauge: animate depletion ──
+    observeOnce($$('.prana-gauge'), el => {
+        el.classList.add('pg-revealed');
+    }, { threshold: 0.5 });
+
+    // ── Shadow Emergence: reveal ──
+    observeOnce($$('.shadow-emergence'), el => {
+        el.classList.add('se-revealed');
+    }, { threshold: 0.4 });
+
+    // ── Golden Dissolution: reveal ──
+    observeOnce($$('.golden-dissolution'), el => {
+        el.classList.add('gd-revealed');
+    }, { threshold: 0.4 });
+
+    // ── Breaking News: reveal ──
+    observeOnce($$('.breaking-news'), el => {
+        el.classList.add('bn-revealed');
+    }, { threshold: 0.4 });
+
+    // ── Threat Grid: reveal ──
+    observeOnce($$('.threat-grid'), el => {
+        el.classList.add('tg-revealed');
+    }, { threshold: 0.4 });
+
+    // ── Impact Line: reveal ──
+    observeOnce($$('.impact-line'), el => {
+        el.classList.add('il-revealed');
+    }, { threshold: 0.5 });
+
+    // ── Saber Break Declaration: reveal ──
+    observeOnce($$('.saber-break'), el => {
+        el.classList.add('sb-revealed');
+    }, { threshold: 0.4 });

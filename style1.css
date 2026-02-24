@@ -1,0 +1,832 @@
+/* ===================================================
+   FATE/STAY LAST TIME — EXTENDED COMPONENTS
+   style1.css — Battle UI, Speakers, Gauges, Alerts
+   =================================================== */
+
+/* ===================================================
+   NEW SPEAKER CLASSES
+   =================================================== */
+
+/* ── Assassin ── */
+.dialogue-box .speaker.assassin {
+    color: #6b21a8;
+    border-bottom: 2px solid #3b0764;
+    text-shadow: 0 0 6px rgba(107, 33, 168, 0.4);
+}
+
+body.theme-avalon .dialogue-box .speaker.assassin {
+    color: #581c87;
+    border-bottom-color: #d8b4fe;
+    text-shadow: none;
+}
+
+.dialogue-box:has(.speaker.assassin) .dialogue-text {
+    background: linear-gradient(135deg, rgba(15, 5, 20, 0.95), var(--bg-dialogue), rgba(20, 5, 15, 0.9)) !important;
+    border-color: rgba(107, 33, 168, 0.2);
+}
+
+.dialogue-box:has(.speaker.assassin) .dialogue-text::before {
+    background: linear-gradient(180deg, #6b21a8, #1a0a2e);
+    box-shadow: 0 0 8px rgba(107, 33, 168, 0.4);
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.assassin) .dialogue-text {
+    background: linear-gradient(135deg, rgba(245, 238, 250, 0.95), var(--bg-dialogue)) !important;
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.assassin) .dialogue-text::before {
+    background: linear-gradient(180deg, #581c87, #d8b4fe);
+    box-shadow: 0 0 4px rgba(88, 28, 135, 0.15);
+}
+
+/* ── Military ── */
+.dialogue-box .speaker.military {
+    color: #84cc16;
+    border-bottom: 2px solid #365314;
+    font-family: 'Share Tech Mono', monospace;
+    letter-spacing: 4px;
+}
+
+body.theme-avalon .dialogue-box .speaker.military {
+    color: #3f6212;
+    border-bottom-color: #bef264;
+}
+
+.dialogue-box:has(.speaker.military) .dialogue-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-style: normal;
+    font-size: 0.88em;
+    letter-spacing: 0.5px;
+    background: var(--terminal-bg) !important;
+    border-color: rgba(132, 204, 22, 0.15);
+}
+
+.dialogue-box:has(.speaker.military) .dialogue-text::before {
+    background: #84cc16;
+    box-shadow: 0 0 8px rgba(132, 204, 22, 0.3);
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.military) .dialogue-text::before {
+    background: #3f6212;
+    box-shadow: 0 0 4px rgba(63, 98, 18, 0.15);
+}
+
+/* Static flicker on military dialogue */
+.dialogue-box:has(.speaker.military) .dialogue-text::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(132, 204, 22, 0.015) 2px,
+        rgba(132, 204, 22, 0.015) 4px
+    );
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.military) .dialogue-text::after {
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(63, 98, 18, 0.01) 2px,
+        rgba(63, 98, 18, 0.01) 4px
+    );
+}
+
+/* ── NPC / Civilian ── */
+.dialogue-box .speaker.npc {
+    color: #a8a29e;
+    border-bottom: 2px solid #57534e;
+}
+
+body.theme-avalon .dialogue-box .speaker.npc {
+    color: #78716c;
+    border-bottom-color: #d6d3d1;
+}
+
+.dialogue-box:has(.speaker.npc) .dialogue-text::before {
+    background: #a8a29e;
+    box-shadow: none;
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.npc) .dialogue-text::before {
+    background: #78716c;
+}
+
+/* ===================================================
+   BATTLE STATUS PANEL
+   =================================================== */
+.battle-status {
+    margin: 10px 0 50px;
+    padding: 20px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.battle-status::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent, rgba(196, 30, 58, 0.2), rgba(196, 30, 58, 0.4), rgba(196, 30, 58, 0.2), transparent);
+    animation: bs-scan 5s ease-in-out infinite;
+}
+
+@keyframes bs-scan {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+.bs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.bs-header .bs-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.bs-header .bs-location {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--command-seal);
+    letter-spacing: 2px;
+    animation: bs-loc-pulse 2s ease-in-out infinite;
+}
+
+@keyframes bs-loc-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.bs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.bs-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 14px 16px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid transparent;
+    border-radius: 3px;
+}
+
+.bs-card.bs-saber { border-left-color: var(--saber-blue); }
+.bs-card.bs-archer { border-left-color: var(--archer-red-bright); }
+.bs-card.bs-enemy { border-left-color: #ffd700; }
+.bs-card.bs-master { border-left-color: var(--gold); }
+.bs-card.bs-assassin { border-left-color: #6b21a8; }
+
+body.theme-avalon .bs-card.bs-enemy { border-left-color: #b8860b; }
+
+.bs-card .bs-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bs-card .bs-class {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.bs-card .bs-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85em;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.bs-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--border-subtle);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.bs-fill {
+    height: 100%;
+    border-radius: 2px;
+    width: 0%;
+    transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.battle-status.bs-revealed .bs-fill {
+    width: var(--hp);
+}
+
+.bs-saber .bs-fill { background: var(--saber-blue); box-shadow: 0 0 6px rgba(58, 123, 213, 0.4); }
+.bs-archer .bs-fill { background: var(--archer-red-bright); box-shadow: 0 0 6px rgba(212, 64, 84, 0.4); }
+.bs-enemy .bs-fill { background: #ffd700; box-shadow: 0 0 6px rgba(255, 215, 0, 0.4); }
+.bs-master .bs-fill { background: var(--command-seal); box-shadow: 0 0 6px rgba(196, 30, 58, 0.4); }
+.bs-assassin .bs-fill { background: #6b21a8; box-shadow: 0 0 6px rgba(107, 33, 168, 0.4); }
+
+body.theme-avalon .bs-fill { box-shadow: none; }
+
+.bs-card .bs-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.52em;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+}
+
+/* ===================================================
+   PRANA GAUGE
+   =================================================== */
+.prana-gauge {
+    text-indent: 0 !important;
+    margin: 35px 0;
+    padding: 18px 22px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--command-seal);
+    border-radius: 0 4px 4px 0;
+}
+
+.prana-gauge .pg-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+.pg-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--border-subtle);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.pg-fill {
+    height: 100%;
+    border-radius: 4px;
+    width: 100%;
+    transition: width 2s ease;
+}
+
+.prana-gauge.pg-revealed .pg-fill {
+    width: var(--prana);
+}
+
+.pg-fill.pg-critical {
+    background: linear-gradient(90deg, var(--command-seal), var(--archer-red-bright));
+    box-shadow: 0 0 8px rgba(196, 30, 58, 0.4);
+    animation: pg-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pg-pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+body.theme-avalon .pg-fill { box-shadow: none; }
+body.theme-avalon .pg-fill.pg-critical { animation: none; }
+
+.prana-gauge .pg-status {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--command-seal);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: pg-flash 1s ease-in-out infinite;
+}
+
+@keyframes pg-flash {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* ===================================================
+   SHADOW EMERGENCE BLOCK
+   =================================================== */
+.shadow-emergence {
+    text-indent: 0 !important;
+    margin: 45px 0;
+    padding: 30px 24px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(180deg,
+        var(--bg-deep) 0%,
+        rgba(15, 5, 20, 0.95) 50%,
+        var(--bg-deep) 100%);
+    border-left: 3px solid #6b21a8;
+    border-radius: 0 4px 4px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.shadow-emergence.se-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+body.theme-avalon .shadow-emergence {
+    background: linear-gradient(180deg,
+        var(--bg-deep) 0%,
+        rgba(245, 238, 250, 0.95) 50%,
+        var(--bg-deep) 100%);
+}
+
+/* Shadow tendrils */
+.shadow-emergence::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(0deg, rgba(107, 33, 168, 0.06), transparent);
+    pointer-events: none;
+    animation: shadow-creep 4s ease-in-out infinite;
+}
+
+@keyframes shadow-creep {
+    0%, 100% { opacity: 0.3; height: 40%; }
+    50% { opacity: 0.8; height: 70%; }
+}
+
+body.theme-avalon .shadow-emergence::before {
+    background: linear-gradient(0deg, rgba(107, 33, 168, 0.03), transparent);
+}
+
+.shadow-emergence .se-class {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: #a855f7;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+}
+
+.shadow-emergence .se-name {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #c084fc;
+    letter-spacing: 4px;
+    text-shadow: 0 0 15px rgba(192, 132, 252, 0.4);
+    margin-bottom: 6px;
+}
+
+body.theme-avalon .shadow-emergence .se-name {
+    color: #581c87;
+    text-shadow: none;
+}
+
+.shadow-emergence .se-desc {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.88em;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* ===================================================
+   GOLDEN DISSOLUTION
+   =================================================== */
+.golden-dissolution {
+    text-indent: 0 !important;
+    text-align: center;
+    margin: 45px 0;
+    padding: 30px 20px;
+    position: relative;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.golden-dissolution.gd-revealed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.golden-dissolution .gd-name {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 1.6em;
+    font-weight: 700;
+    color: #ffd700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    animation: gd-fade 4s ease-out forwards;
+}
+
+@keyframes gd-fade {
+    0% { opacity: 1; letter-spacing: 6px; }
+    70% { opacity: 0.6; letter-spacing: 10px; }
+    100% { opacity: 0.15; letter-spacing: 18px; }
+}
+
+body.theme-avalon .golden-dissolution .gd-name {
+    color: #b8860b;
+    text-shadow: none;
+}
+
+body.theme-avalon .golden-dissolution .gd-name {
+    animation-name: gd-fade-avalon;
+}
+
+@keyframes gd-fade-avalon {
+    0% { opacity: 1; letter-spacing: 6px; }
+    70% { opacity: 0.5; letter-spacing: 10px; }
+    100% { opacity: 0.12; letter-spacing: 18px; }
+}
+
+.golden-dissolution .gd-status {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-top: 14px;
+}
+
+/* ===================================================
+   BREAKING NEWS ALERT
+   =================================================== */
+.breaking-news {
+    text-indent: 0 !important;
+    margin: 40px 0;
+    padding: 0;
+    border: 1px solid rgba(196, 30, 58, 0.25);
+    border-radius: 4px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.breaking-news.bn-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.bn-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: var(--command-seal);
+    color: #ffffff;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+body.theme-avalon .bn-bar {
+    background: #9f1239;
+}
+
+.bn-bar .bn-live {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+    border-radius: 50%;
+    animation: bn-blink 1s ease-in-out infinite;
+}
+
+@keyframes bn-blink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+.bn-body {
+    padding: 16px 20px;
+    background: var(--bg-panel);
+}
+
+.bn-headline {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.bn-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65em;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+}
+
+/* ===================================================
+   THREAT DESIGNATION CARDS
+   =================================================== */
+.threat-grid {
+    text-indent: 0 !important;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 30px 0;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.threat-grid.tg-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.threat-card {
+    padding: 16px 12px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-top: 3px solid var(--command-seal);
+    border-radius: 3px;
+    text-align: center;
+}
+
+.threat-card .tc-codename {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85em;
+    font-weight: 700;
+    color: var(--command-seal);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.threat-card .tc-real {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.threat-card .tc-class {
+    display: inline-block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.5em;
+    color: #ef4444;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 2px 8px;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+body.theme-avalon .threat-card .tc-class {
+    color: #b91c1c;
+    border-color: rgba(185, 28, 28, 0.25);
+    background: rgba(185, 28, 28, 0.04);
+}
+
+/* ===================================================
+   SABER BREAKING POINT DECLARATION
+   =================================================== */
+.saber-break {
+    text-indent: 0 !important;
+    text-align: center;
+    margin: 60px 0;
+    padding: 50px 24px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: linear-gradient(180deg,
+        rgba(8, 10, 20, 0.9) 0%,
+        rgba(10, 15, 35, 0.85) 30%,
+        rgba(20, 8, 8, 0.8) 70%,
+        rgba(8, 10, 20, 0.9) 100%);
+    border-top: 1px solid rgba(58, 123, 213, 0.15);
+    border-bottom: 1px solid rgba(196, 30, 58, 0.2);
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.saber-break.sb-revealed {
+    opacity: 1;
+    transform: scale(1);
+}
+
+body.theme-avalon .saber-break {
+    background: linear-gradient(180deg,
+        rgba(235, 229, 216, 0.92) 0%,
+        rgba(225, 220, 210, 0.88) 30%,
+        rgba(235, 220, 215, 0.85) 70%,
+        rgba(235, 229, 216, 0.92) 100%);
+    border-top-color: rgba(42, 90, 170, 0.12);
+    border-bottom-color: rgba(168, 32, 64, 0.1);
+}
+
+/* Cracking ice effect */
+.saber-break::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(37deg, transparent 49.5%, rgba(196, 30, 58, 0.06) 49.5%, rgba(196, 30, 58, 0.06) 50.5%, transparent 50.5%),
+        linear-gradient(143deg, transparent 49.5%, rgba(58, 123, 213, 0.04) 49.5%, rgba(58, 123, 213, 0.04) 50.5%, transparent 50.5%),
+        linear-gradient(97deg, transparent 49.5%, rgba(196, 30, 58, 0.03) 49.5%, rgba(196, 30, 58, 0.03) 50.5%, transparent 50.5%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Corner brackets */
+.saber-break .sb-corner {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.sb-corner-tl { top: 10px; left: 10px; border-top: 1px solid rgba(58, 123, 213, 0.2); border-left: 1px solid rgba(58, 123, 213, 0.2); }
+.sb-corner-tr { top: 10px; right: 10px; border-top: 1px solid rgba(58, 123, 213, 0.2); border-right: 1px solid rgba(58, 123, 213, 0.2); }
+.sb-corner-bl { bottom: 10px; left: 10px; border-bottom: 1px solid rgba(196, 30, 58, 0.15); border-left: 1px solid rgba(196, 30, 58, 0.15); }
+.sb-corner-br { bottom: 10px; right: 10px; border-bottom: 1px solid rgba(196, 30, 58, 0.15); border-right: 1px solid rgba(196, 30, 58, 0.15); }
+
+body.theme-avalon .sb-corner-tl,
+body.theme-avalon .sb-corner-tr { border-color: rgba(42, 90, 170, 0.12); }
+body.theme-avalon .sb-corner-bl,
+body.theme-avalon .sb-corner-br { border-color: rgba(168, 32, 64, 0.08); }
+
+.saber-break .sb-speaker {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--saber-blue);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 2;
+}
+
+.saber-break .sb-text {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 1.6em;
+    font-weight: 600;
+    color: var(--saber-blue);
+    letter-spacing: 3px;
+    line-height: 1.5;
+    text-shadow: 0 0 20px rgba(58, 123, 213, 0.4);
+    position: relative;
+    z-index: 2;
+    transition: color 3s ease, text-shadow 3s ease;
+}
+
+.saber-break.sb-revealed .sb-text {
+    color: var(--command-seal);
+    text-shadow: 0 0 20px rgba(196, 30, 58, 0.5);
+}
+
+body.theme-avalon .saber-break .sb-text {
+    text-shadow: none;
+}
+
+body.theme-avalon .saber-break.sb-revealed .sb-text {
+    color: var(--command-seal);
+    text-shadow: 0 0 8px rgba(168, 32, 64, 0.1);
+}
+
+.saber-break .sb-sub {
+    display: block;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.82em;
+    font-style: italic;
+    color: var(--text-dim);
+    margin-top: 16px;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 1.5s ease 2s, transform 1.5s ease 2s;
+}
+
+.saber-break.sb-revealed .sb-sub {
+    opacity: 0.6;
+    transform: translateY(0);
+}
+
+/* ===================================================
+   IMPACT LINE
+   =================================================== */
+.impact-line {
+    text-indent: 0 !important;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 1.3em;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 45px 20px;
+    padding: 20px 0;
+    letter-spacing: 1px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.impact-line.il-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.impact-line::before,
+.impact-line::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 1px;
+}
+
+.impact-line::before {
+    top: 0;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+}
+
+.impact-line::after {
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, var(--command-seal), transparent);
+}
+
+/* ===================================================
+   FADING DIALOGUE (Dissolving Servant)
+   =================================================== */
+.dialogue-box.fade-1 { opacity: 0.72; }
+.dialogue-box.fade-2 { opacity: 0.48; }
+.dialogue-box.fade-3 { opacity: 0.25; }
+
+.dialogue-box.fade-1 .dialogue-text,
+.dialogue-box.fade-2 .dialogue-text,
+.dialogue-box.fade-3 .dialogue-text {
+    border-style: dashed;
+}
+
+/* ===================================================
+   RESPONSIVE
+   =================================================== */
+@media (max-width: 768px) {
+    .bs-grid { grid-template-columns: 1fr; }
+    .threat-grid { grid-template-columns: 1fr; }
+
+    .shadow-emergence .se-name { font-size: 1.15em; }
+
+    .saber-break { padding: 40px 18px; }
+    .saber-break .sb-text { font-size: 1.25em; letter-spacing: 2px; }
+
+    .impact-line { font-size: 1.1em; margin: 35px 10px; }
+
+    .golden-dissolution .gd-name { font-size: 1.3em; }
+}
+
+@media (max-width: 480px) {
+    .saber-break .sb-text { font-size: 1.05em; letter-spacing: 1px; }
+    .saber-break { padding: 30px 14px; }
+
+    .shadow-emergence .se-name { font-size: 1em; letter-spacing: 2px; }
+
+    .golden-dissolution .gd-name { font-size: 1.1em; letter-spacing: 4px; }
+
+    .impact-line { font-size: 0.95em; }
+
+    .bn-headline { font-size: 0.9em; }
+}

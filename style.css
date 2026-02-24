@@ -1887,423 +1887,589 @@ body.theme-avalon .dialogue-box.ubw-mode .dialogue-text::after {
     border-color: rgba(30, 64, 175, 0.12);
 }
 
-/* ===================================================
+ /* ===================================================
    UNLIMITED BLADE WORKS — REALITY MARBLE DECLARATION
-   PNG Gears + Three-Phase Shake + Mechanical Effects
+   Redesigned: Forge-Hammer Letter Reveal
    =================================================== */
+
+/* ── Container ── */
 .reality-marble-declare {
-    text-indent: 0 !important;
-    text-align: center;
-    font-family: 'Cinzel', serif;
-    font-size: 2.4em;
-    font-weight: 700;
-    color: #60a5fa;
-    letter-spacing: 10px;
-    text-transform: uppercase;
-    margin: 60px 0;
-    padding: 60px 20px;
     position: relative;
-    overflow: hidden;
-    line-height: 1.4;
-    isolation: isolate;
-    text-shadow:
-        0 0 10px rgba(59, 130, 246, 0.6),
-        0 0 30px rgba(59, 130, 246, 0.4),
-        0 0 60px rgba(59, 130, 246, 0.2),
-        0 0 100px rgba(234, 88, 12, 0.1);
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.6), rgba(59, 130, 246, 0.03), rgba(234, 88, 12, 0.02), rgba(15, 23, 42, 0.6));
-    border-top: 1px solid rgba(59, 130, 246, 0.25);
-    border-bottom: 1px solid rgba(59, 130, 246, 0.25);
-}
-
-/* Gear PNG Layer */
-.reality-marble-declare .gear-layer {
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
-    height: 100%;
+    margin: 70px 0;
+    padding: 80px 20px;
+    overflow: hidden;
+    isolation: isolate;
+    background: linear-gradient(180deg,
+        rgba(8, 10, 20, 0.9) 0%,
+        rgba(10, 14, 30, 0.85) 40%,
+        rgba(15, 12, 10, 0.8) 70%,
+        rgba(8, 10, 20, 0.9) 100%);
+    border-top: 1px solid rgba(96, 165, 250, 0.2);
+    border-bottom: 1px solid rgba(234, 88, 12, 0.12);
+}
+
+/* ── Gear Layer ── */
+.rm-gear-layer {
+    position: absolute;
+    inset: 0;
     pointer-events: none;
-    z-index: -1;
+    z-index: 0;
     overflow: hidden;
 }
 
-.reality-marble-declare .gear {
+.rm-gear {
     position: absolute;
     pointer-events: none;
 }
 
-.reality-marble-declare .gear img {
+.rm-gear img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    opacity: 0.06;
-    filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.3)) brightness(0.6) saturate(0.3);
+    opacity: 0.03;
+    filter: drop-shadow(0 0 4px rgba(96, 165, 250, 0.15)) brightness(0.5) saturate(0.3);
+    transition: opacity 1.5s ease;
 }
 
-.reality-marble-declare .gear-1 {
-    width: 320px;
-    height: 320px;
+.rm-gear-1 {
+    width: 300px;
+    height: 300px;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: gear-tick-center 8s steps(80, end) infinite;
 }
 
-.reality-marble-declare .gear-1 img {
-    opacity: 0.08;
+.rm-gear-2 {
+    width: 160px;
+    height: 160px;
+    top: -8%;
+    left: 8%;
 }
 
-.reality-marble-declare .gear-2 {
-    width: 180px;
-    height: 180px;
-    top: -10%;
-    left: 5%;
-    transform-origin: center center;
-    animation: gear-tick-normal-ccw 6s steps(60, end) infinite;
-}
-
-.reality-marble-declare .gear-2 img {
-    opacity: 0.05;
-    filter: drop-shadow(0 0 4px rgba(234, 88, 12, 0.2)) brightness(0.5) saturate(0.3);
-}
-
-.reality-marble-declare .gear-3 {
-    width: 150px;
-    height: 150px;
-    top: -5%;
-    right: 8%;
-    left: auto;
-    transform-origin: center center;
-    animation: gear-tick-normal-cw 5s steps(50, end) infinite;
-}
-
-.reality-marble-declare .gear-3 img {
-    opacity: 0.04;
-}
-
-.reality-marble-declare .gear-4 {
-    width: 120px;
-    height: 120px;
-    bottom: -5%;
-    left: 15%;
-    top: auto;
-    transform-origin: center center;
-    animation: gear-tick-normal-ccw 4s steps(40, end) infinite;
-}
-
-.reality-marble-declare .gear-4 img {
-    opacity: 0.04;
+.rm-gear-2 img {
     filter: drop-shadow(0 0 3px rgba(234, 88, 12, 0.15)) brightness(0.5) saturate(0.3);
 }
 
-.reality-marble-declare .gear-5 {
-    width: 100px;
-    height: 100px;
-    bottom: 0%;
-    right: 12%;
+.rm-gear-3 {
+    width: 140px;
+    height: 140px;
+    bottom: -5%;
+    right: 10%;
     top: auto;
-    left: auto;
-    transform-origin: center center;
-    animation: gear-tick-normal-cw 3.5s steps(35, end) infinite;
 }
 
-.reality-marble-declare .gear-5 img {
-    opacity: 0.035;
+/* Gears frozen by default — engage on activation */
+.reality-marble-declare.rm-active .rm-gear-1 {
+    animation: rm-gear-center 10s steps(100, end) infinite;
 }
 
-@keyframes gear-tick-center {
+.reality-marble-declare.rm-active .rm-gear-2 {
+    animation: rm-gear-ccw 7s steps(70, end) infinite;
+}
+
+.reality-marble-declare.rm-active .rm-gear-3 {
+    animation: rm-gear-cw 5s steps(50, end) infinite;
+}
+
+.reality-marble-declare.rm-active .rm-gear img {
+    opacity: 0.07;
+}
+
+@keyframes rm-gear-center {
     from { transform: translate(-50%, -50%) rotate(0deg); }
     to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-@keyframes gear-tick-normal-cw {
+@keyframes rm-gear-cw {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
 
-@keyframes gear-tick-normal-ccw {
+@keyframes rm-gear-ccw {
     from { transform: rotate(0deg); }
     to { transform: rotate(-360deg); }
 }
 
-/* Scan Line */
-.reality-marble-declare .scan-line {
+/* ── Horizon Line (UBW landscape) ── */
+.rm-horizon-line {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+    top: 58%;
+    left: 10%;
+    width: 80%;
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.15), transparent);
-    animation: scan-move 4s ease-in-out infinite;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(234, 88, 12, 0.05) 20%,
+        rgba(251, 146, 60, 0.18) 50%,
+        rgba(234, 88, 12, 0.05) 80%,
+        transparent 100%);
     pointer-events: none;
-    z-index: -1;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 2s ease 0.5s;
 }
 
-@keyframes scan-move {
-    0% { top: 0; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { top: 100%; opacity: 0; }
+.reality-marble-declare.rm-active .rm-horizon-line {
+    opacity: 1;
 }
 
-/* Ember Glow */
-.reality-marble-declare .ember-glow {
+/* ── Ember Bed ── */
+.rm-ember-bed {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 35%;
-    background: linear-gradient(0deg, rgba(234, 88, 12, 0.06), transparent);
-    pointer-events: none;
-    z-index: -1;
-    animation: ember-flicker-rm 3s ease-in-out infinite;
-}
-
-@keyframes ember-flicker-rm {
-    0%, 100% { opacity: 0.3; }
-    30% { opacity: 0.7; }
-    60% { opacity: 0.2; }
-    80% { opacity: 0.6; }
-}
-
-/* Corner Markers */
-.reality-marble-declare .corner-tl,
-.reality-marble-declare .corner-tr,
-.reality-marble-declare .corner-bl,
-.reality-marble-declare .corner-br {
-    position: absolute;
-    width: 20px;
-    height: 20px;
+    height: 40%;
+    background: linear-gradient(0deg,
+        rgba(234, 88, 12, 0.06) 0%,
+        rgba(234, 88, 12, 0.02) 40%,
+        transparent 100%);
     pointer-events: none;
     z-index: 1;
+    opacity: 0;
+    transition: opacity 1.5s ease;
 }
 
-.reality-marble-declare .corner-tl {
-    top: 8px; left: 8px;
-    border-top: 1px solid rgba(59, 130, 246, 0.2);
-    border-left: 1px solid rgba(59, 130, 246, 0.2);
+.reality-marble-declare.rm-active .rm-ember-bed {
+    opacity: 1;
 }
 
-.reality-marble-declare .corner-tr {
-    top: 8px; right: 8px;
-    border-top: 1px solid rgba(59, 130, 246, 0.2);
-    border-right: 1px solid rgba(59, 130, 246, 0.2);
+.reality-marble-declare.rm-complete .rm-ember-bed {
+    animation: rm-ember-pulse 3s ease-in-out infinite;
 }
 
-.reality-marble-declare .corner-bl {
-    bottom: 8px; left: 8px;
-    border-bottom: 1px solid rgba(234, 88, 12, 0.15);
-    border-left: 1px solid rgba(234, 88, 12, 0.15);
+@keyframes rm-ember-pulse {
+    0%, 100% { opacity: 0.6; }
+    30% { opacity: 1; }
+    60% { opacity: 0.4; }
+    80% { opacity: 0.9; }
 }
 
-.reality-marble-declare .corner-br {
-    bottom: 8px; right: 8px;
-    border-bottom: 1px solid rgba(234, 88, 12, 0.15);
-    border-right: 1px solid rgba(234, 88, 12, 0.15);
+/* ── Flash Overlay ── */
+.rm-flash-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center,
+        rgba(147, 197, 253, 0.9) 0%,
+        rgba(96, 165, 250, 0.5) 30%,
+        rgba(59, 130, 246, 0.15) 60%,
+        transparent 80%);
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
 }
 
-/* Main Text */
-.reality-marble-declare .rm-text {
+.rm-flash-overlay.rm-flash-fire {
+    animation: rm-flash-burst 0.5s ease-out forwards;
+}
+
+@keyframes rm-flash-burst {
+    0% { opacity: 0; }
+    12% { opacity: 0.9; }
+    35% { opacity: 0.4; }
+    100% { opacity: 0; }
+}
+
+/* ── Page-Wide Reality Flash ── */
+body.rm-world-flash::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(59, 130, 246, 0.04);
+    pointer-events: none;
+    z-index: 9998;
+    animation: rm-world-pulse 0.8s ease-out forwards;
+}
+
+@keyframes rm-world-pulse {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+body.theme-avalon.rm-world-flash::after {
+    background: rgba(30, 64, 175, 0.03);
+}
+
+/* ── Corner Brackets ── */
+.rm-corner {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.3s;
+}
+
+.reality-marble-declare.rm-active .rm-corner {
+    opacity: 1;
+}
+
+.rm-corner-tl { top: 12px; left: 12px; border-top: 1px solid rgba(96, 165, 250, 0.2); border-left: 1px solid rgba(96, 165, 250, 0.2); }
+.rm-corner-tr { top: 12px; right: 12px; border-top: 1px solid rgba(96, 165, 250, 0.2); border-right: 1px solid rgba(96, 165, 250, 0.2); }
+.rm-corner-bl { bottom: 12px; left: 12px; border-bottom: 1px solid rgba(234, 88, 12, 0.12); border-left: 1px solid rgba(234, 88, 12, 0.12); }
+.rm-corner-br { bottom: 12px; right: 12px; border-bottom: 1px solid rgba(234, 88, 12, 0.12); border-right: 1px solid rgba(234, 88, 12, 0.12); }
+
+/* ── Title Container ── */
+.rm-title {
     position: relative;
-    z-index: 2;
+    z-index: 5;
+    text-align: center;
+    min-height: 1.5em;
+    line-height: 1.4;
+    font-family: 'Cinzel', serif;
+    font-size: 2.6em;
+    font-weight: 700;
+    letter-spacing: 12px;
+    text-transform: uppercase;
+}
+
+/* ── Individual Characters ── */
+.rm-char {
     display: inline-block;
+    opacity: 0;
+    transform: translateY(25px) scale(0.7);
+    color: #93c5fd;
+    text-shadow: none;
+    will-change: transform, opacity, text-shadow;
 }
 
-/* Three-Phase Shake */
-.reality-marble-declare.shake-buildup {
-    animation: rm-buildup 0.8s ease-in;
+.rm-space {
+    display: inline-block;
+    width: 0.35em;
 }
 
-@keyframes rm-buildup {
-    0% { transform: translateX(0); }
-    10% { transform: translateX(-1px); }
-    20% { transform: translateX(1px); }
-    30% { transform: translateX(-2px); }
-    40% { transform: translateX(2px); }
-    50% { transform: translateX(-2px); }
-    60% { transform: translateX(3px); }
-    70% { transform: translateX(-3px); }
-    80% { transform: translateX(3px); }
-    90% { transform: translateX(-4px); }
-    100% { transform: translateX(0); }
+/* Forge-hammer reveal — staggered via --i */
+.rm-char.rm-forged {
+    animation: rm-char-forge 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--i) * 70ms);
 }
 
-.reality-marble-declare.shake-impact {
-    animation: rm-impact 0.5s ease-out;
+@keyframes rm-char-forge {
+    0% {
+        opacity: 0;
+        transform: translateY(25px) scale(0.7);
+        text-shadow:
+            0 0 60px rgba(147, 197, 253, 0),
+            0 0 30px rgba(96, 165, 250, 0);
+        color: #dbeafe;
+    }
+    40% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.1);
+        text-shadow:
+            0 0 40px rgba(147, 197, 253, 1),
+            0 0 80px rgba(96, 165, 250, 0.8),
+            0 0 120px rgba(59, 130, 246, 0.4);
+        color: #eff6ff;
+    }
+    70% {
+        transform: translateY(2px) scale(0.97);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        text-shadow:
+            0 0 10px rgba(96, 165, 250, 0.8),
+            0 0 30px rgba(59, 130, 246, 0.4),
+            0 0 60px rgba(59, 130, 246, 0.12);
+        color: #93c5fd;
+    }
 }
 
-@keyframes rm-impact {
-    0% { transform: translateX(0) translateY(0) scale(1); }
-    15% { transform: translateX(-8px) translateY(-4px) scale(1.02); }
-    30% { transform: translateX(8px) translateY(3px) scale(0.98); }
-    45% { transform: translateX(-6px) translateY(-2px) scale(1.01); }
-    60% { transform: translateX(5px) translateY(2px) scale(0.99); }
-    75% { transform: translateX(-3px) translateY(-1px); }
-    90% { transform: translateX(2px) translateY(1px); }
-    100% { transform: translateX(0) translateY(0) scale(1); }
+/* Persistent breathing after completion — staggered wave */
+.reality-marble-declare.rm-complete .rm-char {
+    animation: rm-char-breathe 5s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 130ms);
 }
 
-.reality-marble-declare.shake-settle {
-    animation: rm-settle 1s ease-out;
+@keyframes rm-char-breathe {
+    0%, 100% {
+        text-shadow:
+            0 0 8px rgba(96, 165, 250, 0.5),
+            0 0 22px rgba(59, 130, 246, 0.15);
+    }
+    50% {
+        text-shadow:
+            0 0 14px rgba(96, 165, 250, 0.9),
+            0 0 40px rgba(59, 130, 246, 0.45),
+            0 0 80px rgba(59, 130, 246, 0.12);
+    }
 }
 
-@keyframes rm-settle {
-    0% { transform: translateX(0); }
-    20% { transform: translateX(-2px); }
-    40% { transform: translateX(1px); }
-    60% { transform: translateX(-1px); }
-    100% { transform: translateX(0); }
-}
-
-/* Subtitle Fade-In */
-.reality-marble-declare .rm-subtitle {
-    display: block;
-    font-size: 0.32em;
+/* ── Subtitle ── */
+.rm-subtitle-text {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.82em;
     font-weight: 400;
+    font-style: italic;
     letter-spacing: 4px;
     color: rgba(96, 165, 250, 0);
-    margin-top: 14px;
-    font-style: italic;
-    transition: color 1.5s ease;
-    position: relative;
-    z-index: 2;
+    transform: translateY(10px);
+    transition: color 1.5s ease, transform 1.5s ease;
 }
 
-.reality-marble-declare.revealed .rm-subtitle {
-    color: rgba(96, 165, 250, 0.5);
+.reality-marble-declare.rm-complete .rm-subtitle-text {
+    color: rgba(96, 165, 250, 0.45);
+    transform: translateY(0);
 }
 
-/* Avalon Theme — Reality Marble */
-body.theme-avalon .reality-marble-declare {
-    color: #1d4ed8;
-    text-shadow: 0 0 8px rgba(29, 78, 216, 0.25), 0 0 20px rgba(29, 78, 216, 0.12);
-    border-color: rgba(29, 78, 216, 0.15);
-    background: linear-gradient(180deg, rgba(240, 235, 224, 0.6), rgba(29, 78, 216, 0.03), rgba(194, 65, 12, 0.02), rgba(240, 235, 224, 0.6));
+/* ── Shake: Micro-Tremor (during forge) ── */
+.reality-marble-declare.rm-shake-tremor {
+    animation: rm-tremor 1.8s linear;
 }
 
-body.theme-avalon .reality-marble-declare .gear img {
-    opacity: 0.04;
-    filter: drop-shadow(0 0 3px rgba(29, 78, 216, 0.1)) brightness(0.7) saturate(0.2);
+@keyframes rm-tremor {
+    0%, 100% { transform: translateX(0); }
+    5% { transform: translateX(-1px); }
+    10% { transform: translateX(1px); }
+    15% { transform: translateX(-1px) translateY(-1px); }
+    20% { transform: translateX(1px); }
+    25% { transform: translateX(-1px); }
+    30% { transform: translateX(0) translateY(1px); }
+    35% { transform: translateX(1px); }
+    40% { transform: translateX(-1px); }
+    45% { transform: translateX(1px) translateY(-1px); }
+    50% { transform: translateX(-2px); }
+    55% { transform: translateX(1px); }
+    60% { transform: translateX(-1px) translateY(1px); }
+    65% { transform: translateX(2px); }
+    70% { transform: translateX(-1px); }
+    75% { transform: translateX(1px) translateY(-1px); }
+    80% { transform: translateX(-2px); }
+    85% { transform: translateX(2px); }
+    90% { transform: translateX(-1px) translateY(1px); }
+    95% { transform: translateX(1px); }
 }
 
-body.theme-avalon .reality-marble-declare .gear-2 img,
-body.theme-avalon .reality-marble-declare .gear-4 img {
-    filter: drop-shadow(0 0 3px rgba(194, 65, 12, 0.08)) brightness(0.7) saturate(0.2);
+/* ── Shake: Impact Hit (on flash) ── */
+.reality-marble-declare.rm-shake-impact {
+    animation: rm-impact-hit 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
 }
 
-body.theme-avalon .reality-marble-declare .scan-line {
-    background: linear-gradient(90deg, transparent, rgba(29, 78, 216, 0.1), rgba(29, 78, 216, 0.2), rgba(29, 78, 216, 0.1), transparent);
-}
-
-body.theme-avalon .reality-marble-declare .ember-glow {
-    background: linear-gradient(0deg, rgba(194, 65, 12, 0.03), transparent);
-}
-
-body.theme-avalon .reality-marble-declare .corner-tl,
-body.theme-avalon .reality-marble-declare .corner-tr {
-    border-color: rgba(29, 78, 216, 0.15);
-}
-
-body.theme-avalon .reality-marble-declare .corner-bl,
-body.theme-avalon .reality-marble-declare .corner-br {
-    border-color: rgba(194, 65, 12, 0.1);
-}
-
-body.theme-avalon .reality-marble-declare .rm-subtitle {
-    color: rgba(29, 78, 216, 0);
-}
-
-body.theme-avalon .reality-marble-declare.revealed .rm-subtitle {
-    color: rgba(29, 78, 216, 0.35);
+@keyframes rm-impact-hit {
+    0% { transform: translate(0, 0) scale(1); }
+    12% { transform: translate(-8px, -4px) scale(1.015); }
+    24% { transform: translate(8px, 3px) scale(0.985); }
+    36% { transform: translate(-6px, -2px) scale(1.008); }
+    50% { transform: translate(5px, 2px) scale(0.995); }
+    65% { transform: translate(-3px, -1px); }
+    80% { transform: translate(2px, 0); }
+    90% { transform: translate(-1px, 0); }
+    100% { transform: translate(0, 0) scale(1); }
 }
 
 /* ===================================================
-   RESPONSIVE
+   REALITY MARBLE — AVALON THEME
+   =================================================== */
+body.theme-avalon .reality-marble-declare {
+    background: linear-gradient(180deg,
+        rgba(235, 229, 216, 0.92) 0%,
+        rgba(228, 222, 210, 0.88) 40%,
+        rgba(232, 225, 215, 0.84) 70%,
+        rgba(235, 229, 216, 0.92) 100%);
+    border-top-color: rgba(30, 64, 175, 0.15);
+    border-bottom-color: rgba(194, 65, 12, 0.08);
+}
+
+body.theme-avalon .rm-gear img {
+    filter: drop-shadow(0 0 3px rgba(30, 64, 175, 0.08)) brightness(0.7) saturate(0.2);
+    opacity: 0.025;
+}
+
+body.theme-avalon .rm-gear-2 img {
+    filter: drop-shadow(0 0 3px rgba(194, 65, 12, 0.06)) brightness(0.7) saturate(0.2);
+}
+
+body.theme-avalon .reality-marble-declare.rm-active .rm-gear img {
+    opacity: 0.05;
+}
+
+body.theme-avalon .rm-horizon-line {
+    background: linear-gradient(90deg,
+        transparent 0%, rgba(194, 65, 12, 0.03) 20%, rgba(194, 65, 12, 0.1) 50%, rgba(194, 65, 12, 0.03) 80%, transparent 100%);
+}
+
+body.theme-avalon .rm-ember-bed {
+    background: linear-gradient(0deg, rgba(194, 65, 12, 0.03) 0%, transparent 100%);
+}
+
+body.theme-avalon .rm-flash-overlay {
+    background: radial-gradient(ellipse at center,
+        rgba(30, 64, 175, 0.5) 0%, rgba(30, 64, 175, 0.2) 35%, transparent 70%);
+}
+
+body.theme-avalon .rm-corner-tl,
+body.theme-avalon .rm-corner-tr { border-color: rgba(30, 64, 175, 0.15); }
+
+body.theme-avalon .rm-corner-bl,
+body.theme-avalon .rm-corner-br { border-color: rgba(194, 65, 12, 0.08); }
+
+/* Avalon forge animation */
+body.theme-avalon .rm-char {
+    color: #1e3a8a;
+}
+
+body.theme-avalon .rm-char.rm-forged {
+    animation-name: rm-char-forge-avalon;
+}
+
+@keyframes rm-char-forge-avalon {
+    0% {
+        opacity: 0;
+        transform: translateY(25px) scale(0.7);
+        text-shadow: 0 0 40px rgba(30, 64, 175, 0);
+        color: #1e3a8a;
+    }
+    40% {
+        opacity: 1;
+        transform: translateY(-4px) scale(1.1);
+        text-shadow:
+            0 0 20px rgba(30, 64, 175, 0.5),
+            0 0 50px rgba(30, 64, 175, 0.2);
+        color: #1e40af;
+    }
+    70% {
+        transform: translateY(2px) scale(0.97);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        text-shadow: 0 0 8px rgba(30, 64, 175, 0.15);
+        color: #1e3a8a;
+    }
+}
+
+/* Avalon breathing */
+body.theme-avalon .reality-marble-declare.rm-complete .rm-char {
+    animation: rm-char-breathe-avalon 5s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 130ms);
+}
+
+@keyframes rm-char-breathe-avalon {
+    0%, 100% { text-shadow: 0 0 4px rgba(30, 64, 175, 0.06); }
+    50% { text-shadow: 0 0 12px rgba(30, 64, 175, 0.2); }
+}
+
+/* Avalon subtitle */
+body.theme-avalon .rm-subtitle-text {
+    color: rgba(30, 64, 175, 0);
+}
+
+body.theme-avalon .reality-marble-declare.rm-complete .rm-subtitle-text {
+    color: rgba(30, 64, 175, 0.3);
+}
+
+/* ===================================================
+   REALITY MARBLE — REDUCED MOTION
+   =================================================== */
+@media (prefers-reduced-motion: reduce) {
+    .rm-char {
+        opacity: 1 !important;
+        transform: none !important;
+        color: #93c5fd;
+        text-shadow: 0 0 10px rgba(96, 165, 250, 0.6);
+    }
+
+    body.theme-avalon .rm-char {
+        color: #1e3a8a;
+        text-shadow: 0 0 6px rgba(30, 64, 175, 0.12);
+    }
+
+    .rm-char.rm-forged,
+    .reality-marble-declare.rm-complete .rm-char {
+        animation: none !important;
+    }
+
+    .rm-subtitle-text {
+        color: rgba(96, 165, 250, 0.45) !important;
+        transform: none !important;
+    }
+
+    body.theme-avalon .rm-subtitle-text {
+        color: rgba(30, 64, 175, 0.3) !important;
+    }
+
+    .reality-marble-declare.rm-active .rm-gear img { opacity: 0.07; }
+    .rm-horizon-line { opacity: 1 !important; transition: none !important; }
+    .rm-ember-bed { opacity: 0.6 !important; transition: none !important; }
+    .rm-corner { opacity: 1 !important; transition: none !important; }
+
+    .reality-marble-declare.rm-shake-tremor,
+    .reality-marble-declare.rm-shake-impact {
+        animation: none !important;
+    }
+
+    .rm-flash-overlay.rm-flash-fire { animation: none !important; }
+    body.rm-world-flash::after { animation: none !important; }
+
+    .reality-marble-declare.rm-complete .rm-ember-bed {
+        animation: none !important;
+    }
+}
+
+/* ===================================================
+   REALITY MARBLE — RESPONSIVE
    =================================================== */
 @media (max-width: 768px) {
-    body { font-size: 17px; }
-    .landing-header h1 { font-size: 2.2em; }
-    .chapter-header h1 { font-size: 1.8em; }
-    .chapter-list a { grid-template-columns: 1fr; gap: 4px; }
-    .phase { text-align: left; }
-    .hour-heading::before, .hour-heading::after { display: none; }
-    .hour-tracker { display: none; }
-    .chapter-nav { flex-direction: column; gap: 8px; }
-    .chapter-nav a { width: 100%; text-align: center; }
-    .dialogue-box .dialogue-text { padding: 14px 16px; }
-    .prose .thought { margin: 25px 15px; }
-    .hour-heading + p::first-letter { font-size: 2.8em; }
-    .magic-circle-container { width: 150px; height: 150px; }
-    .theme-toggle { width: 42px; height: 42px; font-size: 1.1em; bottom: 18px; right: 18px; }
-
-    .roster-grid { grid-template-columns: 1fr; gap: 8px; }
-    .roster-card {
-        flex-direction: row;
-        justify-content: space-between;
-        padding: 14px 18px;
-        border-top: none;
-        border-left: 3px solid transparent;
+    .reality-marble-declare {
+        padding: 60px 15px;
+        margin: 50px 0;
     }
-    .roster-card.saber-card { border-left-color: var(--saber-blue); }
-    .roster-card.archer-card { border-left-color: var(--archer-red-bright); }
-    .roster-card.gilgamesh-card { border-left-color: #ffd700; }
-    .timeline-labels { flex-wrap: wrap; gap: 4px; }
-    .timeline-labels span { flex: none; font-size: 0.5em; }
-    .timeline-header { flex-direction: column; gap: 6px; }
-    .phase-divider { flex-direction: column; align-items: flex-start; gap: 4px; }
-    .latest-badge { position: static; margin-top: 4px; }
 
-    .reality-marble-declare { font-size: 1.6em; letter-spacing: 6px; padding: 40px 15px; }
-    .reality-marble-declare .gear-1 { width: 220px; height: 220px; }
-    .reality-marble-declare .gear-2 { width: 130px; height: 130px; }
-    .reality-marble-declare .gear-3 { width: 100px; height: 100px; }
-    .reality-marble-declare .gear-4,
-    .reality-marble-declare .gear-5 { display: none; }
+    .rm-title {
+        font-size: 1.8em;
+        letter-spacing: 8px;
+    }
 
-    .prose .incantation.ubw {
-        font-size: 1.02em;
+    .rm-gear-1 { width: 220px; height: 220px; }
+    .rm-gear-2 { width: 120px; height: 120px; }
+    .rm-gear-3 { display: none; }
+
+    .rm-subtitle-text {
+        font-size: 0.7em;
         letter-spacing: 3px;
-        padding: 20px 22px;
-        max-width: 100%;
     }
 
-    .prose .incantation.ubw::before,
-    .prose .incantation.ubw::after {
-        width: 65%;
-    }
-
-    .dialogue-box.ubw-mode .dialogue-text::after {
-        width: 10px;
-        height: 10px;
-        top: 6px;
-        right: 6px;
-    }
-
-    .dialogue-box.ubw-mode .speaker.archer {
-        letter-spacing: 3px;
+    .rm-corner {
+        width: 18px;
+        height: 18px;
     }
 }
 
 @media (max-width: 480px) {
-    body { font-size: 16px; }
-    .landing-header h1 { font-size: 1.8em; }
-    .landing-header { padding: 50px 0 30px; }
-    .magic-circle-container { width: 120px; height: 120px; }
+    .reality-marble-declare {
+        padding: 45px 10px;
+        margin: 40px 0;
+    }
 
-    .reality-marble-declare { font-size: 1.2em; letter-spacing: 4px; padding: 30px 10px; }
-    .reality-marble-declare .gear-1 { width: 160px; height: 160px; }
-    .reality-marble-declare .gear-2,
-    .reality-marble-declare .gear-3 { display: none; }
+    .rm-title {
+        font-size: 1.3em;
+        letter-spacing: 4px;
+    }
 
-    .prose .incantation.ubw {
-        font-size: 0.92em;
+    .rm-gear-1 { width: 160px; height: 160px; }
+    .rm-gear-2 { display: none; }
+
+    .rm-subtitle-text {
+        font-size: 0.6em;
         letter-spacing: 2px;
-        padding: 16px 16px;
     }
 
-    .prose .incantation.ubw::before,
-    .prose .incantation.ubw::after {
-        width: 80%;
+    .rm-corner {
+        width: 14px;
+        height: 14px;
+        top: 8px;
     }
-   }
+
+    .rm-corner-tl { left: 8px; }
+    .rm-corner-tr { right: 8px; }
+    .rm-corner-bl { left: 8px; }
+    .rm-corner-br { right: 8px; }
+}

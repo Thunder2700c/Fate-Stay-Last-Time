@@ -1,29 +1,31 @@
-
 /* ===================================================
-   FATE/STAY LAST TIME — INTERACTIVE ENGINE v2
+   FATE/STAY LAST TIME — INTERACTIVE ENGINE v2.1
    Modern ES2024 · RAF Delta · Async Sequences
-   Single Observer Pool · Passive Scroll · ResizeObserver
+   Single Observer Pool · Passive Scroll
    =================================================== */
 
 ;(() => {
     'use strict';
 
     // ─── Constants ───
-    const STORAGE_KEY   = 'fate-theme';
+    const STORAGE_KEY    = 'fate-theme';
     const PARTICLE_COUNT = 35;
     const LOADER_DELAY   = 1200;
     const TYPE_SPEED     = 30;
 
     // ─── Utilities ───
-    const $ = (sel, ctx = document) => ctx.querySelector(sel);
-    const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+    const $    = (sel, ctx = document) => ctx.querySelector(sel);
+    const $$   = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
     const wait = ms => new Promise(r => setTimeout(r, ms));
     const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
     const rand  = (lo = 0, hi = 1) => Math.random() * (hi - lo) + lo;
     const pick  = arr => arr[Math.floor(Math.random() * arr.length)];
 
-    const prefersReducedMotion = 
+    const prefersReducedMotion =
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Callbacks that run when theme changes
+    const themeChangeCallbacks = [];
 
     // ═══════════════════════════════════════════════
     //  1. THEME ENGINE
@@ -40,6 +42,11 @@
             toggle?.setAttribute('data-tooltip',
                 theme === 'void' ? 'Switch to Avalon' : 'Switch to Void'
             );
+
+            // Notify subscribers after CSS recalculates
+            requestAnimationFrame(() => {
+                themeChangeCallbacks.forEach(fn => fn(theme));
+            });
         };
 
         apply(current);
@@ -48,7 +55,7 @@
             apply(current === 'void' ? 'avalon' : 'void')
         );
 
-        return { get current() { return current; }, apply };
+        return { get current() { return current; } };
     })();
 
     // ═══════════════════════════════════════════════
@@ -99,48 +106,53 @@
 
     if (canvas) {
         const ctx = canvas.getContext('2d', { alpha: true });
-        let W, H;
+        let W = 0;
+        let H = 0;
 
-        // ── Resize via ResizeObserver ──
-        const ro = new ResizeObserver(([entry]) => {
-            const { width, height } = entry.contentRect;
-            W = canvas.width  = width;
-            H = canvas.height = height;
-        });
-        ro.observe(document.documentElement);
-        W = canvas.width  = innerWidth;
-        H = canvas.height = innerHeight;
+        // ── Resize: only when dimensions actually change ──
+        const resizeCanvas = () => {
+            const newW = window.innerWidth;
+            const newH = window.innerHeight;
+
+            // Guard: skip if nothing changed (prevents buffer clear flicker)
+            if (newW === W && newH === H) return;
+
+            W = canvas.width  = newW;
+            H = canvas.height = newH;
+        };
+
+        resizeCanvas();
+
+        // Debounced resize — no need to fire on every pixel of window drag
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(resizeCanvas, 100);
+        }, { passive: true });
 
         // ── Theme-aware colors ──
         const readColors = () => {
             const s = getComputedStyle(document.body);
-            const c = (prefix) => ({
-                r: parseInt(s.getPropertyValue(`--particle-${prefix}-r`)),
-                g: parseInt(s.getPropertyValue(`--particle-${prefix}-g`)),
-                b: parseInt(s.getPropertyValue(`--particle-${prefix}-b`)),
+            const c = prefix => ({
+                r: parseInt(s.getPropertyValue(`--particle-${prefix}-r`)) || 0,
+                g: parseInt(s.getPropertyValue(`--particle-${prefix}-g`)) || 0,
+                b: parseInt(s.getPropertyValue(`--particle-${prefix}-b`)) || 0,
             });
             return [c('1'), c('2'), c('3')];
         };
 
         let palette = readColors();
 
-        // Re-read palette when theme changes
-        const themeMedia = window.matchMedia('(prefers-color-scheme: dark)');
-        const originalApply = Theme.apply;
-        Theme.apply = (t) => {
-            originalApply(t);
-            requestAnimationFrame(() => {
-                palette = readColors();
-                pool.forEach(p => p.color = pick(palette));
-            });
-        };
-        // Trigger initial re-read after DOM settles
-        requestAnimationFrame(() => palette = readColors());
+        // Re-read palette when theme changes (via callback, not monkey-patch)
+        themeChangeCallbacks.push(() => {
+            palette = readColors();
+            pool.forEach(p => { p.color = pick(palette); });
+        });
 
         // ── Object Pool ──
         const createParticle = () => ({
-            x: rand(0, W),
-            y: rand(0, H),
+            x: rand(0, W || innerWidth),
+            y: rand(0, H || innerHeight),
             size: rand(0.5, 3),
             vx: rand(-0.15, 0.15),
             vy: rand(-0.4, -0.1),
@@ -165,18 +177,20 @@
         };
 
         // ── Render Loop (delta-time) ──
-        let lastTime = 0;
+        let lastTime = performance.now();
 
-        const tick = (now) => {
-            const dt = Math.min((now - lastTime) / 16.667, 3); // cap at 3× speed
+        const tick = now => {
+            const dt = clamp((now - lastTime) / 16.667, 0.1, 3);
             lastTime = now;
 
             ctx.clearRect(0, 0, W, H);
 
             for (const p of pool) {
+                // Physics
                 p.x += p.vx * dt;
                 p.y += p.vy * dt;
 
+                // Fade cycle
                 if (p.growing) {
                     p.opacity += p.fadeSpeed * dt;
                     if (p.opacity >= 0.5) p.growing = false;
@@ -185,6 +199,7 @@
                     if (p.opacity <= 0) { resetParticle(p); continue; }
                 }
 
+                // Bounds check
                 if (p.y < -10 || p.x < -10 || p.x > W + 10) {
                     resetParticle(p);
                     continue;
@@ -196,13 +211,13 @@
                 // Glow halo
                 ctx.fillStyle = `rgba(${r},${g},${b},${a * 0.15})`;
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+                ctx.arc(p.x, p.y, p.size * 3, 0, 6.2832);
                 ctx.fill();
 
-                // Core
+                // Core dot
                 ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
                 ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.arc(p.x, p.y, p.size, 0, 6.2832);
                 ctx.fill();
             }
 
@@ -213,8 +228,7 @@
     }
 
     // ═══════════════════════════════════════════════
-    //  5. UNIFIED INTERSECTION OBSERVER POOL
-    //     Single observer handles all scroll-triggered effects
+    //  5. INTERSECTION OBSERVER HELPERS
     // ═══════════════════════════════════════════════
     const observeOnce = (elements, callback, options = {}) => {
         if (!elements.length) return;
@@ -223,7 +237,7 @@
             for (const entry of entries) {
                 if (entry.isIntersecting) {
                     callback(entry.target);
-                    obs.unobserve(entry.target); // fire once, then release
+                    obs.unobserve(entry.target);
                 }
             }
         }, { threshold: 0.5, ...options });
@@ -235,7 +249,7 @@
     const observeLive = (elements, callback, options = {}) => {
         if (!elements.length) return;
 
-        const observer = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver(entries => {
             for (const entry of entries) {
                 callback(entry.target, entry.isIntersecting);
             }
@@ -245,19 +259,19 @@
         return observer;
     };
 
-    // ── Sound Effect Shake (fire-once) ──
+    // ── Sound Effect Shake ──
     observeOnce($$('.sound-effect'), async el => {
         el.classList.add('shake');
         await wait(500);
         el.classList.remove('shake');
     }, { threshold: 0.8 });
 
-    // ── Incantation Typing (fire-once) ──
+    // ── Incantation Typing ──
     observeOnce($$('.incantation[data-typed]'), el => {
         typewriter(el);
     }, { threshold: 0.5 });
 
-    // ── Hour Tracker Dots (live — tracks current section) ──
+    // ── Hour Tracker Dots ──
     const hourHeadings = $$('.hour-heading');
     const hourDots     = $$('.hour-dot');
 
@@ -289,7 +303,6 @@
         const step = () => {
             if (cursor >= source.length) return;
 
-            // Skip full HTML tags in one frame
             if (source[cursor] === '<') {
                 const close = source.indexOf('>', cursor);
                 buffer += source.substring(cursor, close + 1);
@@ -306,7 +319,7 @@
     }
 
     // ═══════════════════════════════════════════════
-    //  7. REALITY MARBLE — FORGE REVEAL SEQUENCE
+    //  7. REALITY MARBLE — FORGE REVEAL
     // ═══════════════════════════════════════════════
     const rmDeclare = $('.reality-marble-declare');
 
@@ -315,7 +328,7 @@
         const rmFlash = rmDeclare.querySelector('.rm-flash-overlay');
         const rmText  = rmTitle?.getAttribute('data-rm-text');
 
-        // ── Split text into individual character spans ──
+        // Split text into character spans (single DOM write via fragment)
         if (rmTitle && rmText) {
             const frag = document.createDocumentFragment();
             let ci = 0;
@@ -338,7 +351,7 @@
             rmTitle.appendChild(frag);
         }
 
-        // ── Trigger on scroll ──
+        // Trigger on scroll
         observeOnce([rmDeclare], el => {
             if (prefersReducedMotion) {
                 el.classList.add('rm-active', 'rm-complete');
@@ -351,41 +364,38 @@
             }
         }, { threshold: 0.4 });
 
-        // ── Async Forge Choreography ──
+        // Async choreography
         async function forgeSequence(el) {
-            const chars      = el.querySelectorAll('.rm-char');
-            const totalChars = chars.length;
+            const chars    = el.querySelectorAll('.rm-char');
+            const total    = chars.length;
+            const STAGGER  = 70;
+            const CHAR_DUR = 500;
+            const BUILDUP  = 400;
+            const FORGE_END  = BUILDUP + ((total - 1) * STAGGER) + CHAR_DUR;
+            const FLASH_AT   = FORGE_END + 200;
+            const COMPLETE_AT = FLASH_AT + 600;
 
-            // Timing
-            const STAGGER       = 70;
-            const CHAR_ANIM     = 500;
-            const BUILDUP       = 400;
-            const FORGE_TOTAL   = BUILDUP + ((totalChars - 1) * STAGGER) + CHAR_ANIM;
-            const FLASH_AT      = FORGE_TOTAL + 200;
-            const COMPLETE_AT   = FLASH_AT + 600;
-
-            // Phase 0 — Atmosphere: gears engage, corners appear
+            // Phase 0 — Atmosphere
             el.classList.add('rm-active');
 
-            // Phase 1 — Micro-tremor
+            // Phase 1 — Tremor
             await wait(100);
             el.classList.add('rm-shake-tremor');
 
-            // Phase 2 — Forge letters (CSS handles stagger via --i)
+            // Phase 2 — Forge letters
             await wait(BUILDUP - 100);
             chars.forEach(c => c.classList.add('rm-forged'));
 
-            // Phase 2.5 — End tremor before impact
+            // End tremor before impact
             await wait(FLASH_AT - BUILDUP - 100);
             el.classList.remove('rm-shake-tremor');
 
-            // Phase 3 — Flash + Impact + World pulse
+            // Phase 3 — Flash + Impact
             await wait(100);
             rmFlash?.classList.add('rm-flash-fire');
             el.classList.add('rm-shake-impact');
             document.body.classList.add('rm-world-flash');
 
-            // Clean up impact
             wait(500).then(() => {
                 el.classList.remove('rm-shake-impact');
                 rmFlash?.classList.remove('rm-flash-fire');
@@ -395,14 +405,14 @@
                 document.body.classList.remove('rm-world-flash');
             });
 
-            // Phase 4 — Complete: breathing + subtitle
+            // Phase 4 — Complete
             await wait(COMPLETE_AT - FLASH_AT);
             el.classList.add('rm-complete');
         }
     }
 
     // ═══════════════════════════════════════════════
-    //  8. KEYBOARD NAVIGATION (← → Esc)
+    //  8. KEYBOARD NAVIGATION
     // ═══════════════════════════════════════════════
     const navLinks = $$('.chapter-nav a:not(.disabled)');
 
@@ -412,19 +422,12 @@
         const tocLink  = navLinks.find(a => a.textContent.includes('Table'));
 
         document.addEventListener('keydown', e => {
-            // Don't hijack if user is typing in an input
             if (e.target.closest('input, textarea, select, [contenteditable]')) return;
 
             switch (e.key) {
-                case 'ArrowLeft':
-                    prevLink?.click();
-                    break;
-                case 'ArrowRight':
-                    nextLink?.click();
-                    break;
-                case 'Escape':
-                    tocLink?.click();
-                    break;
+                case 'ArrowLeft':  prevLink?.click(); break;
+                case 'ArrowRight': nextLink?.click(); break;
+                case 'Escape':     tocLink?.click();  break;
             }
         });
     }

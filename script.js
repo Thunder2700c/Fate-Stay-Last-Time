@@ -191,39 +191,118 @@ document.addEventListener('DOMContentLoaded', () => {
         shakeElements.forEach(el => shakeObserver.observe(el));
     }
 
-    // ===== 6. REALITY MARBLE — THREE-PHASE SHAKE =====
-    const rmDeclare = document.querySelectorAll('.reality-marble-declare');
-    if (rmDeclare.length > 0) {
+        // ===== 6. REALITY MARBLE — FORGE REVEAL =====
+    const rmDeclare = document.querySelector('.reality-marble-declare');
+
+    if (rmDeclare) {
+        const rmTitle = rmDeclare.querySelector('.rm-title');
+        const rmFlash = rmDeclare.querySelector('.rm-flash-overlay');
+        const rmText = rmTitle ? rmTitle.getAttribute('data-rm-text') : null;
+
+        // Split text into individual character spans
+        if (rmTitle && rmText) {
+            rmTitle.innerHTML = '';
+            let charIndex = 0;
+
+            for (let i = 0; i < rmText.length; i++) {
+                if (rmText[i] === ' ') {
+                    const space = document.createElement('span');
+                    space.className = 'rm-space';
+                    rmTitle.appendChild(space);
+                } else {
+                    const span = document.createElement('span');
+                    span.className = 'rm-char';
+                    span.textContent = rmText[i];
+                    span.style.setProperty('--i', charIndex);
+                    rmTitle.appendChild(span);
+                    charIndex++;
+                }
+            }
+        }
+
+        // Check reduced motion preference
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // Observe and trigger
         const rmObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.dataset.shaken) {
-                    entry.target.dataset.shaken = 'true';
+                if (entry.isIntersecting && !rmDeclare.dataset.triggered) {
+                    rmDeclare.dataset.triggered = 'true';
 
-                    // Phase 1: Buildup vibration
-                    entry.target.classList.add('shake-buildup');
-
-                    // Phase 2: Main impact
-                    setTimeout(() => {
-                        entry.target.classList.remove('shake-buildup');
-                        entry.target.classList.add('shake-impact');
-                    }, 800);
-
-                    // Phase 3: Aftershock settle
-                    setTimeout(() => {
-                        entry.target.classList.remove('shake-impact');
-                        entry.target.classList.add('shake-settle');
-                    }, 1300);
-
-                    // Reveal subtitle
-                    setTimeout(() => {
-                        entry.target.classList.remove('shake-settle');
-                        entry.target.classList.add('revealed');
-                    }, 1800);
+                    if (prefersReducedMotion) {
+                        // Instant reveal — no animation
+                        rmDeclare.classList.add('rm-active', 'rm-complete');
+                        const allChars = rmDeclare.querySelectorAll('.rm-char');
+                        allChars.forEach(c => {
+                            c.style.opacity = '1';
+                            c.style.transform = 'none';
+                        });
+                    } else {
+                        triggerForgeSequence();
+                    }
                 }
             });
-        }, { threshold: 0.6 });
+        }, { threshold: 0.4 });
 
-        rmDeclare.forEach(el => rmObserver.observe(el));
+        rmObserver.observe(rmDeclare);
+
+        function triggerForgeSequence() {
+            const chars = rmDeclare.querySelectorAll('.rm-char');
+            const totalChars = chars.length;
+
+            // Timing constants
+            const BUILDUP = 400;
+            const CHAR_STAGGER = 70;   // per char (handled by CSS --i)
+            const CHAR_DURATION = 500;  // each char animation length
+            const FORGE_END = BUILDUP + ((totalChars - 1) * CHAR_STAGGER) + CHAR_DURATION;
+            const FLASH_TIME = FORGE_END + 200;
+            const COMPLETE_TIME = FLASH_TIME + 600;
+
+            // Phase 0: Activate atmosphere — gears engage, corners appear
+            rmDeclare.classList.add('rm-active');
+
+            // Phase 1: Micro-tremor builds during forge
+            setTimeout(() => {
+                rmDeclare.classList.add('rm-shake-tremor');
+            }, 100);
+
+            // Phase 2: Forge all letters (CSS staggers via --i × 70ms)
+            setTimeout(() => {
+                chars.forEach(char => char.classList.add('rm-forged'));
+            }, BUILDUP);
+
+            // Remove tremor before impact
+            setTimeout(() => {
+                rmDeclare.classList.remove('rm-shake-tremor');
+            }, FLASH_TIME - 100);
+
+            // Phase 3: Flash + Impact
+            setTimeout(() => {
+                // Container flash
+                if (rmFlash) rmFlash.classList.add('rm-flash-fire');
+
+                // Impact shake
+                rmDeclare.classList.add('rm-shake-impact');
+
+                // Page-wide reality flash
+                document.body.classList.add('rm-world-flash');
+
+                // Clean up
+                setTimeout(() => {
+                    rmDeclare.classList.remove('rm-shake-impact');
+                    if (rmFlash) rmFlash.classList.remove('rm-flash-fire');
+                }, 500);
+
+                setTimeout(() => {
+                    document.body.classList.remove('rm-world-flash');
+                }, 800);
+            }, FLASH_TIME);
+
+            // Phase 4: Complete — persistent breathing + subtitle
+            setTimeout(() => {
+                rmDeclare.classList.add('rm-complete');
+            }, COMPLETE_TIME);
+        }
     }
 
     // ===== 7. HOUR TRACKER DOTS =====

@@ -1,377 +1,432 @@
+
 /* ===================================================
-   FATE/STAY LAST TIME — INTERACTIVE ENGINE
-   Theme + Particles + Scroll + Shake + Typing
-   + Three-Phase Reality Marble
+   FATE/STAY LAST TIME — INTERACTIVE ENGINE v2
+   Modern ES2024 · RAF Delta · Async Sequences
+   Single Observer Pool · Passive Scroll · ResizeObserver
    =================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
+;(() => {
+    'use strict';
 
-    // ===== 1. THEME SYSTEM =====
-    const themeToggle = document.querySelector('.theme-toggle');
-    const STORAGE_KEY = 'fate-theme';
+    // ─── Constants ───
+    const STORAGE_KEY   = 'fate-theme';
+    const PARTICLE_COUNT = 35;
+    const LOADER_DELAY   = 1200;
+    const TYPE_SPEED     = 30;
 
-    function getStoredTheme() {
-        return localStorage.getItem(STORAGE_KEY) || 'void';
-    }
+    // ─── Utilities ───
+    const $ = (sel, ctx = document) => ctx.querySelector(sel);
+    const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+    const rand  = (lo = 0, hi = 1) => Math.random() * (hi - lo) + lo;
+    const pick  = arr => arr[Math.floor(Math.random() * arr.length)];
 
-    function setTheme(theme) {
-        document.body.className = '';
-        document.body.classList.add('theme-' + theme);
-        localStorage.setItem(STORAGE_KEY, theme);
-        updateToggleButton(theme);
-        updateParticleColors(theme);
-    }
+    const prefersReducedMotion = 
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    function updateToggleButton(theme) {
-        if (!themeToggle) return;
-        if (theme === 'void') {
-            themeToggle.setAttribute('data-tooltip', 'Switch to Avalon');
+    // ═══════════════════════════════════════════════
+    //  1. THEME ENGINE
+    // ═══════════════════════════════════════════════
+    const Theme = (() => {
+        const toggle = $('.theme-toggle');
+        let current = localStorage.getItem(STORAGE_KEY) ?? 'void';
+
+        const apply = theme => {
+            current = theme;
+            document.body.classList.remove('theme-void', 'theme-avalon');
+            document.body.classList.add(`theme-${theme}`);
+            localStorage.setItem(STORAGE_KEY, theme);
+            toggle?.setAttribute('data-tooltip',
+                theme === 'void' ? 'Switch to Avalon' : 'Switch to Void'
+            );
+        };
+
+        apply(current);
+
+        toggle?.addEventListener('click', () =>
+            apply(current === 'void' ? 'avalon' : 'void')
+        );
+
+        return { get current() { return current; }, apply };
+    })();
+
+    // ═══════════════════════════════════════════════
+    //  2. LOADING SCREEN
+    // ═══════════════════════════════════════════════
+    const loader = $('.summoning-loader');
+    if (loader) {
+        const dismiss = async () => {
+            await wait(LOADER_DELAY);
+            loader.classList.add('hidden');
+        };
+
+        if (document.readyState === 'complete') {
+            dismiss();
         } else {
-            themeToggle.setAttribute('data-tooltip', 'Switch to Void');
+            window.addEventListener('load', dismiss, { once: true });
         }
     }
 
-    setTheme(getStoredTheme());
-
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const current = getStoredTheme();
-            const next = current === 'void' ? 'avalon' : 'void';
-            setTheme(next);
-        });
-    }
-
-    // ===== 2. LOADING SCREEN =====
-    const loader = document.querySelector('.summoning-loader');
-    if (loader) {
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                loader.classList.add('hidden');
-            }, 1200);
-        });
-    }
-
-    // ===== 3. COMMAND SEAL SCROLL PROGRESS =====
-    const progressBar = document.querySelector('.command-seal-progress');
+    // ═══════════════════════════════════════════════
+    //  3. SCROLL PROGRESS (Command Seal)
+    // ═══════════════════════════════════════════════
+    const progressBar = $('.command-seal-progress');
     if (progressBar) {
+        let ticking = false;
+
+        const updateProgress = () => {
+            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            const pct = scrollHeight <= clientHeight
+                ? 0
+                : (scrollTop / (scrollHeight - clientHeight)) * 100;
+            progressBar.style.height = `${pct}%`;
+            ticking = false;
+        };
+
         window.addEventListener('scroll', () => {
-            const scrollTop = window.scrollY;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            progressBar.style.height = scrollPercent + '%';
-        });
-    }
-
-    // ===== 4. PRANA PARTICLES =====
-    const canvas = document.getElementById('prana-particles');
-    let particles = [];
-    let particleColors = [];
-    const PARTICLE_COUNT = 35;
-
-    function getThemeParticleColors() {
-        const style = getComputedStyle(document.body);
-        return [
-            {
-                r: parseInt(style.getPropertyValue('--particle-1-r')),
-                g: parseInt(style.getPropertyValue('--particle-1-g')),
-                b: parseInt(style.getPropertyValue('--particle-1-b'))
-            },
-            {
-                r: parseInt(style.getPropertyValue('--particle-2-r')),
-                g: parseInt(style.getPropertyValue('--particle-2-g')),
-                b: parseInt(style.getPropertyValue('--particle-2-b'))
-            },
-            {
-                r: parseInt(style.getPropertyValue('--particle-3-r')),
-                g: parseInt(style.getPropertyValue('--particle-3-g')),
-                b: parseInt(style.getPropertyValue('--particle-3-b'))
+            if (!ticking) {
+                requestAnimationFrame(updateProgress);
+                ticking = true;
             }
-        ];
+        }, { passive: true });
     }
 
-    function updateParticleColors(theme) {
-        setTimeout(() => {
-            particleColors = getThemeParticleColors();
-            particles.forEach(p => {
-                p.color = particleColors[Math.floor(Math.random() * particleColors.length)];
-            });
-        }, 100);
-    }
+    // ═══════════════════════════════════════════════
+    //  4. PRANA PARTICLE SYSTEM
+    // ═══════════════════════════════════════════════
+    const canvas = $('#prana-particles');
 
     if (canvas) {
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: true });
+        let W, H;
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        // ── Resize via ResizeObserver ──
+        const ro = new ResizeObserver(([entry]) => {
+            const { width, height } = entry.contentRect;
+            W = canvas.width  = width;
+            H = canvas.height = height;
+        });
+        ro.observe(document.documentElement);
+        W = canvas.width  = innerWidth;
+        H = canvas.height = innerHeight;
 
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+        // ── Theme-aware colors ──
+        const readColors = () => {
+            const s = getComputedStyle(document.body);
+            const c = (prefix) => ({
+                r: parseInt(s.getPropertyValue(`--particle-${prefix}-r`)),
+                g: parseInt(s.getPropertyValue(`--particle-${prefix}-g`)),
+                b: parseInt(s.getPropertyValue(`--particle-${prefix}-b`)),
+            });
+            return [c('1'), c('2'), c('3')];
+        };
 
-        particleColors = getThemeParticleColors();
+        let palette = readColors();
 
-        class Particle {
-            constructor() {
-                this.reset();
-            }
+        // Re-read palette when theme changes
+        const themeMedia = window.matchMedia('(prefers-color-scheme: dark)');
+        const originalApply = Theme.apply;
+        Theme.apply = (t) => {
+            originalApply(t);
+            requestAnimationFrame(() => {
+                palette = readColors();
+                pool.forEach(p => p.color = pick(palette));
+            });
+        };
+        // Trigger initial re-read after DOM settles
+        requestAnimationFrame(() => palette = readColors());
 
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2.5 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.3;
-                this.speedY = -Math.random() * 0.4 - 0.1;
-                this.opacity = Math.random() * 0.4 + 0.1;
-                this.fadeSpeed = Math.random() * 0.003 + 0.001;
-                this.growing = true;
-                this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
-            }
+        // ── Object Pool ──
+        const createParticle = () => ({
+            x: rand(0, W),
+            y: rand(0, H),
+            size: rand(0.5, 3),
+            vx: rand(-0.15, 0.15),
+            vy: rand(-0.4, -0.1),
+            opacity: rand(0.1, 0.4),
+            fadeSpeed: rand(0.001, 0.004),
+            growing: true,
+            color: pick(palette),
+        });
 
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
+        const pool = Array.from({ length: PARTICLE_COUNT }, createParticle);
 
-                if (this.growing) {
-                    this.opacity += this.fadeSpeed;
-                    if (this.opacity >= 0.5) this.growing = false;
+        const resetParticle = p => {
+            p.x = rand(0, W);
+            p.y = rand(H * 0.3, H);
+            p.size = rand(0.5, 3);
+            p.vx = rand(-0.15, 0.15);
+            p.vy = rand(-0.4, -0.1);
+            p.opacity = 0.05;
+            p.fadeSpeed = rand(0.001, 0.004);
+            p.growing = true;
+            p.color = pick(palette);
+        };
+
+        // ── Render Loop (delta-time) ──
+        let lastTime = 0;
+
+        const tick = (now) => {
+            const dt = Math.min((now - lastTime) / 16.667, 3); // cap at 3× speed
+            lastTime = now;
+
+            ctx.clearRect(0, 0, W, H);
+
+            for (const p of pool) {
+                p.x += p.vx * dt;
+                p.y += p.vy * dt;
+
+                if (p.growing) {
+                    p.opacity += p.fadeSpeed * dt;
+                    if (p.opacity >= 0.5) p.growing = false;
                 } else {
-                    this.opacity -= this.fadeSpeed;
-                    if (this.opacity <= 0) this.reset();
+                    p.opacity -= p.fadeSpeed * dt;
+                    if (p.opacity <= 0) { resetParticle(p); continue; }
                 }
 
-                if (this.y < -10 || this.x < -10 || this.x > canvas.width + 10) {
-                    this.reset();
+                if (p.y < -10 || p.x < -10 || p.x > W + 10) {
+                    resetParticle(p);
+                    continue;
                 }
-            }
 
-            draw() {
+                const { r, g, b } = p.color;
+                const a = clamp(p.opacity, 0, 1);
+
+                // Glow halo
+                ctx.fillStyle = `rgba(${r},${g},${b},${a * 0.15})`;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity})`;
+                ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
                 ctx.fill();
 
+                // Core
+                ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${this.opacity * 0.15})`;
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fill();
             }
-        }
 
-        for (let i = 0; i < PARTICLE_COUNT; i++) {
-            particles.push(new Particle());
-        }
+            requestAnimationFrame(tick);
+        };
 
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateParticles);
-        }
-
-        animateParticles();
+        requestAnimationFrame(tick);
     }
 
-    // ===== 5. SOUND EFFECT SHAKE ON SCROLL =====
-    const shakeElements = document.querySelectorAll('.sound-effect');
-    if (shakeElements.length > 0) {
-        const shakeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
+    // ═══════════════════════════════════════════════
+    //  5. UNIFIED INTERSECTION OBSERVER POOL
+    //     Single observer handles all scroll-triggered effects
+    // ═══════════════════════════════════════════════
+    const observeOnce = (elements, callback, options = {}) => {
+        if (!elements.length) return;
+
+        const observer = new IntersectionObserver((entries, obs) => {
+            for (const entry of entries) {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('shake');
-                    setTimeout(() => {
-                        entry.target.classList.remove('shake');
-                    }, 500);
+                    callback(entry.target);
+                    obs.unobserve(entry.target); // fire once, then release
                 }
-            });
-        }, { threshold: 0.8 });
+            }
+        }, { threshold: 0.5, ...options });
 
-        shakeElements.forEach(el => shakeObserver.observe(el));
+        elements.forEach(el => observer.observe(el));
+        return observer;
+    };
+
+    const observeLive = (elements, callback, options = {}) => {
+        if (!elements.length) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                callback(entry.target, entry.isIntersecting);
+            }
+        }, { threshold: 0.3, ...options });
+
+        elements.forEach(el => observer.observe(el));
+        return observer;
+    };
+
+    // ── Sound Effect Shake (fire-once) ──
+    observeOnce($$('.sound-effect'), async el => {
+        el.classList.add('shake');
+        await wait(500);
+        el.classList.remove('shake');
+    }, { threshold: 0.8 });
+
+    // ── Incantation Typing (fire-once) ──
+    observeOnce($$('.incantation[data-typed]'), el => {
+        typewriter(el);
+    }, { threshold: 0.5 });
+
+    // ── Hour Tracker Dots (live — tracks current section) ──
+    const hourHeadings = $$('.hour-heading');
+    const hourDots     = $$('.hour-dot');
+
+    if (hourHeadings.length && hourDots.length) {
+        observeLive(hourHeadings, (target, isVisible) => {
+            if (!isVisible) return;
+
+            const idx = hourHeadings.indexOf(target);
+            if (idx < 0) return;
+
+            hourDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i <= idx);
+                dot.classList.toggle('current', i === idx);
+            });
+        }, { threshold: 0.3 });
     }
 
-        // ===== 6. REALITY MARBLE — FORGE REVEAL =====
-    const rmDeclare = document.querySelector('.reality-marble-declare');
+    // ═══════════════════════════════════════════════
+    //  6. INCANTATION TYPEWRITER
+    // ═══════════════════════════════════════════════
+    function typewriter(element) {
+        const source = element.innerHTML;
+        element.innerHTML = '';
+        element.style.visibility = 'visible';
+
+        let cursor = 0;
+        let buffer = '';
+
+        const step = () => {
+            if (cursor >= source.length) return;
+
+            // Skip full HTML tags in one frame
+            if (source[cursor] === '<') {
+                const close = source.indexOf('>', cursor);
+                buffer += source.substring(cursor, close + 1);
+                cursor = close + 1;
+            } else {
+                buffer += source[cursor++];
+            }
+
+            element.innerHTML = buffer;
+            setTimeout(step, TYPE_SPEED);
+        };
+
+        step();
+    }
+
+    // ═══════════════════════════════════════════════
+    //  7. REALITY MARBLE — FORGE REVEAL SEQUENCE
+    // ═══════════════════════════════════════════════
+    const rmDeclare = $('.reality-marble-declare');
 
     if (rmDeclare) {
         const rmTitle = rmDeclare.querySelector('.rm-title');
         const rmFlash = rmDeclare.querySelector('.rm-flash-overlay');
-        const rmText = rmTitle ? rmTitle.getAttribute('data-rm-text') : null;
+        const rmText  = rmTitle?.getAttribute('data-rm-text');
 
-        // Split text into individual character spans
+        // ── Split text into individual character spans ──
         if (rmTitle && rmText) {
-            rmTitle.innerHTML = '';
-            let charIndex = 0;
+            const frag = document.createDocumentFragment();
+            let ci = 0;
 
-            for (let i = 0; i < rmText.length; i++) {
-                if (rmText[i] === ' ') {
+            for (const ch of rmText) {
+                if (ch === ' ') {
                     const space = document.createElement('span');
                     space.className = 'rm-space';
-                    rmTitle.appendChild(space);
+                    frag.appendChild(space);
                 } else {
                     const span = document.createElement('span');
                     span.className = 'rm-char';
-                    span.textContent = rmText[i];
-                    span.style.setProperty('--i', charIndex);
-                    rmTitle.appendChild(span);
-                    charIndex++;
+                    span.textContent = ch;
+                    span.style.setProperty('--i', ci++);
+                    frag.appendChild(span);
                 }
             }
+
+            rmTitle.innerHTML = '';
+            rmTitle.appendChild(frag);
         }
 
-        // Check reduced motion preference
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        // Observe and trigger
-        const rmObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !rmDeclare.dataset.triggered) {
-                    rmDeclare.dataset.triggered = 'true';
-
-                    if (prefersReducedMotion) {
-                        // Instant reveal — no animation
-                        rmDeclare.classList.add('rm-active', 'rm-complete');
-                        const allChars = rmDeclare.querySelectorAll('.rm-char');
-                        allChars.forEach(c => {
-                            c.style.opacity = '1';
-                            c.style.transform = 'none';
-                        });
-                    } else {
-                        triggerForgeSequence();
-                    }
-                }
-            });
+        // ── Trigger on scroll ──
+        observeOnce([rmDeclare], el => {
+            if (prefersReducedMotion) {
+                el.classList.add('rm-active', 'rm-complete');
+                el.querySelectorAll('.rm-char').forEach(c => {
+                    c.style.opacity = '1';
+                    c.style.transform = 'none';
+                });
+            } else {
+                forgeSequence(el);
+            }
         }, { threshold: 0.4 });
 
-        rmObserver.observe(rmDeclare);
-
-        function triggerForgeSequence() {
-            const chars = rmDeclare.querySelectorAll('.rm-char');
+        // ── Async Forge Choreography ──
+        async function forgeSequence(el) {
+            const chars      = el.querySelectorAll('.rm-char');
             const totalChars = chars.length;
 
-            // Timing constants
-            const BUILDUP = 400;
-            const CHAR_STAGGER = 70;   // per char (handled by CSS --i)
-            const CHAR_DURATION = 500;  // each char animation length
-            const FORGE_END = BUILDUP + ((totalChars - 1) * CHAR_STAGGER) + CHAR_DURATION;
-            const FLASH_TIME = FORGE_END + 200;
-            const COMPLETE_TIME = FLASH_TIME + 600;
+            // Timing
+            const STAGGER       = 70;
+            const CHAR_ANIM     = 500;
+            const BUILDUP       = 400;
+            const FORGE_TOTAL   = BUILDUP + ((totalChars - 1) * STAGGER) + CHAR_ANIM;
+            const FLASH_AT      = FORGE_TOTAL + 200;
+            const COMPLETE_AT   = FLASH_AT + 600;
 
-            // Phase 0: Activate atmosphere — gears engage, corners appear
-            rmDeclare.classList.add('rm-active');
+            // Phase 0 — Atmosphere: gears engage, corners appear
+            el.classList.add('rm-active');
 
-            // Phase 1: Micro-tremor builds during forge
-            setTimeout(() => {
-                rmDeclare.classList.add('rm-shake-tremor');
-            }, 100);
+            // Phase 1 — Micro-tremor
+            await wait(100);
+            el.classList.add('rm-shake-tremor');
 
-            // Phase 2: Forge all letters (CSS staggers via --i × 70ms)
-            setTimeout(() => {
-                chars.forEach(char => char.classList.add('rm-forged'));
-            }, BUILDUP);
+            // Phase 2 — Forge letters (CSS handles stagger via --i)
+            await wait(BUILDUP - 100);
+            chars.forEach(c => c.classList.add('rm-forged'));
 
-            // Remove tremor before impact
-            setTimeout(() => {
-                rmDeclare.classList.remove('rm-shake-tremor');
-            }, FLASH_TIME - 100);
+            // Phase 2.5 — End tremor before impact
+            await wait(FLASH_AT - BUILDUP - 100);
+            el.classList.remove('rm-shake-tremor');
 
-            // Phase 3: Flash + Impact
-            setTimeout(() => {
-                // Container flash
-                if (rmFlash) rmFlash.classList.add('rm-flash-fire');
+            // Phase 3 — Flash + Impact + World pulse
+            await wait(100);
+            rmFlash?.classList.add('rm-flash-fire');
+            el.classList.add('rm-shake-impact');
+            document.body.classList.add('rm-world-flash');
 
-                // Impact shake
-                rmDeclare.classList.add('rm-shake-impact');
+            // Clean up impact
+            wait(500).then(() => {
+                el.classList.remove('rm-shake-impact');
+                rmFlash?.classList.remove('rm-flash-fire');
+            });
 
-                // Page-wide reality flash
-                document.body.classList.add('rm-world-flash');
+            wait(800).then(() => {
+                document.body.classList.remove('rm-world-flash');
+            });
 
-                // Clean up
-                setTimeout(() => {
-                    rmDeclare.classList.remove('rm-shake-impact');
-                    if (rmFlash) rmFlash.classList.remove('rm-flash-fire');
-                }, 500);
-
-                setTimeout(() => {
-                    document.body.classList.remove('rm-world-flash');
-                }, 800);
-            }, FLASH_TIME);
-
-            // Phase 4: Complete — persistent breathing + subtitle
-            setTimeout(() => {
-                rmDeclare.classList.add('rm-complete');
-            }, COMPLETE_TIME);
+            // Phase 4 — Complete: breathing + subtitle
+            await wait(COMPLETE_AT - FLASH_AT);
+            el.classList.add('rm-complete');
         }
     }
 
-    // ===== 7. HOUR TRACKER DOTS =====
-    const hourHeadings = document.querySelectorAll('.hour-heading');
-    const hourDots = document.querySelectorAll('.hour-dot');
+    // ═══════════════════════════════════════════════
+    //  8. KEYBOARD NAVIGATION (← → Esc)
+    // ═══════════════════════════════════════════════
+    const navLinks = $$('.chapter-nav a:not(.disabled)');
 
-    if (hourHeadings.length > 0 && hourDots.length > 0) {
-        const hourObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                const index = Array.from(hourHeadings).indexOf(entry.target);
-                if (index >= 0 && index < hourDots.length) {
-                    if (entry.isIntersecting) {
-                        hourDots.forEach((dot, i) => {
-                            dot.classList.remove('current');
-                            if (i < index) {
-                                dot.classList.add('active');
-                            } else if (i === index) {
-                                dot.classList.add('active');
-                                dot.classList.add('current');
-                            }
-                        });
-                    }
-                }
-            });
-        }, { threshold: 0.3 });
+    if (navLinks.length) {
+        const prevLink = navLinks.find(a => a.textContent.includes('←'));
+        const nextLink = navLinks.find(a => a.textContent.includes('→'));
+        const tocLink  = navLinks.find(a => a.textContent.includes('Table'));
 
-        hourHeadings.forEach(h => hourObserver.observe(h));
-    }
+        document.addEventListener('keydown', e => {
+            // Don't hijack if user is typing in an input
+            if (e.target.closest('input, textarea, select, [contenteditable]')) return;
 
-    // ===== 8. INCANTATION TYPING EFFECT =====
-    const incantations = document.querySelectorAll('.incantation[data-typed]');
-    if (incantations.length > 0) {
-        const typedObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !entry.target.dataset.typed_done) {
-                    entry.target.dataset.typed_done = 'true';
-                    typeIncantation(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
-
-        incantations.forEach(el => typedObserver.observe(el));
-    }
-
-    function typeIncantation(element) {
-        const html = element.innerHTML;
-        element.innerHTML = '';
-        element.style.visibility = 'visible';
-
-        let i = 0;
-        let output = '';
-        const speed = 30;
-
-        function typeChar() {
-            if (i < html.length) {
-                if (html[i] === '<') {
-                    const closeIndex = html.indexOf('>', i);
-                    output += html.substring(i, closeIndex + 1);
-                    i = closeIndex + 1;
-                } else {
-                    output += html[i];
-                    i++;
-                }
-                element.innerHTML = output;
-                setTimeout(typeChar, speed);
+            switch (e.key) {
+                case 'ArrowLeft':
+                    prevLink?.click();
+                    break;
+                case 'ArrowRight':
+                    nextLink?.click();
+                    break;
+                case 'Escape':
+                    tocLink?.click();
+                    break;
             }
-        }
-
-        typeChar();
+        });
     }
 
-});
+})();

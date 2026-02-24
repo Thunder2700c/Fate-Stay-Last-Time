@@ -1330,10 +1330,9 @@ body.theme-avalon .dialogue-box .dialogue-text {
 }
 
 /* ===================================================
-   UBW INCANTATION — REDESIGNED: BLADE VERSE
+   UBW INCANTATION — BLADE VERSE
    =================================================== */
 .prose .incantation.ubw {
-    /* Reset overrides */
     text-indent: 0 !important;
     text-align: center;
     margin: 45px auto;
@@ -1343,34 +1342,25 @@ body.theme-avalon .dialogue-box .dialogue-text {
     overflow: visible;
     border: none;
     border-radius: 0;
-
-    /* Typography */
     font-family: 'Cinzel', serif;
     font-style: normal;
     font-weight: 600;
     font-size: 1.18em;
     letter-spacing: 4px;
     line-height: 1.6;
-
-    /* Ice-blue with deep layered glow */
     color: #93c5fd;
     text-shadow:
         0 0 10px rgba(96, 165, 250, 0.9),
         0 0 28px rgba(59, 130, 246, 0.5),
         0 0 56px rgba(59, 130, 246, 0.2),
         0 0 100px rgba(59, 130, 246, 0.08);
-
-    /* Radial halo */
     background: radial-gradient(ellipse at center,
         rgba(59, 130, 246, 0.04) 0%,
         rgba(59, 130, 246, 0.01) 50%,
         transparent 75%);
-
-    /* Living pulse */
     animation: ubw-verse-pulse 5s ease-in-out infinite;
 }
 
-/* Text Glow Pulse */
 @keyframes ubw-verse-pulse {
     0%, 100% {
         text-shadow:
@@ -1389,7 +1379,6 @@ body.theme-avalon .dialogue-box .dialogue-text {
     }
 }
 
-/* Steel Edge — Top */
 .prose .incantation.ubw::before {
     content: '';
     position: absolute;
@@ -1399,16 +1388,11 @@ body.theme-avalon .dialogue-box .dialogue-text {
     width: 50%;
     height: 1px;
     background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(96, 165, 250, 0.08) 15%,
-        rgba(147, 197, 253, 0.55) 50%,
-        rgba(96, 165, 250, 0.08) 85%,
-        transparent 100%);
+        transparent 0%, rgba(96, 165, 250, 0.08) 15%, rgba(147, 197, 253, 0.55) 50%, rgba(96, 165, 250, 0.08) 85%, transparent 100%);
     box-shadow: 0 0 10px rgba(96, 165, 250, 0.15);
     animation: blade-edge-breathe 6s ease-in-out infinite;
 }
 
-/* Ember Edge — Bottom */
 .prose .incantation.ubw::after {
     content: '';
     position: absolute;
@@ -1418,17 +1402,12 @@ body.theme-avalon .dialogue-box .dialogue-text {
     width: 50%;
     height: 1px;
     background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(234, 88, 12, 0.06) 15%,
-        rgba(251, 146, 60, 0.3) 50%,
-        rgba(234, 88, 12, 0.06) 85%,
-        transparent 100%);
+        transparent 0%, rgba(234, 88, 12, 0.06) 15%, rgba(251, 146, 60, 0.3) 50%, rgba(234, 88, 12, 0.06) 85%, transparent 100%);
     box-shadow: 0 0 8px rgba(234, 88, 12, 0.1);
     pointer-events: none;
     animation: ember-edge-breathe 6s ease-in-out 3s infinite;
 }
 
-/* Edge Breathing */
 @keyframes blade-edge-breathe {
     0%, 100% { opacity: 0.5; }
     50% { opacity: 1; }
@@ -1439,34 +1418,24 @@ body.theme-avalon .dialogue-box .dialogue-text {
     50% { opacity: 0.9; }
 }
 
-/* UBW Incantation — Avalon Theme */
 body.theme-avalon .prose .incantation.ubw {
     color: #1e3a8a;
     text-shadow: 0 0 8px rgba(30, 58, 138, 0.15);
-    background: radial-gradient(ellipse at center,
-        rgba(30, 58, 138, 0.03) 0%, transparent 60%);
+    background: radial-gradient(ellipse at center, rgba(30, 58, 138, 0.03) 0%, transparent 60%);
     animation: none;
     filter: none;
 }
 
 body.theme-avalon .prose .incantation.ubw::before {
     background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(30, 58, 138, 0.06) 15%,
-        rgba(30, 64, 175, 0.3) 50%,
-        rgba(30, 58, 138, 0.06) 85%,
-        transparent 100%);
+        transparent 0%, rgba(30, 58, 138, 0.06) 15%, rgba(30, 64, 175, 0.3) 50%, rgba(30, 58, 138, 0.06) 85%, transparent 100%);
     box-shadow: none;
     animation: none;
 }
 
 body.theme-avalon .prose .incantation.ubw::after {
     background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(194, 65, 12, 0.04) 15%,
-        rgba(194, 65, 12, 0.15) 50%,
-        rgba(194, 65, 12, 0.04) 85%,
-        transparent 100%);
+        transparent 0%, rgba(194, 65, 12, 0.04) 15%, rgba(194, 65, 12, 0.15) 50%, rgba(194, 65, 12, 0.04) 85%, transparent 100%);
     box-shadow: none;
     animation: none;
 }
@@ -1626,9 +1595,6 @@ body.theme-avalon .prose .sound-effect.shake {
     border-color: var(--border-subtle);
 }
 
-/* ===================================================
-   DISABLED NAV LINK
-   =================================================== */
 .chapter-nav a.disabled {
     color: var(--text-dim);
     border-color: var(--border-subtle);
@@ -1763,13 +1729,11 @@ body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
 
 /* ===================================================
    ARCHER — UBW MODE DIALOGUE (FORGE VOICE)
-   Add .ubw-mode to dialogue-box elements in UBW scenes
    =================================================== */
 .dialogue-box.ubw-mode {
     margin: 28px 0;
 }
 
-/* Speaker Label */
 .dialogue-box.ubw-mode .speaker.archer {
     color: #93c5fd;
     text-shadow: 0 0 12px rgba(96, 165, 250, 0.6);
@@ -1777,7 +1741,6 @@ body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
     letter-spacing: 4px;
 }
 
-/* Gear sigil after name */
 .dialogue-box.ubw-mode .speaker.archer::after {
     content: '⚙';
     margin-left: 8px;
@@ -1786,7 +1749,6 @@ body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
     color: rgba(96, 165, 250, 0.5);
 }
 
-/* Dialogue Container */
 .dialogue-box.ubw-mode .dialogue-text {
     background:
         repeating-linear-gradient(
@@ -1811,15 +1773,10 @@ body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
     position: relative;
 }
 
-/* Left Blade Border — Blue to Purple to Ember */
 .dialogue-box.ubw-mode .dialogue-text::before {
     width: 3px !important;
     background: linear-gradient(180deg,
-        #60a5fa 0%,
-        #818cf8 40%,
-        #c084fc 65%,
-        #fb923c 90%,
-        #ea580c 100%) !important;
+        #60a5fa 0%, #818cf8 40%, #c084fc 65%, #fb923c 90%, #ea580c 100%) !important;
     box-shadow:
         0 0 8px rgba(96, 165, 250, 0.5),
         0 0 20px rgba(96, 165, 250, 0.15) !important;
@@ -1832,7 +1789,6 @@ body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
     50% { background-position: 0% 100%; }
 }
 
-/* Corner Bracket — Top Right */
 .dialogue-box.ubw-mode .dialogue-text::after {
     content: '';
     position: absolute;
@@ -1845,7 +1801,6 @@ body.theme-avalon .dialogue-box:has(.speaker.gilgamesh) .dialogue-text {
     pointer-events: none;
 }
 
-/* UBW Mode — Avalon Theme */
 body.theme-avalon .dialogue-box.ubw-mode .speaker.archer {
     color: #1e40af;
     text-shadow: none;
@@ -1876,10 +1831,7 @@ body.theme-avalon .dialogue-box.ubw-mode .dialogue-text {
 
 body.theme-avalon .dialogue-box.ubw-mode .dialogue-text::before {
     background: linear-gradient(180deg,
-        #1e40af 0%,
-        #4f46e5 40%,
-        #7c3aed 65%,
-        #ea580c 100%) !important;
+        #1e40af 0%, #4f46e5 40%, #7c3aed 65%, #ea580c 100%) !important;
     box-shadow: 0 0 4px rgba(30, 64, 175, 0.2) !important;
 }
 
@@ -1887,12 +1839,12 @@ body.theme-avalon .dialogue-box.ubw-mode .dialogue-text::after {
     border-color: rgba(30, 64, 175, 0.12);
 }
 
- /* ===================================================
+/* ===================================================
    UNLIMITED BLADE WORKS — REALITY MARBLE DECLARATION
    Redesigned: Forge-Hammer Letter Reveal
    =================================================== */
 
-/* ── Container ── */
+/* Container */
 .reality-marble-declare {
     position: relative;
     width: 100%;
@@ -1909,7 +1861,7 @@ body.theme-avalon .dialogue-box.ubw-mode .dialogue-text::after {
     border-bottom: 1px solid rgba(234, 88, 12, 0.12);
 }
 
-/* ── Gear Layer ── */
+/* Gear Layer */
 .rm-gear-layer {
     position: absolute;
     inset: 0;
@@ -1959,7 +1911,6 @@ body.theme-avalon .dialogue-box.ubw-mode .dialogue-text::after {
     top: auto;
 }
 
-/* Gears frozen by default — engage on activation */
 .reality-marble-declare.rm-active .rm-gear-1 {
     animation: rm-gear-center 10s steps(100, end) infinite;
 }
@@ -1991,7 +1942,7 @@ body.theme-avalon .dialogue-box.ubw-mode .dialogue-text::after {
     to { transform: rotate(-360deg); }
 }
 
-/* ── Horizon Line (UBW landscape) ── */
+/* Horizon Line */
 .rm-horizon-line {
     position: absolute;
     top: 58%;
@@ -1999,11 +1950,7 @@ body.theme-avalon .dialogue-box.ubw-mode .dialogue-text::after {
     width: 80%;
     height: 1px;
     background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(234, 88, 12, 0.05) 20%,
-        rgba(251, 146, 60, 0.18) 50%,
-        rgba(234, 88, 12, 0.05) 80%,
-        transparent 100%);
+        transparent 0%, rgba(234, 88, 12, 0.05) 20%, rgba(251, 146, 60, 0.18) 50%, rgba(234, 88, 12, 0.05) 80%, transparent 100%);
     pointer-events: none;
     z-index: 1;
     opacity: 0;
@@ -2014,7 +1961,7 @@ body.theme-avalon .dialogue-box.ubw-mode .dialogue-text::after {
     opacity: 1;
 }
 
-/* ── Ember Bed ── */
+/* Ember Bed */
 .rm-ember-bed {
     position: absolute;
     bottom: 0;
@@ -2022,9 +1969,7 @@ body.theme-avalon .dialogue-box.ubw-mode .dialogue-text::after {
     width: 100%;
     height: 40%;
     background: linear-gradient(0deg,
-        rgba(234, 88, 12, 0.06) 0%,
-        rgba(234, 88, 12, 0.02) 40%,
-        transparent 100%);
+        rgba(234, 88, 12, 0.06) 0%, rgba(234, 88, 12, 0.02) 40%, transparent 100%);
     pointer-events: none;
     z-index: 1;
     opacity: 0;
@@ -2046,15 +1991,12 @@ body.theme-avalon .dialogue-box.ubw-mode .dialogue-text::after {
     80% { opacity: 0.9; }
 }
 
-/* ── Flash Overlay ── */
+/* Flash Overlay */
 .rm-flash-overlay {
     position: absolute;
     inset: 0;
     background: radial-gradient(ellipse at center,
-        rgba(147, 197, 253, 0.9) 0%,
-        rgba(96, 165, 250, 0.5) 30%,
-        rgba(59, 130, 246, 0.15) 60%,
-        transparent 80%);
+        rgba(147, 197, 253, 0.9) 0%, rgba(96, 165, 250, 0.5) 30%, rgba(59, 130, 246, 0.15) 60%, transparent 80%);
     pointer-events: none;
     z-index: 10;
     opacity: 0;
@@ -2071,7 +2013,7 @@ body.theme-avalon .dialogue-box.ubw-mode .dialogue-text::after {
     100% { opacity: 0; }
 }
 
-/* ── Page-Wide Reality Flash ── */
+/* Page-Wide Reality Flash */
 body.rm-world-flash::after {
     content: '';
     position: fixed;
@@ -2092,7 +2034,7 @@ body.theme-avalon.rm-world-flash::after {
     background: rgba(30, 64, 175, 0.03);
 }
 
-/* ── Corner Brackets ── */
+/* Corner Brackets */
 .rm-corner {
     position: absolute;
     width: 24px;
@@ -2112,7 +2054,7 @@ body.theme-avalon.rm-world-flash::after {
 .rm-corner-bl { bottom: 12px; left: 12px; border-bottom: 1px solid rgba(234, 88, 12, 0.12); border-left: 1px solid rgba(234, 88, 12, 0.12); }
 .rm-corner-br { bottom: 12px; right: 12px; border-bottom: 1px solid rgba(234, 88, 12, 0.12); border-right: 1px solid rgba(234, 88, 12, 0.12); }
 
-/* ── Title Container ── */
+/* Title Container */
 .rm-title {
     position: relative;
     z-index: 5;
@@ -2126,7 +2068,7 @@ body.theme-avalon.rm-world-flash::after {
     text-transform: uppercase;
 }
 
-/* ── Individual Characters ── */
+/* Individual Characters */
 .rm-char {
     display: inline-block;
     opacity: 0;
@@ -2141,7 +2083,7 @@ body.theme-avalon.rm-world-flash::after {
     width: 0.35em;
 }
 
-/* Forge-hammer reveal — staggered via --i */
+/* Forge-hammer reveal */
 .rm-char.rm-forged {
     animation: rm-char-forge 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     animation-delay: calc(var(--i) * 70ms);
@@ -2151,9 +2093,7 @@ body.theme-avalon.rm-world-flash::after {
     0% {
         opacity: 0;
         transform: translateY(25px) scale(0.7);
-        text-shadow:
-            0 0 60px rgba(147, 197, 253, 0),
-            0 0 30px rgba(96, 165, 250, 0);
+        text-shadow: 0 0 60px rgba(147, 197, 253, 0), 0 0 30px rgba(96, 165, 250, 0);
         color: #dbeafe;
     }
     40% {
@@ -2179,8 +2119,15 @@ body.theme-avalon.rm-world-flash::after {
     }
 }
 
-/* Persistent breathing after completion — staggered wave */
+/* Persistent breathing after completion — FIXED: explicit base state */
 .reality-marble-declare.rm-complete .rm-char {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    color: #93c5fd;
+    text-shadow:
+        0 0 10px rgba(96, 165, 250, 0.8),
+        0 0 30px rgba(59, 130, 246, 0.4),
+        0 0 60px rgba(59, 130, 246, 0.12);
     animation: rm-char-breathe 5s ease-in-out infinite;
     animation-delay: calc(var(--i) * 130ms);
 }
@@ -2199,7 +2146,7 @@ body.theme-avalon.rm-world-flash::after {
     }
 }
 
-/* ── Subtitle ── */
+/* Subtitle */
 .rm-subtitle-text {
     position: relative;
     z-index: 5;
@@ -2220,7 +2167,7 @@ body.theme-avalon.rm-world-flash::after {
     transform: translateY(0);
 }
 
-/* ── Shake: Micro-Tremor (during forge) ── */
+/* Shake: Micro-Tremor */
 .reality-marble-declare.rm-shake-tremor {
     animation: rm-tremor 1.8s linear;
 }
@@ -2248,7 +2195,7 @@ body.theme-avalon.rm-world-flash::after {
     95% { transform: translateX(1px); }
 }
 
-/* ── Shake: Impact Hit (on flash) ── */
+/* Shake: Impact Hit */
 .reality-marble-declare.rm-shake-impact {
     animation: rm-impact-hit 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97);
 }
@@ -2311,7 +2258,6 @@ body.theme-avalon .rm-corner-tr { border-color: rgba(30, 64, 175, 0.15); }
 body.theme-avalon .rm-corner-bl,
 body.theme-avalon .rm-corner-br { border-color: rgba(194, 65, 12, 0.08); }
 
-/* Avalon forge animation */
 body.theme-avalon .rm-char {
     color: #1e3a8a;
 }
@@ -2330,9 +2276,7 @@ body.theme-avalon .rm-char.rm-forged {
     40% {
         opacity: 1;
         transform: translateY(-4px) scale(1.1);
-        text-shadow:
-            0 0 20px rgba(30, 64, 175, 0.5),
-            0 0 50px rgba(30, 64, 175, 0.2);
+        text-shadow: 0 0 20px rgba(30, 64, 175, 0.5), 0 0 50px rgba(30, 64, 175, 0.2);
         color: #1e40af;
     }
     70% {
@@ -2346,8 +2290,12 @@ body.theme-avalon .rm-char.rm-forged {
     }
 }
 
-/* Avalon breathing */
+/* Avalon breathing — FIXED: explicit base state */
 body.theme-avalon .reality-marble-declare.rm-complete .rm-char {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    color: #1e3a8a;
+    text-shadow: 0 0 8px rgba(30, 64, 175, 0.15);
     animation: rm-char-breathe-avalon 5s ease-in-out infinite;
     animation-delay: calc(var(--i) * 130ms);
 }
@@ -2357,7 +2305,6 @@ body.theme-avalon .reality-marble-declare.rm-complete .rm-char {
     50% { text-shadow: 0 0 12px rgba(30, 64, 175, 0.2); }
 }
 
-/* Avalon subtitle */
 body.theme-avalon .rm-subtitle-text {
     color: rgba(30, 64, 175, 0);
 }
@@ -2415,9 +2362,65 @@ body.theme-avalon .reality-marble-declare.rm-complete .rm-subtitle-text {
 }
 
 /* ===================================================
-   REALITY MARBLE — RESPONSIVE
+   RESPONSIVE
    =================================================== */
 @media (max-width: 768px) {
+    body { font-size: 17px; }
+    .landing-header h1 { font-size: 2.2em; }
+    .chapter-header h1 { font-size: 1.8em; }
+    .chapter-list a { grid-template-columns: 1fr; gap: 4px; }
+    .phase { text-align: left; }
+    .hour-heading::before, .hour-heading::after { display: none; }
+    .hour-tracker { display: none; }
+    .chapter-nav { flex-direction: column; gap: 8px; }
+    .chapter-nav a { width: 100%; text-align: center; }
+    .dialogue-box .dialogue-text { padding: 14px 16px; }
+    .prose .thought { margin: 25px 15px; }
+    .hour-heading + p::first-letter { font-size: 2.8em; }
+    .magic-circle-container { width: 150px; height: 150px; }
+    .theme-toggle { width: 42px; height: 42px; font-size: 1.1em; bottom: 18px; right: 18px; }
+
+    .roster-grid { grid-template-columns: 1fr; gap: 8px; }
+    .roster-card {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 14px 18px;
+        border-top: none;
+        border-left: 3px solid transparent;
+    }
+    .roster-card.saber-card { border-left-color: var(--saber-blue); }
+    .roster-card.archer-card { border-left-color: var(--archer-red-bright); }
+    .roster-card.gilgamesh-card { border-left-color: #ffd700; }
+    .timeline-labels { flex-wrap: wrap; gap: 4px; }
+    .timeline-labels span { flex: none; font-size: 0.5em; }
+    .timeline-header { flex-direction: column; gap: 6px; }
+    .phase-divider { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .latest-badge { position: static; margin-top: 4px; }
+
+    .prose .incantation.ubw {
+        font-size: 1.02em;
+        letter-spacing: 3px;
+        padding: 20px 22px;
+        max-width: 100%;
+    }
+
+    .prose .incantation.ubw::before,
+    .prose .incantation.ubw::after {
+        width: 65%;
+    }
+
+    .dialogue-box.ubw-mode .dialogue-text::after {
+        width: 10px;
+        height: 10px;
+        top: 6px;
+        right: 6px;
+    }
+
+    .dialogue-box.ubw-mode .speaker.archer {
+        letter-spacing: 3px;
+    }
+
+    /* Reality Marble responsive */
     .reality-marble-declare {
         padding: 60px 15px;
         margin: 50px 0;
@@ -2444,6 +2447,23 @@ body.theme-avalon .reality-marble-declare.rm-complete .rm-subtitle-text {
 }
 
 @media (max-width: 480px) {
+    body { font-size: 16px; }
+    .landing-header h1 { font-size: 1.8em; }
+    .landing-header { padding: 50px 0 30px; }
+    .magic-circle-container { width: 120px; height: 120px; }
+
+    .prose .incantation.ubw {
+        font-size: 0.92em;
+        letter-spacing: 2px;
+        padding: 16px 16px;
+    }
+
+    .prose .incantation.ubw::before,
+    .prose .incantation.ubw::after {
+        width: 80%;
+    }
+
+    /* Reality Marble responsive */
     .reality-marble-declare {
         padding: 45px 10px;
         margin: 40px 0;
@@ -2465,11 +2485,10 @@ body.theme-avalon .reality-marble-declare.rm-complete .rm-subtitle-text {
     .rm-corner {
         width: 14px;
         height: 14px;
-        top: 8px;
     }
 
-    .rm-corner-tl { left: 8px; }
-    .rm-corner-tr { right: 8px; }
-    .rm-corner-bl { left: 8px; }
-    .rm-corner-br { right: 8px; }
-}
+    .rm-corner-tl { top: 8px; left: 8px; }
+    .rm-corner-tr { top: 8px; right: 8px; }
+    .rm-corner-bl { bottom: 8px; left: 8px; }
+    .rm-corner-br { bottom: 8px; right: 8px; }
+       }

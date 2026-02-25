@@ -3,24 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fate/Stay Last Time</title>
+
+    <!-- Primary SEO -->
+    <title>Fate/Stay Last Time — A Fate Fan Novel | Read Free Online</title>
+    <meta name="description" content="Read Fate/Stay Last Time, a free fan-written light novel set in the Fate universe. A broken shoe, a viral video, two Heroic Spirits, and 70 hours to prune a timeline. Read all chapters online.">
+    <meta name="keywords" content="Fate Stay Night, fan novel, light novel, fate series, fate stay last time, free online novel, web novel, EMIYA, Saber, Gilgamesh, Holy Grail War, visual novel fan fiction">
+    <meta name="author" content="Thunder">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://fate-stay-last-time.vercel.app/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://fate-stay-last-time.vercel.app/">
+    <meta property="og:title" content="Fate/Stay Last Time — A Fate Fan Novel">
+    <meta property="og:description" content="A broken shoe. A viral video. Two Heroic Spirits. 70 hours to prune a corrupted timeline. Read free online.">
+    <meta property="og:site_name" content="Fate/Stay Last Time">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fate/Stay Last Time — A Fate Fan Novel">
+    <meta name="twitter:description" content="A broken shoe. A viral video. Two Heroic Spirits. 70 hours to prune a corrupted timeline.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style1.css">
 </head>
 <body>
 
-    <!-- GIF Loading Screen -->
     <div class="summoning-loader">
         <div class="magic-circle-container gold">
-            <img src="magic-circle.gif" alt="Summoning">
+            <img src="magic-circle.gif" alt="Summoning Circle Loading Animation">
         </div>
         <span class="load-text">Summoning</span>
     </div>
 
-    <!-- Prana Particles -->
-    <canvas id="prana-particles"></canvas>
+    <canvas id="prana-particles" aria-hidden="true"></canvas>
 
-    <!-- Command Seal Scroll Progress -->
-    <div class="command-seal-track">
+    <div class="command-seal-track" aria-hidden="true">
         <div class="command-seal-progress"></div>
     </div>
 
@@ -47,20 +69,20 @@
             </p>
         </section>
 
-        <!-- ===== TIMELINE PROGRESS BAR ===== -->
-        <section class="timeline-progress">
+        <section class="timeline-progress" aria-label="Story timeline progress">
             <div class="timeline-header">
                 <h2>Timeline</h2>
-                <span class="timeline-stats">Hour 60 of 70 — 85% Complete</span>
+                <span class="timeline-stats">Hour 65 of 70 — 92% Complete</span>
             </div>
             <div class="timeline-bar">
-                <div class="timeline-fill" style="width: 85%;">
+                <div class="timeline-fill" style="width: 92%;">
                     <span class="timeline-marker" style="left: 0%;" data-label="0"></span>
                     <span class="timeline-marker" style="left: 17%;" data-label="12"></span>
                     <span class="timeline-marker" style="left: 34%;" data-label="24"></span>
                     <span class="timeline-marker" style="left: 51%;" data-label="36"></span>
                     <span class="timeline-marker" style="left: 68%;" data-label="48"></span>
                     <span class="timeline-marker" style="left: 85%;" data-label="60"></span>
+                    <span class="timeline-marker" style="left: 92%;" data-label="65"></span>
                 </div>
                 <span class="timeline-end">70</span>
             </div>
@@ -73,8 +95,7 @@
             </div>
         </section>
 
-        <!-- ===== SERVANT ROSTER ===== -->
-        <section class="servant-roster">
+        <section class="servant-roster" aria-label="Active servants in the story">
             <h2>Active Servants</h2>
             <div class="roster-grid">
                 <div class="roster-card saber-card">
@@ -93,21 +114,18 @@
                     <span class="roster-class">Archer</span>
                     <span class="roster-name">Gilgamesh</span>
                     <span class="roster-title">King of Heroes</span>
-                    <span class="roster-status enemy">Enemy</span>
+                    <span class="roster-status enemy">Defeated</span>
                 </div>
             </div>
         </section>
 
-        <!-- ===== CHAPTER LIST ===== -->
-        <nav class="chapter-list">
+        <nav class="chapter-list" aria-label="Chapter navigation">
             <h2>Chapters</h2>
 
-            <!-- Phase I -->
             <div class="phase-divider">
                 <span class="phase-divider-label">Phase I — The Catalyst</span>
                 <span class="phase-divider-hours">Hours 0 – 12</span>
             </div>
-
             <ul>
                 <li>
                     <a href="chapters/chapter-1.html">
@@ -118,12 +136,10 @@
                 </li>
             </ul>
 
-            <!-- Phase II -->
             <div class="phase-divider">
                 <span class="phase-divider-label">Phase II — The Summoning</span>
                 <span class="phase-divider-hours">Hours 13 – 24</span>
             </div>
-
             <ul>
                 <li>
                     <a href="chapters/chapter-2.html">
@@ -134,12 +150,10 @@
                 </li>
             </ul>
 
-            <!-- Phase III -->
             <div class="phase-divider">
                 <span class="phase-divider-label">Phase III — War of the Grail</span>
                 <span class="phase-divider-hours">Hours 25 – 60</span>
             </div>
-
             <ul>
                 <li>
                     <a href="chapters/chapter-3.html">
@@ -156,27 +170,25 @@
                     </a>
                 </li>
                 <li>
-                    <a href="chapters/chapter-5.html" class="latest">
+                    <a href="chapters/chapter-5.html">
                         <span class="chapter-number">Chapter 05</span>
                         <span class="chapter-title">The Golden Bastard and the Forge of the Soul</span>
                         <span class="phase">Hours 49 – 60</span>
-                        <span class="latest-badge">Latest</span>
                     </a>
                 </li>
             </ul>
 
-            <!-- Phase IV -->
             <div class="phase-divider">
                 <span class="phase-divider-label">Phase IV — The Siege</span>
                 <span class="phase-divider-hours">Hours 61 – 65</span>
             </div>
-
             <ul>
                 <li>
-                    <a href="chapters/chapter-6.html">
+                    <a href="chapters/chapter-6.html" class="latest">
                         <span class="chapter-number">Chapter 06</span>
                         <span class="chapter-title">The Fall of the Golden King</span>
                         <span class="phase">Hours 61 – 65</span>
+                        <span class="latest-badge">Latest</span>
                     </a>
                 </li>
                 <li>
@@ -188,12 +200,10 @@
                 </li>
             </ul>
 
-            <!-- Phase V -->
             <div class="phase-divider">
                 <span class="phase-divider-label">Phase V — The Pruning</span>
                 <span class="phase-divider-hours">Hours 66 – 70</span>
             </div>
-
             <ul>
                 <li>
                     <a href="chapters/chapter-8.html" class="locked">
@@ -226,7 +236,6 @@
 
     </div>
 
-    <!-- Theme Toggle -->
     <button class="theme-toggle" data-tooltip="Switch to Avalon" aria-label="Toggle theme">
         <span class="icon-sun">🔆</span>
         <span class="icon-moon">🌙</span>
@@ -235,4 +244,4 @@
     <script src="script.js"></script>
 
 </body>
-</html>
+    </html>

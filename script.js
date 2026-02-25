@@ -1,7 +1,8 @@
 /* ===================================================
-   FATE/STAY LAST TIME — INTERACTIVE ENGINE v2.1
+   FATE/STAY LAST TIME — INTERACTIVE ENGINE v2.2
    Modern ES2024 · RAF Delta · Async Sequences
    Single Observer Pool · Passive Scroll
+   FIXED: Section 9 moved inside IIFE
    =================================================== */
 
 ;(() => {
@@ -83,7 +84,8 @@
         let ticking = false;
 
         const updateProgress = () => {
-            const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+            const { scrollTop, scrollHeight, clientHeight } =
+                document.documentElement;
             const pct = scrollHeight <= clientHeight
                 ? 0
                 : (scrollTop / (scrollHeight - clientHeight)) * 100;
@@ -109,21 +111,16 @@
         let W = 0;
         let H = 0;
 
-        // ── Resize: only when dimensions actually change ──
         const resizeCanvas = () => {
             const newW = window.innerWidth;
             const newH = window.innerHeight;
-
-            // Guard: skip if nothing changed (prevents buffer clear flicker)
             if (newW === W && newH === H) return;
-
             W = canvas.width  = newW;
             H = canvas.height = newH;
         };
 
         resizeCanvas();
 
-        // Debounced resize — no need to fire on every pixel of window drag
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
@@ -143,7 +140,6 @@
 
         let palette = readColors();
 
-        // Re-read palette when theme changes (via callback, not monkey-patch)
         themeChangeCallbacks.push(() => {
             palette = readColors();
             pool.forEach(p => { p.color = pick(palette); });
@@ -176,7 +172,7 @@
             p.color = pick(palette);
         };
 
-        // ── Render Loop (delta-time) ──
+        // ── Render Loop ──
         let lastTime = performance.now();
 
         const tick = now => {
@@ -186,11 +182,9 @@
             ctx.clearRect(0, 0, W, H);
 
             for (const p of pool) {
-                // Physics
                 p.x += p.vx * dt;
                 p.y += p.vy * dt;
 
-                // Fade cycle
                 if (p.growing) {
                     p.opacity += p.fadeSpeed * dt;
                     if (p.opacity >= 0.5) p.growing = false;
@@ -199,7 +193,6 @@
                     if (p.opacity <= 0) { resetParticle(p); continue; }
                 }
 
-                // Bounds check
                 if (p.y < -10 || p.x < -10 || p.x > W + 10) {
                     resetParticle(p);
                     continue;
@@ -328,7 +321,6 @@
         const rmFlash = rmDeclare.querySelector('.rm-flash-overlay');
         const rmText  = rmTitle?.getAttribute('data-rm-text');
 
-        // Split text into character spans (single DOM write via fragment)
         if (rmTitle && rmText) {
             const frag = document.createDocumentFragment();
             let ci = 0;
@@ -351,7 +343,6 @@
             rmTitle.appendChild(frag);
         }
 
-        // Trigger on scroll
         observeOnce([rmDeclare], el => {
             if (prefersReducedMotion) {
                 el.classList.add('rm-active', 'rm-complete');
@@ -364,33 +355,27 @@
             }
         }, { threshold: 0.4 });
 
-        // Async choreography
         async function forgeSequence(el) {
-            const chars    = el.querySelectorAll('.rm-char');
-            const total    = chars.length;
-            const STAGGER  = 70;
-            const CHAR_DUR = 500;
-            const BUILDUP  = 400;
+            const chars      = el.querySelectorAll('.rm-char');
+            const total      = chars.length;
+            const STAGGER    = 70;
+            const CHAR_DUR   = 500;
+            const BUILDUP    = 400;
             const FORGE_END  = BUILDUP + ((total - 1) * STAGGER) + CHAR_DUR;
             const FLASH_AT   = FORGE_END + 200;
             const COMPLETE_AT = FLASH_AT + 600;
 
-            // Phase 0 — Atmosphere
             el.classList.add('rm-active');
 
-            // Phase 1 — Tremor
             await wait(100);
             el.classList.add('rm-shake-tremor');
 
-            // Phase 2 — Forge letters
             await wait(BUILDUP - 100);
             chars.forEach(c => c.classList.add('rm-forged'));
 
-            // End tremor before impact
             await wait(FLASH_AT - BUILDUP - 100);
             el.classList.remove('rm-shake-tremor');
 
-            // Phase 3 — Flash + Impact
             await wait(100);
             rmFlash?.classList.add('rm-flash-fire');
             el.classList.add('rm-shake-impact');
@@ -405,7 +390,6 @@
                 document.body.classList.remove('rm-world-flash');
             });
 
-            // Phase 4 — Complete
             await wait(COMPLETE_AT - FLASH_AT);
             el.classList.add('rm-complete');
         }
@@ -422,7 +406,8 @@
         const tocLink  = navLinks.find(a => a.textContent.includes('Table'));
 
         document.addEventListener('keydown', e => {
-            if (e.target.closest('input, textarea, select, [contenteditable]')) return;
+            if (e.target.closest('input, textarea, select, [contenteditable]'))
+                return;
 
             switch (e.key) {
                 case 'ArrowLeft':  prevLink?.click(); break;
@@ -432,10 +417,9 @@
         });
     }
 
-})();
-
     // ═══════════════════════════════════════════════
     //  9. CHAPTER 6+ BATTLE COMPONENTS
+    //     (NOW INSIDE THE IIFE — FIXED)
     // ═══════════════════════════════════════════════
 
     // ── Battle Status: animate HP bars on scroll ──
@@ -477,3 +461,5 @@
     observeOnce($$('.saber-break'), el => {
         el.classList.add('sb-revealed');
     }, { threshold: 0.4 });
+
+})(); // <-- IIFE closes AFTER Section 9 now ✅

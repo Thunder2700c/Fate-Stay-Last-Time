@@ -462,4 +462,303 @@
         el.classList.add('sb-revealed');
     }, { threshold: 0.4 });
 
+    // ═══════════════════════════════════════════════
+    //  10. READING PROGRESS SAVE
+    //      Saves scroll position per chapter
+    // ═══════════════════════════════════════════════
+    const ReadingProgress = (() => {
+        const SAVE_KEY = 'fate-reading-progress';
+        const SAVE_INTERVAL = 2000; // Save every 2 seconds while scrolling
+
+        // Get current chapter from URL
+        const getChapterId = () => {
+            const path = window.location.pathname;
+            const match = path.match(/chapter-(\d+)/);
+            return match ? `chapter-${match[1]}` : null;
+        };
+
+        // Load all progress data
+        const loadAll = () => {
+            try {
+                return JSON.parse(localStorage.getItem(SAVE_KEY)) || {};
+            } catch {
+                return {};
+            }
+        };
+
+        // Save progress for current chapter
+        const save = (chapterId, data) => {
+            const all = loadAll();
+            all[chapterId] = { ...data, timestamp: Date.now() };
+            localStorage.setItem(SAVE_KEY, JSON.stringify(all));
+        };
+
+        // Get progress for a specific chapter
+        const get = chapterId => {
+            const all = loadAll();
+            return all[chapterId] || null;
+        };
+
+        // Mark chapter as completed
+        const markComplete = chapterId => {
+            save(chapterId, { complete: true, scrollPct: 100 });
+        };
+
+        const chapterId = getChapterId();
+
+        if (chapterId) {
+            let saveTimer = null;
+            let lastPct = 0;
+
+            // Restore scroll position on load
+            const saved = get(chapterId);
+            if (saved && !saved.complete && saved.scrollY) {
+                // Small delay to let page render
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: saved.scrollY,
+                        behavior: 'instant'
+                    });
+
+                    // Show resume notification
+                    showResumeToast(saved.scrollPct);
+                }, 300);
+            }
+
+            // Save on scroll
+            window.addEventListener('scroll', () => {
+                if (saveTimer) return;
+
+                saveTimer = setTimeout(() => {
+                    const { scrollTop, scrollHeight, clientHeight } =
+                        document.documentElement;
+                    const pct = Math.round(
+                        (scrollTop / (scrollHeight - clientHeight)) * 100
+                    );
+
+                    lastPct = pct;
+
+                    if (pct >= 95) {
+                        markComplete(chapterId);
+                    } else {
+                        save(chapterId, {
+                            scrollY: scrollTop,
+                            scrollPct: pct,
+                            complete: false
+                        });
+                    }
+
+                    saveTimer = null;
+                }, SAVE_INTERVAL);
+            }, { passive: true });
+        }
+
+        // Resume toast notification
+        function showResumeToast(pct) {
+            const toast = document.createElement('div');
+            toast.className = 'resume-toast';
+            toast.innerHTML = `
+                <span class="resume-icon">📖</span>
+                <span class="resume-text">Resuming from ${pct}%</span>
+                <button class="resume-restart" aria-label="Start from beginning">
+                    ↺ Restart
+                </button>
+            `;
+            document.body.appendChild(toast);
+
+            // Restart button
+            toast.querySelector('.resume-restart')
+                .addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    if (chapterId) {
+                        save(chapterId, {
+                            scrollY: 0,
+                            scrollPct: 0,
+                            complete: false
+                        });
+                    }
+                    toast.classList.add('toast-hide');
+                    setTimeout(() => toast.remove(), 500);
+                });
+
+            // Auto-hide after 4 seconds
+            requestAnimationFrame(() => toast.classList.add('toast-show'));
+            setTimeout(() => {
+                toast.classList.add('toast-hide');
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
+
+        return { loadAll, get, getChapterId, markComplete };
+    })();
+
+    // ═══════════════════════════════════════════════
+    //  11. ESTIMATED READING TIME
+    //      Calculates and displays reading time
+    // ═══════════════════════════════════════════════
+    const ReadingTime = (() => {
+        const prose = $('.prose');
+        if (!prose) return;
+
+        const text = prose.innerText || prose.textContent || '';
+        const wordCount = text
+            .trim()
+            .split(/\s+/)
+            .filter(w => w.length > 0).length;
+        const minutes = Math.ceil(wordCount / 230); // Average reading speed
+
+        // Create reading time element
+        const chapterHeader = $('.chapter-header');
+        if (chapterHeader) {
+            const timeEl = document.createElement('div');
+            timeEl.className = 'reading-time';
+            timeEl.innerHTML = `
+                <span class="rt-icon">⏱</span>
+                <span class="rt-text">${minutes} min read</span>
+                <span class="rt-separator">·</span>
+                <span class="rt-words">${wordCount.toLocaleString()} words</span>
+            `;
+            chapterHeader.appendChild(timeEl);
+        }
+    })();
+
+    // ═══════════════════════════════════════════════
+    //  12. READING STATS DASHBOARD (Homepage)
+    //      Shows read/unread chapters + progress
+    // ═══════════════════════════════════════════════
+    const Dashboard = (() => {
+        // Only run on homepage
+        const chapterList = $('.chapter-list');
+        const isHomepage = chapterList &&
+            !window.location.pathname.includes('chapter');
+        if (!isHomepage) return;
+
+        const progress = ReadingProgress.loadAll();
+        const totalChapters = 6; // Update when adding chapters
+        let completedCount = 0;
+
+        // Add status indicators to chapter links
+        $$('.chapter-list a:not(.locked)').forEach(link => {
+            const href = link.getAttribute('href') || '';
+            const match = href.match(/chapter-(\d+)/);
+            if (!match) return;
+
+            const chapterId = `chapter-${match[1]}`;
+            const data = progress[chapterId];
+
+            if (data?.complete) {
+                completedCount++;
+                const badge = document.createElement('span');
+                badge.className = 'read-badge';
+                badge.textContent = '✓ Read';
+                link.appendChild(badge);
+                link.classList.add('chapter-read');
+            } else if (data?.scrollPct > 0) {
+                const badge = document.createElement('span');
+                badge.className = 'read-badge reading';
+                badge.textContent = `${data.scrollPct}%`;
+                link.appendChild(badge);
+                link.classList.add('chapter-in-progress');
+            }
+        });
+
+        // Add overall stats bar above chapter list
+        if (completedCount > 0 || Object.keys(progress).length > 0) {
+            const statsEl = document.createElement('div');
+            statsEl.className = 'reading-dashboard';
+
+            const readPct = Math.round(
+                (completedCount / totalChapters) * 100
+            );
+
+            statsEl.innerHTML = `
+                <div class="rd-header">
+                    <span class="rd-title">Your Progress</span>
+                    <span class="rd-stats">
+                        ${completedCount}/${totalChapters} Chapters
+                    </span>
+                </div>
+                <div class="rd-bar">
+                    <div class="rd-fill" style="width: ${readPct}%"></div>
+                </div>
+                <div class="rd-label">
+                    ${readPct}% Complete
+                </div>
+            `;
+
+            chapterList.insertBefore(
+                statsEl,
+                chapterList.querySelector('h2')?.nextSibling
+            );
+        }
+    })();
+
+    // ═══════════════════════════════════════════════
+    //  13. PAGE TRANSITIONS
+    //      Smooth fade between chapters
+    // ═══════════════════════════════════════════════
+    const PageTransitions = (() => {
+        // Fade in on load
+        document.body.classList.add('page-enter');
+        requestAnimationFrame(() => {
+            document.body.classList.add('page-enter-active');
+        });
+
+        // Intercept navigation clicks for fade out
+        $$('a[href]').forEach(link => {
+            const href = link.getAttribute('href');
+
+            // Skip external links, anchors, disabled
+            if (!href ||
+                href.startsWith('#') ||
+                href.startsWith('http') ||
+                href.startsWith('mailto') ||
+                link.classList.contains('disabled') ||
+                link.classList.contains('locked')
+            ) return;
+
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                document.body.classList.add('page-exit');
+
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 300);
+            });
+        });
+    })();
+
+    // ═══════════════════════════════════════════════
+    //  14. BACK TO TOP BUTTON
+    //      Appears on scroll, themed
+    // ═══════════════════════════════════════════════
+    const BackToTop = (() => {
+        const btn = document.createElement('button');
+        btn.className = 'back-to-top';
+        btn.setAttribute('aria-label', 'Back to top');
+        btn.innerHTML = '↑';
+        document.body.appendChild(btn);
+
+        let visible = false;
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            if (ticking) return;
+            ticking = true;
+
+            requestAnimationFrame(() => {
+                const shouldShow = window.scrollY > 600;
+
+                if (shouldShow !== visible) {
+                    visible = shouldShow;
+                    btn.classList.toggle('btt-visible', visible);
+                }
+                ticking = false;
+            });
+        }, { passive: true });
+
+        btn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    })();
 })(); // <-- IIFE closes AFTER Section 9 now ✅

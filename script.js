@@ -693,16 +693,55 @@
         }
     })();
 
-    // ═══════════════════════════════════════════════
+       // ═══════════════════════════════════════════════
     //  13. PAGE TRANSITIONS
     //      Smooth fade between chapters
+    //      FIXED: No conflict with loading screen
     // ═══════════════════════════════════════════════
     const PageTransitions = (() => {
-        // Fade in on load
-        document.body.classList.add('page-enter');
-        requestAnimationFrame(() => {
-            document.body.classList.add('page-enter-active');
-        });
+        // Only fade in AFTER loader is done (or if no loader)
+        const loader = $('.summoning-loader');
+
+        const fadeIn = () => {
+            document.body.classList.add('page-enter');
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    document.body.classList.add('page-enter-active');
+                });
+            });
+
+            // Clean up classes after transition
+            setTimeout(() => {
+                document.body.classList.remove('page-enter', 'page-enter-active');
+            }, 500);
+        };
+
+        if (loader) {
+            // Wait for loader to finish, THEN fade in
+            const observer = new MutationObserver((mutations) => {
+                for (const m of mutations) {
+                    if (loader.classList.contains('hidden')) {
+                        observer.disconnect();
+                        fadeIn();
+                        return;
+                    }
+                }
+            });
+
+            observer.observe(loader, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+
+            // Fallback: if loader is already hidden
+            if (loader.classList.contains('hidden')) {
+                observer.disconnect();
+                fadeIn();
+            }
+        } else {
+            // No loader on this page, fade in immediately
+            fadeIn();
+        }
 
         // Intercept navigation clicks for fade out
         $$('a[href]').forEach(link => {

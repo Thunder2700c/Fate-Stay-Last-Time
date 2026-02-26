@@ -2691,23 +2691,6 @@ body.theme-avalon .chapter-list a.chapter-read {
 }
 
 /* ===================================================
-   PAGE TRANSITIONS
-   =================================================== */
-body.page-enter {
-    opacity: 0;
-}
-
-body.page-enter-active {
-    opacity: 1;
-    transition: opacity 0.4s ease;
-}
-
-body.page-exit {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-/* ===================================================
    BACK TO TOP BUTTON
    =================================================== */
 .back-to-top {

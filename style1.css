@@ -1,7 +1,7 @@
 /* ===================================================
    FATE/STAY LAST TIME — EXTENDED COMPONENTS
-   style1.css — Battle UI, Speakers, Gauges, Alerts
-   (FIXED: Fully visible without JS scroll triggers)
+   style1.css — Battle UI, Speakers, Gauges, Alerts,
+   Chapter 8 Components, Scroll Triggers
    =================================================== */
 
 /* ===================================================
@@ -72,7 +72,6 @@ body.theme-avalon .dialogue-box:has(.speaker.military) .dialogue-text::before {
     box-shadow: 0 0 4px rgba(63, 98, 18, 0.15);
 }
 
-/* Static flicker on military dialogue */
 .dialogue-box:has(.speaker.military) .dialogue-text::after {
     content: '';
     position: absolute;
@@ -119,6 +118,115 @@ body.theme-avalon .dialogue-box:has(.speaker.npc) .dialogue-text::before {
 }
 
 /* ===================================================
+   JASKARAN — THE OVERSEER / COLLEGE BESTIE
+   Holy Church Executor · Amber & Gold · Warm Authority
+   =================================================== */
+.dialogue-box .speaker.jaskaran {
+    color: #f59e0b;
+    border-bottom: 2px solid #92400e;
+    text-shadow: 0 0 6px rgba(245, 158, 11, 0.3);
+}
+
+body.theme-avalon .dialogue-box .speaker.jaskaran {
+    color: #b45309;
+    border-bottom-color: #fbbf24;
+    text-shadow: none;
+}
+
+.dialogue-box:has(.speaker.jaskaran) .dialogue-text {
+    background: linear-gradient(135deg,
+        rgba(245, 158, 11, 0.03),
+        var(--bg-dialogue),
+        rgba(146, 64, 14, 0.02)) !important;
+}
+
+.dialogue-box:has(.speaker.jaskaran) .dialogue-text::before {
+    background: linear-gradient(180deg, #f59e0b, #92400e);
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.jaskaran) .dialogue-text {
+    background: linear-gradient(135deg,
+        rgba(180, 83, 9, 0.04),
+        var(--bg-dialogue)) !important;
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.jaskaran) .dialogue-text::before {
+    background: linear-gradient(180deg, #b45309, #d97706);
+    box-shadow: 0 0 4px rgba(180, 83, 9, 0.15);
+}
+
+/* ===================================================
+   CLOCK TOWER LORD — MAGUS ARISTOCRACY
+   Telepathic Decree · Cold Indigo · Formal Authority
+   =================================================== */
+.dialogue-box .speaker.magus {
+    color: #818cf8;
+    border-bottom: 2px solid #3730a3;
+    text-shadow: 0 0 6px rgba(129, 140, 248, 0.3);
+    letter-spacing: 4px;
+}
+
+body.theme-avalon .dialogue-box .speaker.magus {
+    color: #4338ca;
+    border-bottom-color: #a5b4fc;
+    text-shadow: none;
+}
+
+.dialogue-box:has(.speaker.magus) .dialogue-text {
+    background: linear-gradient(135deg,
+        rgba(129, 140, 248, 0.03),
+        var(--bg-dialogue),
+        rgba(55, 48, 163, 0.02)) !important;
+    border-color: rgba(129, 140, 248, 0.12);
+    font-family: 'Cinzel', serif;
+    font-style: normal;
+    font-size: 0.92em;
+    letter-spacing: 0.5px;
+}
+
+.dialogue-box:has(.speaker.magus) .dialogue-text::before {
+    background: linear-gradient(180deg, #818cf8, #3730a3);
+    box-shadow: 0 0 8px rgba(129, 140, 248, 0.4);
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.magus) .dialogue-text {
+    background: linear-gradient(135deg,
+        rgba(67, 56, 202, 0.04),
+        var(--bg-dialogue)) !important;
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.magus) .dialogue-text::before {
+    background: linear-gradient(180deg, #4338ca, #6366f1);
+    box-shadow: 0 0 4px rgba(67, 56, 202, 0.15);
+}
+
+.dialogue-box:has(.speaker.magus) .dialogue-text::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 3px,
+        rgba(129, 140, 248, 0.012) 3px,
+        rgba(129, 140, 248, 0.012) 4px
+    );
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+body.theme-avalon .dialogue-box:has(.speaker.magus) .dialogue-text::after {
+    background: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 3px,
+        rgba(67, 56, 202, 0.008) 3px,
+        rgba(67, 56, 202, 0.008) 4px
+    );
+}
+
+/* ===================================================
    BATTLE STATUS PANEL
    =================================================== */
 .battle-status {
@@ -129,7 +237,7 @@ body.theme-avalon .dialogue-box:has(.speaker.npc) .dialogue-text::before {
     border-radius: 4px;
     position: relative;
     overflow: hidden;
-    opacity: 1; /* Fixed visibility */
+    opacity: 1;
 }
 
 .battle-status::before {
@@ -236,7 +344,7 @@ body.theme-avalon .bs-card.bs-enemy { border-left-color: #b8860b; }
 .bs-fill {
     height: 100%;
     border-radius: 2px;
-    width: var(--hp); /* Fixed: Shows HP immediately */
+    width: var(--hp);
     transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -266,7 +374,7 @@ body.theme-avalon .bs-fill { box-shadow: none; }
     border: 1px solid var(--border-subtle);
     border-left: 3px solid var(--command-seal);
     border-radius: 0 4px 4px 0;
-    opacity: 1; /* Fixed visibility */
+    opacity: 1;
 }
 
 .prana-gauge .pg-label {
@@ -290,7 +398,7 @@ body.theme-avalon .bs-fill { box-shadow: none; }
 .pg-fill {
     height: 100%;
     border-radius: 4px;
-    width: var(--prana); /* Fixed: Shows immediately */
+    width: var(--prana);
     transition: width 2s ease;
 }
 
@@ -337,7 +445,7 @@ body.theme-avalon .pg-fill.pg-critical { animation: none; }
         var(--bg-deep) 100%);
     border-left: 3px solid #6b21a8;
     border-radius: 0 4px 4px 0;
-    opacity: 1; /* Fixed visibility */
+    opacity: 1;
 }
 
 body.theme-avalon .shadow-emergence {
@@ -347,7 +455,6 @@ body.theme-avalon .shadow-emergence {
         var(--bg-deep) 100%);
 }
 
-/* Shadow tendrils */
 .shadow-emergence::before {
     content: '';
     position: absolute;
@@ -411,7 +518,7 @@ body.theme-avalon .shadow-emergence .se-name {
     margin: 45px 0;
     padding: 30px 20px;
     position: relative;
-    opacity: 1; /* Fixed visibility */
+    opacity: 1;
 }
 
 .golden-dissolution .gd-name {
@@ -464,7 +571,7 @@ body.theme-avalon .golden-dissolution .gd-name {
     border: 1px solid rgba(196, 30, 58, 0.25);
     border-radius: 4px;
     overflow: hidden;
-    opacity: 1; /* Fixed visibility */
+    opacity: 1;
 }
 
 .bn-bar {
@@ -529,7 +636,12 @@ body.theme-avalon .bn-bar {
     grid-template-columns: repeat(3, 1fr);
     gap: 8px;
     margin: 30px 0;
-    opacity: 1; /* Fixed visibility */
+    opacity: 1;
+}
+
+/* Auto-fit for 2-card grids */
+.threat-grid:has(.threat-card:nth-child(2):last-child) {
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .threat-card {
@@ -580,6 +692,57 @@ body.theme-avalon .threat-card .tc-class {
 }
 
 /* ===================================================
+   EVOLVED MASTER CARD — PROJECTION MAGUS
+   =================================================== */
+.threat-card.tc-projection {
+    border-top: 3px solid #4ade80 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.threat-card.tc-projection::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+        rgba(74, 222, 128, 0.04) 0%,
+        transparent 60%);
+    pointer-events: none;
+}
+
+.threat-card.tc-projection .tc-codename {
+    color: #4ade80 !important;
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+}
+
+.threat-card.tc-projection .tc-class {
+    color: #4ade80 !important;
+    border-color: rgba(74, 222, 128, 0.3) !important;
+    background: rgba(74, 222, 128, 0.05) !important;
+}
+
+body.theme-avalon .threat-card.tc-projection {
+    border-top-color: #15803d !important;
+}
+
+body.theme-avalon .threat-card.tc-projection::before {
+    background: linear-gradient(180deg,
+        rgba(21, 128, 61, 0.03) 0%,
+        transparent 60%);
+}
+
+body.theme-avalon .threat-card.tc-projection .tc-codename {
+    color: #15803d !important;
+    text-shadow: none;
+}
+
+body.theme-avalon .threat-card.tc-projection .tc-class {
+    color: #15803d !important;
+    border-color: rgba(21, 128, 61, 0.25) !important;
+    background: rgba(21, 128, 61, 0.04) !important;
+}
+
+/* ===================================================
    SABER BREAKING POINT DECLARATION
    =================================================== */
 .saber-break {
@@ -597,7 +760,7 @@ body.theme-avalon .threat-card .tc-class {
         rgba(8, 10, 20, 0.9) 100%);
     border-top: 1px solid rgba(58, 123, 213, 0.15);
     border-bottom: 1px solid rgba(196, 30, 58, 0.2);
-    opacity: 1; /* Fixed visibility */
+    opacity: 1;
 }
 
 body.theme-avalon .saber-break {
@@ -610,7 +773,6 @@ body.theme-avalon .saber-break {
     border-bottom-color: rgba(168, 32, 64, 0.1);
 }
 
-/* Cracking ice effect */
 .saber-break::before {
     content: '';
     position: absolute;
@@ -623,7 +785,6 @@ body.theme-avalon .saber-break {
     z-index: -1;
 }
 
-/* Corner brackets */
 .saber-break .sb-corner {
     position: absolute;
     width: 22px;
@@ -659,10 +820,10 @@ body.theme-avalon .sb-corner-br { border-color: rgba(168, 32, 64, 0.08); }
     font-family: 'Cinzel', serif;
     font-size: 1.6em;
     font-weight: 600;
-    color: var(--command-seal); /* Fixed: Shows broken color instantly */
+    color: var(--command-seal);
     letter-spacing: 3px;
     line-height: 1.5;
-    text-shadow: 0 0 20px rgba(196, 30, 58, 0.5); /* Fixed */
+    text-shadow: 0 0 20px rgba(196, 30, 58, 0.5);
     position: relative;
     z-index: 2;
 }
@@ -680,7 +841,7 @@ body.theme-avalon .saber-break .sb-text {
     margin-top: 16px;
     position: relative;
     z-index: 2;
-    opacity: 0.6; /* Fixed visibility */
+    opacity: 0.6;
 }
 
 /* ===================================================
@@ -697,7 +858,7 @@ body.theme-avalon .saber-break .sb-text {
     padding: 20px 0;
     letter-spacing: 1px;
     position: relative;
-    opacity: 1; /* Fixed visibility */
+    opacity: 1;
 }
 
 .impact-line::before,
@@ -734,157 +895,23 @@ body.theme-avalon .saber-break .sb-text {
 }
 
 /* ===================================================
-   RESPONSIVE
+   OVERSEER ROSTER CARD (Homepage)
    =================================================== */
-@media (max-width: 768px) {
-    .bs-grid { grid-template-columns: 1fr; }
-    .threat-grid { grid-template-columns: 1fr; }
-
-    .shadow-emergence .se-name { font-size: 1.15em; }
-
-    .saber-break { padding: 40px 18px; }
-    .saber-break .sb-text { font-size: 1.25em; letter-spacing: 2px; }
-
-    .impact-line { font-size: 1.1em; margin: 35px 10px; }
-
-    .golden-dissolution .gd-name { font-size: 1.3em; }
+.roster-card.overseer-card {
+    border-top-color: #f59e0b;
 }
 
-@media (max-width: 480px) {
-    .saber-break .sb-text { font-size: 1.05em; letter-spacing: 1px; }
-    .saber-break { padding: 30px 14px; }
-
-    .shadow-emergence .se-name { font-size: 1em; letter-spacing: 2px; }
-
-    .golden-dissolution .gd-name { font-size: 1.1em; letter-spacing: 4px; }
-
-    .impact-line { font-size: 0.95em; }
-
-    .bn-headline { font-size: 0.9em; }
-}
-
-/* ===================================================
-   JASKARAN — THE OVERSEER / COLLEGE BESTIE
-   Holy Church Executor · Amber & Gold · Warm Authority
-   =================================================== */
-.dialogue-box .speaker.jaskaran {
-    color: #f59e0b;
-    border-bottom: 2px solid #92400e;
-    text-shadow: 0 0 6px rgba(245, 158, 11, 0.3);
-}
-
-body.theme-avalon .dialogue-box .speaker.jaskaran {
-    color: #b45309;
-    border-bottom-color: #fbbf24;
-    text-shadow: none;
-}
-
-.dialogue-box:has(.speaker.jaskaran) .dialogue-text {
-    background: linear-gradient(135deg,
-        rgba(245, 158, 11, 0.03),
-        var(--bg-dialogue),
-        rgba(146, 64, 14, 0.02)) !important;
-}
-
-.dialogue-box:has(.speaker.jaskaran) .dialogue-text::before {
-    background: linear-gradient(180deg, #f59e0b, #92400e);
-    box-shadow: 0 0 8px rgba(245, 158, 11, 0.3);
-}
-
-body.theme-avalon .dialogue-box:has(.speaker.jaskaran) .dialogue-text {
-    background: linear-gradient(135deg,
-        rgba(180, 83, 9, 0.04),
-        var(--bg-dialogue)) !important;
-}
-
-body.theme-avalon .dialogue-box:has(.speaker.jaskaran) .dialogue-text::before {
-    background: linear-gradient(180deg, #b45309, #d97706);
-    box-shadow: 0 0 4px rgba(180, 83, 9, 0.15);
-}
-
-/* ===================================================
-   CLOCK TOWER LORD — MAGUS ARISTOCRACY
-   Telepathic Decree · Cold Indigo · Formal Authority
-   =================================================== */
-.dialogue-box .speaker.magus {
-    color: #818cf8;
-    border-bottom: 2px solid #3730a3;
-    text-shadow: 0 0 6px rgba(129, 140, 248, 0.3);
-    letter-spacing: 4px;
-}
-
-body.theme-avalon .dialogue-box .speaker.magus {
-    color: #4338ca;
-    border-bottom-color: #a5b4fc;
-    text-shadow: none;
-}
-
-.dialogue-box:has(.speaker.magus) .dialogue-text {
-    background: linear-gradient(135deg,
-        rgba(129, 140, 248, 0.03),
-        var(--bg-dialogue),
-        rgba(55, 48, 163, 0.02)) !important;
-    border-color: rgba(129, 140, 248, 0.12);
-    font-family: 'Cinzel', serif;
-    font-style: normal;
-    font-size: 0.92em;
-    letter-spacing: 0.5px;
-}
-
-.dialogue-box:has(.speaker.magus) .dialogue-text::before {
-    background: linear-gradient(180deg, #818cf8, #3730a3);
-    box-shadow: 0 0 8px rgba(129, 140, 248, 0.4);
-}
-
-body.theme-avalon .dialogue-box:has(.speaker.magus) .dialogue-text {
-    background: linear-gradient(135deg,
-        rgba(67, 56, 202, 0.04),
-        var(--bg-dialogue)) !important;
-}
-
-body.theme-avalon .dialogue-box:has(.speaker.magus) .dialogue-text::before {
-    background: linear-gradient(180deg, #4338ca, #6366f1);
-    box-shadow: 0 0 4px rgba(67, 56, 202, 0.15);
-}
-
-/* Telepathic interference pattern overlay */
-.dialogue-box:has(.speaker.magus) .dialogue-text::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 3px,
-        rgba(129, 140, 248, 0.012) 3px,
-        rgba(129, 140, 248, 0.012) 4px
-    );
-    pointer-events: none;
-    border-radius: inherit;
-}
-
-body.theme-avalon .dialogue-box:has(.speaker.magus) .dialogue-text::after {
-    background: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 3px,
-        rgba(67, 56, 202, 0.008) 3px,
-        rgba(67, 56, 202, 0.008) 4px
-    );
+body.theme-avalon .roster-card.overseer-card {
+    border-top-color: #b45309;
 }
 
 /* ===================================================
    CHAPTER 8 — THE PSYCHOPATH PACT
-   Components: Circuit Awakening, Strategy Map,
-   Master Evolution, Monastery Atmosphere
    =================================================== */
 
 /* ===================================================
-   1. TRACE ON — CIRCUIT AWAKENING EFFECT
-   Green Magecraft · Glowing Circuitry · Projection
+   TRACE ON — CIRCUIT AWAKENING EFFECT
    =================================================== */
-
-/* Green magic circle variant for loading screen */
 .magic-circle-container.green::before {
     background: radial-gradient(circle,
         rgba(74, 222, 128, 0.15) 0%,
@@ -896,7 +923,6 @@ body.theme-avalon .dialogue-box:has(.speaker.magus) .dialogue-text::after {
     border-color: rgba(74, 222, 128, 0.2);
 }
 
-/* Circuit Awakening Block — The moment circuits ignite */
 .circuit-awakening {
     text-indent: 0 !important;
     margin: 55px 0;
@@ -925,7 +951,6 @@ body.theme-avalon .circuit-awakening {
     border-bottom-color: rgba(21, 128, 61, 0.08);
 }
 
-/* Circuitry grid background pattern */
 .circuit-awakening::before {
     content: '';
     position: absolute;
@@ -968,7 +993,6 @@ body.theme-avalon .circuit-awakening::before {
     animation: none;
 }
 
-/* Flowing energy lines overlay */
 .circuit-awakening::after {
     content: '';
     position: absolute;
@@ -998,7 +1022,6 @@ body.theme-avalon .circuit-awakening::after {
     opacity: 0.5;
 }
 
-/* Corner brackets */
 .circuit-awakening .ca-corner {
     position: absolute;
     width: 20px;
@@ -1017,7 +1040,6 @@ body.theme-avalon .ca-corner-tr { border-color: rgba(21, 128, 61, 0.15); }
 body.theme-avalon .ca-corner-bl,
 body.theme-avalon .ca-corner-br { border-color: rgba(21, 128, 61, 0.1); }
 
-/* System label */
 .circuit-awakening .ca-system {
     display: block;
     font-family: 'Share Tech Mono', monospace;
@@ -1034,7 +1056,7 @@ body.theme-avalon .circuit-awakening .ca-system {
     color: rgba(21, 128, 61, 0.4);
 }
 
-/* Main activation text — TRACE ON */
+/* Trace On command — starts dim, glows on scroll reveal */
 .circuit-awakening .ca-command {
     display: block;
     font-family: 'Cinzel', serif;
@@ -1050,7 +1072,15 @@ body.theme-avalon .circuit-awakening .ca-system {
         0 0 60px rgba(74, 222, 128, 0.15);
     position: relative;
     z-index: 2;
+    opacity: 0.3;
+    transition: opacity 1s ease;
     animation: trace-on-pulse 3s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+.circuit-awakening.ca-revealed .ca-command {
+    opacity: 1;
+    animation-play-state: running;
 }
 
 @keyframes trace-on-pulse {
@@ -1073,6 +1103,11 @@ body.theme-avalon .circuit-awakening .ca-command {
     color: #15803d;
     text-shadow: 0 0 8px rgba(21, 128, 61, 0.15);
     animation: trace-on-pulse-avalon 3s ease-in-out infinite;
+    animation-play-state: paused;
+}
+
+body.theme-avalon .circuit-awakening.ca-revealed .ca-command {
+    animation-play-state: running;
 }
 
 @keyframes trace-on-pulse-avalon {
@@ -1080,7 +1115,6 @@ body.theme-avalon .circuit-awakening .ca-command {
     50% { text-shadow: 0 0 12px rgba(21, 128, 61, 0.2); }
 }
 
-/* Circuit description text */
 .circuit-awakening .ca-desc {
     display: block;
     text-align: center;
@@ -1093,7 +1127,6 @@ body.theme-avalon .circuit-awakening .ca-command {
     z-index: 2;
 }
 
-/* Circuit line indicators */
 .circuit-awakening .ca-circuits {
     display: flex;
     justify-content: center;
@@ -1112,6 +1145,7 @@ body.theme-avalon .circuit-awakening .ca-command {
     overflow: hidden;
 }
 
+/* Circuit lines wait for scroll trigger */
 .circuit-awakening .ca-line::after {
     content: '';
     position: absolute;
@@ -1124,6 +1158,10 @@ body.theme-avalon .circuit-awakening .ca-command {
         rgba(74, 222, 128, 0.6));
     border-radius: 2px;
     box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
+    animation: none;
+}
+
+.circuit-awakening.ca-revealed .ca-line::after {
     animation: circuit-fill-up 2s ease-out forwards;
     animation-delay: calc(var(--d) * 100ms);
 }
@@ -1144,8 +1182,7 @@ body.theme-avalon .circuit-awakening .ca-line::after {
 }
 
 /* ===================================================
-   2. TRACE ON — INLINE INCANTATION STYLE
-   For when Gurtej says "Trace On" in prose
+   TRACE ON — INLINE INCANTATION
    =================================================== */
 .prose .incantation.trace {
     text-indent: 0 !important;
@@ -1253,8 +1290,7 @@ body.theme-avalon .prose .incantation.trace::after {
 }
 
 /* ===================================================
-   3. STRATEGY MAP / FACTION BOARD
-   World Targets · Glowing Markers · War Table
+   STRATEGY MAP / FACTION BOARD
    =================================================== */
 .faction-board {
     text-indent: 0 !important;
@@ -1267,7 +1303,6 @@ body.theme-avalon .prose .incantation.trace::after {
     opacity: 1;
 }
 
-/* Header bar */
 .fb-header {
     display: flex;
     justify-content: space-between;
@@ -1299,7 +1334,6 @@ body.theme-avalon .prose .incantation.trace::after {
     50% { opacity: 1; }
 }
 
-/* Faction grid */
 .fb-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -1325,7 +1359,6 @@ body.theme-avalon .prose .incantation.trace::after {
     background: var(--bg-card);
 }
 
-/* Location marker */
 .fb-target .fb-location {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.6em;
@@ -1335,7 +1368,6 @@ body.theme-avalon .prose .incantation.trace::after {
     text-align: center;
 }
 
-/* Faction info */
 .fb-target .fb-name {
     display: block;
     font-family: 'Cinzel', serif;
@@ -1354,7 +1386,6 @@ body.theme-avalon .prose .incantation.trace::after {
     letter-spacing: 1px;
 }
 
-/* Threat level badge */
 .fb-threat {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.55em;
@@ -1420,7 +1451,6 @@ body.theme-avalon .fb-threat.fb-unknown {
     background: rgba(107, 33, 168, 0.04);
 }
 
-/* Target dot indicator */
 .fb-target .fb-dot {
     position: absolute;
     left: 14px;
@@ -1456,60 +1486,7 @@ body.theme-avalon .fb-target .fb-dot {
 }
 
 /* ===================================================
-   4. EVOLVED MASTER CARD — PROJECTION MAGUS
-   Neon Green Glow · Circuit Border · Awakened
-   =================================================== */
-.threat-card.tc-projection {
-    border-top: 3px solid #4ade80 !important;
-    position: relative;
-    overflow: hidden;
-}
-
-.threat-card.tc-projection::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg,
-        rgba(74, 222, 128, 0.04) 0%,
-        transparent 60%);
-    pointer-events: none;
-}
-
-.threat-card.tc-projection .tc-codename {
-    color: #4ade80 !important;
-    text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
-}
-
-.threat-card.tc-projection .tc-class {
-    color: #4ade80 !important;
-    border-color: rgba(74, 222, 128, 0.3) !important;
-    background: rgba(74, 222, 128, 0.05) !important;
-}
-
-body.theme-avalon .threat-card.tc-projection {
-    border-top-color: #15803d !important;
-}
-
-body.theme-avalon .threat-card.tc-projection::before {
-    background: linear-gradient(180deg,
-        rgba(21, 128, 61, 0.03) 0%,
-        transparent 60%);
-}
-
-body.theme-avalon .threat-card.tc-projection .tc-codename {
-    color: #15803d !important;
-    text-shadow: none;
-}
-
-body.theme-avalon .threat-card.tc-projection .tc-class {
-    color: #15803d !important;
-    border-color: rgba(21, 128, 61, 0.25) !important;
-    background: rgba(21, 128, 61, 0.04) !important;
-}
-
-/* ===================================================
-   5. PACT DECLARATION — THE PSYCHOPATH PACT
-   Two signatories · Blood oath styling
+   PACT DECLARATION — THE PSYCHOPATH PACT
    =================================================== */
 .pact-declaration {
     text-indent: 0 !important;
@@ -1537,7 +1514,6 @@ body.theme-avalon .pact-declaration {
     border-bottom-color: rgba(168, 32, 64, 0.08);
 }
 
-/* Blood-ink drip lines */
 .pact-declaration::before {
     content: '';
     position: absolute;
@@ -1597,7 +1573,6 @@ body.theme-avalon .pact-declaration .pd-title {
     margin-bottom: 24px;
 }
 
-/* Signatory names */
 .pact-declaration .pd-signatories {
     display: flex;
     justify-content: center;
@@ -1629,8 +1604,7 @@ body.theme-avalon .pact-declaration .pd-title {
 }
 
 /* ===================================================
-   6. CONTRACT TRANSFER EFFECT
-   Servant bond shift · Command seal migration
+   CONTRACT TRANSFER EFFECT
    =================================================== */
 .contract-transfer {
     text-indent: 0 !important;
@@ -1722,8 +1696,7 @@ body.theme-avalon .ct-result {
 }
 
 /* ===================================================
-   7. ENHANCED SOUND EFFECT — HEAVY IMPACT
-   For candle cracks and circuit ignition sounds
+   ENHANCED SOUND EFFECTS
    =================================================== */
 .prose .sound-effect.heavy {
     font-size: 1.4em;
@@ -1760,9 +1733,35 @@ body.theme-avalon .prose .sound-effect.heavy {
 }
 
 /* ===================================================
-   RESPONSIVE — CHAPTER 8 COMPONENTS
+   RESPONSIVE — ALL COMPONENTS (MERGED)
    =================================================== */
 @media (max-width: 768px) {
+    /* Battle Status */
+    .bs-grid { grid-template-columns: 1fr; }
+
+    /* Threat Grid */
+    .threat-grid { grid-template-columns: 1fr; }
+    .threat-grid:has(.threat-card:nth-child(2):last-child) {
+        grid-template-columns: 1fr;
+    }
+
+    /* Shadow Emergence */
+    .shadow-emergence .se-name { font-size: 1.15em; }
+
+    /* Saber Break */
+    .saber-break { padding: 40px 18px; }
+    .saber-break .sb-text { font-size: 1.25em; letter-spacing: 2px; }
+
+    /* Impact Line */
+    .impact-line { font-size: 1.1em; margin: 35px 10px; }
+
+    /* Golden Dissolution */
+    .golden-dissolution .gd-name { font-size: 1.3em; }
+
+    /* Breaking News */
+    .bn-headline { font-size: 0.95em; }
+
+    /* Circuit Awakening */
     .circuit-awakening {
         padding: 30px 20px;
         margin: 40px 0;
@@ -1773,6 +1772,7 @@ body.theme-avalon .prose .sound-effect.heavy {
         letter-spacing: 5px;
     }
 
+    /* Faction Board */
     .fb-target {
         grid-template-columns: 60px 1fr;
         gap: 10px;
@@ -1788,6 +1788,7 @@ body.theme-avalon .prose .sound-effect.heavy {
         display: none;
     }
 
+    /* Pact Declaration */
     .pact-declaration {
         padding: 30px 18px;
     }
@@ -1801,6 +1802,7 @@ body.theme-avalon .prose .sound-effect.heavy {
         gap: 20px;
     }
 
+    /* Contract Transfer */
     .ct-flow {
         flex-direction: column;
         gap: 10px;
@@ -1810,14 +1812,42 @@ body.theme-avalon .prose .sound-effect.heavy {
         transform: rotate(90deg);
     }
 
+    /* Trace On Incantation */
     .prose .incantation.trace {
         font-size: 1.02em;
         letter-spacing: 4px;
         padding: 18px 22px;
     }
+
+    /* Overseer Roster Card */
+    .roster-card.overseer-card {
+        border-top: none;
+        border-left: 3px solid #f59e0b;
+    }
+
+    body.theme-avalon .roster-card.overseer-card {
+        border-left-color: #b45309;
+    }
 }
 
 @media (max-width: 480px) {
+    /* Saber Break */
+    .saber-break .sb-text { font-size: 1.05em; letter-spacing: 1px; }
+    .saber-break { padding: 30px 14px; }
+
+    /* Shadow Emergence */
+    .shadow-emergence .se-name { font-size: 1em; letter-spacing: 2px; }
+
+    /* Golden Dissolution */
+    .golden-dissolution .gd-name { font-size: 1.1em; letter-spacing: 4px; }
+
+    /* Impact Line */
+    .impact-line { font-size: 0.95em; }
+
+    /* Breaking News */
+    .bn-headline { font-size: 0.9em; }
+
+    /* Circuit Awakening */
     .circuit-awakening .ca-command {
         font-size: 1.2em;
         letter-spacing: 3px;
@@ -1827,17 +1857,20 @@ body.theme-avalon .prose .sound-effect.heavy {
         padding: 24px 14px;
     }
 
+    /* Pact Declaration */
     .pact-declaration .pd-title {
         font-size: 1.05em;
         letter-spacing: 2px;
     }
 
+    /* Trace On Incantation */
     .prose .incantation.trace {
         font-size: 0.92em;
         letter-spacing: 3px;
         padding: 14px 16px;
     }
 
+    /* Faction Board */
     .fb-header {
         flex-direction: column;
         gap: 4px;

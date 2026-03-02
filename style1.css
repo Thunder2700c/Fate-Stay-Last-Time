@@ -872,3 +872,975 @@ body.theme-avalon .dialogue-box:has(.speaker.magus) .dialogue-text::after {
         rgba(67, 56, 202, 0.008) 4px
     );
 }
+
+/* ===================================================
+   CHAPTER 8 — THE PSYCHOPATH PACT
+   Components: Circuit Awakening, Strategy Map,
+   Master Evolution, Monastery Atmosphere
+   =================================================== */
+
+/* ===================================================
+   1. TRACE ON — CIRCUIT AWAKENING EFFECT
+   Green Magecraft · Glowing Circuitry · Projection
+   =================================================== */
+
+/* Green magic circle variant for loading screen */
+.magic-circle-container.green::before {
+    background: radial-gradient(circle,
+        rgba(74, 222, 128, 0.15) 0%,
+        rgba(74, 222, 128, 0.06) 25%,
+        transparent 60%);
+}
+
+.magic-circle-container.green::after {
+    border-color: rgba(74, 222, 128, 0.2);
+}
+
+/* Circuit Awakening Block — The moment circuits ignite */
+.circuit-awakening {
+    text-indent: 0 !important;
+    margin: 55px 0;
+    padding: 40px 28px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: linear-gradient(180deg,
+        rgba(8, 10, 20, 0.92) 0%,
+        rgba(5, 20, 10, 0.88) 40%,
+        rgba(8, 15, 8, 0.85) 70%,
+        rgba(8, 10, 20, 0.92) 100%);
+    border-top: 1px solid rgba(74, 222, 128, 0.15);
+    border-bottom: 1px solid rgba(74, 222, 128, 0.1);
+    border-radius: 2px;
+    opacity: 1;
+}
+
+body.theme-avalon .circuit-awakening {
+    background: linear-gradient(180deg,
+        rgba(235, 229, 216, 0.92) 0%,
+        rgba(225, 235, 228, 0.88) 40%,
+        rgba(230, 238, 230, 0.85) 70%,
+        rgba(235, 229, 216, 0.92) 100%);
+    border-top-color: rgba(21, 128, 61, 0.12);
+    border-bottom-color: rgba(21, 128, 61, 0.08);
+}
+
+/* Circuitry grid background pattern */
+.circuit-awakening::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(0deg,
+            transparent 49.5%,
+            rgba(74, 222, 128, 0.015) 49.5%,
+            rgba(74, 222, 128, 0.015) 50.5%,
+            transparent 50.5%),
+        linear-gradient(90deg,
+            transparent 49.5%,
+            rgba(74, 222, 128, 0.015) 49.5%,
+            rgba(74, 222, 128, 0.015) 50.5%,
+            transparent 50.5%);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: -1;
+    animation: circuit-grid-pulse 4s ease-in-out infinite;
+}
+
+@keyframes circuit-grid-pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+body.theme-avalon .circuit-awakening::before {
+    background:
+        linear-gradient(0deg,
+            transparent 49.5%,
+            rgba(21, 128, 61, 0.012) 49.5%,
+            rgba(21, 128, 61, 0.012) 50.5%,
+            transparent 50.5%),
+        linear-gradient(90deg,
+            transparent 49.5%,
+            rgba(21, 128, 61, 0.012) 49.5%,
+            rgba(21, 128, 61, 0.012) 50.5%,
+            transparent 50.5%);
+    background-size: 30px 30px;
+    animation: none;
+}
+
+/* Flowing energy lines overlay */
+.circuit-awakening::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 300%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 40px,
+        rgba(74, 222, 128, 0.02) 40px,
+        rgba(74, 222, 128, 0.02) 41px
+    );
+    animation: circuit-flow 8s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes circuit-flow {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(33.33%); }
+}
+
+body.theme-avalon .circuit-awakening::after {
+    animation: none;
+    opacity: 0.5;
+}
+
+/* Corner brackets */
+.circuit-awakening .ca-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.ca-corner-tl { top: 10px; left: 10px; border-top: 1px solid rgba(74, 222, 128, 0.25); border-left: 1px solid rgba(74, 222, 128, 0.25); }
+.ca-corner-tr { top: 10px; right: 10px; border-top: 1px solid rgba(74, 222, 128, 0.25); border-right: 1px solid rgba(74, 222, 128, 0.25); }
+.ca-corner-bl { bottom: 10px; left: 10px; border-bottom: 1px solid rgba(74, 222, 128, 0.2); border-left: 1px solid rgba(74, 222, 128, 0.2); }
+.ca-corner-br { bottom: 10px; right: 10px; border-bottom: 1px solid rgba(74, 222, 128, 0.2); border-right: 1px solid rgba(74, 222, 128, 0.2); }
+
+body.theme-avalon .ca-corner-tl,
+body.theme-avalon .ca-corner-tr { border-color: rgba(21, 128, 61, 0.15); }
+body.theme-avalon .ca-corner-bl,
+body.theme-avalon .ca-corner-br { border-color: rgba(21, 128, 61, 0.1); }
+
+/* System label */
+.circuit-awakening .ca-system {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: rgba(74, 222, 128, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 2;
+}
+
+body.theme-avalon .circuit-awakening .ca-system {
+    color: rgba(21, 128, 61, 0.4);
+}
+
+/* Main activation text — TRACE ON */
+.circuit-awakening .ca-command {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 2em;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #4ade80;
+    text-shadow:
+        0 0 10px rgba(74, 222, 128, 0.8),
+        0 0 30px rgba(74, 222, 128, 0.4),
+        0 0 60px rgba(74, 222, 128, 0.15);
+    position: relative;
+    z-index: 2;
+    animation: trace-on-pulse 3s ease-in-out infinite;
+}
+
+@keyframes trace-on-pulse {
+    0%, 100% {
+        text-shadow:
+            0 0 8px rgba(74, 222, 128, 0.5),
+            0 0 22px rgba(74, 222, 128, 0.2);
+        filter: brightness(0.9);
+    }
+    50% {
+        text-shadow:
+            0 0 14px rgba(74, 222, 128, 1),
+            0 0 40px rgba(74, 222, 128, 0.5),
+            0 0 80px rgba(74, 222, 128, 0.2);
+        filter: brightness(1.1);
+    }
+}
+
+body.theme-avalon .circuit-awakening .ca-command {
+    color: #15803d;
+    text-shadow: 0 0 8px rgba(21, 128, 61, 0.15);
+    animation: trace-on-pulse-avalon 3s ease-in-out infinite;
+}
+
+@keyframes trace-on-pulse-avalon {
+    0%, 100% { text-shadow: 0 0 4px rgba(21, 128, 61, 0.06); }
+    50% { text-shadow: 0 0 12px rgba(21, 128, 61, 0.2); }
+}
+
+/* Circuit description text */
+.circuit-awakening .ca-desc {
+    display: block;
+    text-align: center;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.88em;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-top: 16px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Circuit line indicators */
+.circuit-awakening .ca-circuits {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.circuit-awakening .ca-line {
+    width: 3px;
+    height: 24px;
+    background: rgba(74, 222, 128, 0.15);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.circuit-awakening .ca-line::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background: linear-gradient(0deg,
+        #4ade80,
+        rgba(74, 222, 128, 0.6));
+    border-radius: 2px;
+    box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
+    animation: circuit-fill-up 2s ease-out forwards;
+    animation-delay: calc(var(--d) * 100ms);
+}
+
+@keyframes circuit-fill-up {
+    0% { height: 0%; opacity: 0; }
+    50% { opacity: 1; }
+    100% { height: 100%; opacity: 1; }
+}
+
+body.theme-avalon .circuit-awakening .ca-line {
+    background: rgba(21, 128, 61, 0.1);
+}
+
+body.theme-avalon .circuit-awakening .ca-line::after {
+    background: linear-gradient(0deg, #15803d, rgba(21, 128, 61, 0.6));
+    box-shadow: 0 0 4px rgba(21, 128, 61, 0.2);
+}
+
+/* ===================================================
+   2. TRACE ON — INLINE INCANTATION STYLE
+   For when Gurtej says "Trace On" in prose
+   =================================================== */
+.prose .incantation.trace {
+    text-indent: 0 !important;
+    text-align: center;
+    margin: 40px auto;
+    padding: 20px 36px;
+    max-width: 500px;
+    position: relative;
+    overflow: visible;
+    border: none;
+    border-radius: 0;
+    font-family: 'Cinzel', serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.2em;
+    letter-spacing: 6px;
+    line-height: 1.6;
+    color: #4ade80;
+    text-shadow:
+        0 0 10px rgba(74, 222, 128, 0.9),
+        0 0 28px rgba(74, 222, 128, 0.5),
+        0 0 56px rgba(74, 222, 128, 0.2);
+    background: radial-gradient(ellipse at center,
+        rgba(74, 222, 128, 0.04) 0%,
+        rgba(74, 222, 128, 0.01) 50%,
+        transparent 75%);
+    animation: trace-verse-pulse 4s ease-in-out infinite;
+}
+
+@keyframes trace-verse-pulse {
+    0%, 100% {
+        text-shadow:
+            0 0 8px rgba(74, 222, 128, 0.6),
+            0 0 24px rgba(74, 222, 128, 0.25);
+        filter: brightness(0.92);
+    }
+    50% {
+        text-shadow:
+            0 0 14px rgba(74, 222, 128, 1),
+            0 0 36px rgba(74, 222, 128, 0.6),
+            0 0 72px rgba(74, 222, 128, 0.2);
+        filter: brightness(1.05);
+    }
+}
+
+.prose .incantation.trace::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(74, 222, 128, 0.1) 15%,
+        rgba(74, 222, 128, 0.5) 50%,
+        rgba(74, 222, 128, 0.1) 85%,
+        transparent 100%);
+    box-shadow: 0 0 8px rgba(74, 222, 128, 0.15);
+}
+
+.prose .incantation.trace::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(74, 222, 128, 0.08) 15%,
+        rgba(74, 222, 128, 0.35) 50%,
+        rgba(74, 222, 128, 0.08) 85%,
+        transparent 100%);
+}
+
+body.theme-avalon .prose .incantation.trace {
+    color: #15803d;
+    text-shadow: 0 0 8px rgba(21, 128, 61, 0.15);
+    background: radial-gradient(ellipse at center,
+        rgba(21, 128, 61, 0.03) 0%, transparent 60%);
+    animation: none;
+    filter: none;
+}
+
+body.theme-avalon .prose .incantation.trace::before {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(21, 128, 61, 0.06) 15%,
+        rgba(21, 128, 61, 0.25) 50%,
+        rgba(21, 128, 61, 0.06) 85%,
+        transparent 100%);
+    box-shadow: none;
+}
+
+body.theme-avalon .prose .incantation.trace::after {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(21, 128, 61, 0.04) 15%,
+        rgba(21, 128, 61, 0.15) 50%,
+        rgba(21, 128, 61, 0.04) 85%,
+        transparent 100%);
+}
+
+/* ===================================================
+   3. STRATEGY MAP / FACTION BOARD
+   World Targets · Glowing Markers · War Table
+   =================================================== */
+.faction-board {
+    text-indent: 0 !important;
+    margin: 45px 0;
+    padding: 0;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    overflow: hidden;
+    opacity: 1;
+}
+
+/* Header bar */
+.fb-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.fb-header .fb-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.fb-header .fb-status {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--command-seal);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: fb-status-blink 2s ease-in-out infinite;
+}
+
+@keyframes fb-status-blink {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Faction grid */
+.fb-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+}
+
+.fb-target {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-subtle);
+    transition: background 0.3s ease;
+    position: relative;
+}
+
+.fb-target:last-child {
+    border-bottom: none;
+}
+
+.fb-target:hover {
+    background: var(--bg-card);
+}
+
+/* Location marker */
+.fb-target .fb-location {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+/* Faction info */
+.fb-target .fb-name {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.fb-target .fb-desc {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55em;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+}
+
+/* Threat level badge */
+.fb-threat {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+}
+
+.fb-threat.fb-hostile {
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.fb-threat.fb-extreme {
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    background: rgba(245, 158, 11, 0.05);
+    animation: fb-extreme-pulse 2s ease-in-out infinite;
+}
+
+@keyframes fb-extreme-pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.fb-threat.fb-allied {
+    color: #4ade80;
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    background: rgba(74, 222, 128, 0.05);
+}
+
+.fb-threat.fb-unknown {
+    color: var(--enemy-purple);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    background: rgba(168, 85, 247, 0.05);
+}
+
+body.theme-avalon .fb-threat.fb-hostile {
+    color: #b91c1c;
+    border-color: rgba(185, 28, 28, 0.25);
+    background: rgba(185, 28, 28, 0.04);
+}
+
+body.theme-avalon .fb-threat.fb-extreme {
+    color: #b45309;
+    border-color: rgba(180, 83, 9, 0.25);
+    background: rgba(180, 83, 9, 0.04);
+    animation: none;
+}
+
+body.theme-avalon .fb-threat.fb-allied {
+    color: #15803d;
+    border-color: rgba(21, 128, 61, 0.25);
+    background: rgba(21, 128, 61, 0.04);
+}
+
+body.theme-avalon .fb-threat.fb-unknown {
+    color: #6b21a8;
+    border-color: rgba(107, 33, 168, 0.25);
+    background: rgba(107, 33, 168, 0.04);
+}
+
+/* Target dot indicator */
+.fb-target .fb-dot {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+}
+
+.fb-target.fb-target-hostile .fb-dot {
+    background: #ef4444;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
+}
+
+.fb-target.fb-target-extreme .fb-dot {
+    background: #f59e0b;
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
+}
+
+.fb-target.fb-target-allied .fb-dot {
+    background: #4ade80;
+    box-shadow: 0 0 6px rgba(74, 222, 128, 0.4);
+}
+
+.fb-target.fb-target-unknown .fb-dot {
+    background: var(--enemy-purple);
+    box-shadow: 0 0 6px rgba(168, 85, 247, 0.4);
+}
+
+body.theme-avalon .fb-target .fb-dot {
+    box-shadow: none;
+}
+
+/* ===================================================
+   4. EVOLVED MASTER CARD — PROJECTION MAGUS
+   Neon Green Glow · Circuit Border · Awakened
+   =================================================== */
+.threat-card.tc-projection {
+    border-top: 3px solid #4ade80 !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.threat-card.tc-projection::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+        rgba(74, 222, 128, 0.04) 0%,
+        transparent 60%);
+    pointer-events: none;
+}
+
+.threat-card.tc-projection .tc-codename {
+    color: #4ade80 !important;
+    text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+}
+
+.threat-card.tc-projection .tc-class {
+    color: #4ade80 !important;
+    border-color: rgba(74, 222, 128, 0.3) !important;
+    background: rgba(74, 222, 128, 0.05) !important;
+}
+
+body.theme-avalon .threat-card.tc-projection {
+    border-top-color: #15803d !important;
+}
+
+body.theme-avalon .threat-card.tc-projection::before {
+    background: linear-gradient(180deg,
+        rgba(21, 128, 61, 0.03) 0%,
+        transparent 60%);
+}
+
+body.theme-avalon .threat-card.tc-projection .tc-codename {
+    color: #15803d !important;
+    text-shadow: none;
+}
+
+body.theme-avalon .threat-card.tc-projection .tc-class {
+    color: #15803d !important;
+    border-color: rgba(21, 128, 61, 0.25) !important;
+    background: rgba(21, 128, 61, 0.04) !important;
+}
+
+/* ===================================================
+   5. PACT DECLARATION — THE PSYCHOPATH PACT
+   Two signatories · Blood oath styling
+   =================================================== */
+.pact-declaration {
+    text-indent: 0 !important;
+    text-align: center;
+    margin: 55px 0;
+    padding: 40px 24px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: linear-gradient(180deg,
+        rgba(8, 10, 20, 0.92) 0%,
+        rgba(20, 5, 5, 0.88) 50%,
+        rgba(8, 10, 20, 0.92) 100%);
+    border-top: 1px solid rgba(196, 30, 58, 0.2);
+    border-bottom: 1px solid rgba(196, 30, 58, 0.15);
+    opacity: 1;
+}
+
+body.theme-avalon .pact-declaration {
+    background: linear-gradient(180deg,
+        rgba(235, 229, 216, 0.92) 0%,
+        rgba(240, 225, 225, 0.88) 50%,
+        rgba(235, 229, 216, 0.92) 100%);
+    border-top-color: rgba(168, 32, 64, 0.1);
+    border-bottom-color: rgba(168, 32, 64, 0.08);
+}
+
+/* Blood-ink drip lines */
+.pact-declaration::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent, rgba(196, 30, 58, 0.4), transparent);
+}
+
+.pact-declaration::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent, rgba(196, 30, 58, 0.25), transparent);
+}
+
+.pact-declaration .pd-label {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--command-seal);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: 18px;
+}
+
+.pact-declaration .pd-title {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 1.6em;
+    font-weight: 700;
+    color: var(--command-seal);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: 0 0 15px rgba(196, 30, 58, 0.4);
+    margin-bottom: 6px;
+}
+
+body.theme-avalon .pact-declaration .pd-title {
+    text-shadow: 0 0 6px rgba(168, 32, 64, 0.1);
+}
+
+.pact-declaration .pd-subtitle {
+    display: block;
+    font-family: 'Crimson Text', serif;
+    font-size: 0.85em;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+/* Signatory names */
+.pact-declaration .pd-signatories {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.pact-declaration .pd-signer {
+    text-align: center;
+}
+
+.pact-declaration .pd-signer-name {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.pact-declaration .pd-signer-role {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ===================================================
+   6. CONTRACT TRANSFER EFFECT
+   Servant bond shift · Command seal migration
+   =================================================== */
+.contract-transfer {
+    text-indent: 0 !important;
+    margin: 40px 0;
+    padding: 24px 22px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--command-seal);
+    border-radius: 0 4px 4px 0;
+    opacity: 1;
+    position: relative;
+}
+
+.contract-transfer .ct-header {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--command-seal);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 14px;
+    animation: ct-header-pulse 2s ease-in-out infinite;
+}
+
+@keyframes ct-header-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.ct-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.ct-entity {
+    text-align: center;
+    padding: 12px 18px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border-subtle);
+    border-radius: 3px;
+    min-width: 120px;
+}
+
+.ct-entity .ct-name {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.ct-entity .ct-role {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.5em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.ct-arrow {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.2em;
+    color: var(--command-seal);
+    animation: ct-arrow-flow 1.5s ease-in-out infinite;
+}
+
+@keyframes ct-arrow-flow {
+    0%, 100% { opacity: 0.4; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(4px); }
+}
+
+.ct-result {
+    display: block;
+    text-align: center;
+    margin-top: 14px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: #4ade80;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+body.theme-avalon .ct-result {
+    color: #15803d;
+}
+
+/* ===================================================
+   7. ENHANCED SOUND EFFECT — HEAVY IMPACT
+   For candle cracks and circuit ignition sounds
+   =================================================== */
+.prose .sound-effect.heavy {
+    font-size: 1.4em;
+    color: #4ade80;
+    text-shadow: 0 0 10px rgba(74, 222, 128, 0.5);
+    letter-spacing: 5px;
+}
+
+body.theme-avalon .prose .sound-effect.heavy {
+    color: #15803d;
+    text-shadow: none;
+}
+
+.prose .sound-effect.crack {
+    font-size: 1.1em;
+    color: var(--text-primary);
+    text-shadow: none;
+    letter-spacing: 6px;
+    position: relative;
+}
+
+.prose .sound-effect.crack::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(74, 222, 128, 0.4),
+        transparent);
+}
+
+/* ===================================================
+   RESPONSIVE — CHAPTER 8 COMPONENTS
+   =================================================== */
+@media (max-width: 768px) {
+    .circuit-awakening {
+        padding: 30px 20px;
+        margin: 40px 0;
+    }
+
+    .circuit-awakening .ca-command {
+        font-size: 1.5em;
+        letter-spacing: 5px;
+    }
+
+    .fb-target {
+        grid-template-columns: 60px 1fr;
+        gap: 10px;
+    }
+
+    .fb-threat {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin-top: 4px;
+    }
+
+    .fb-target .fb-dot {
+        display: none;
+    }
+
+    .pact-declaration {
+        padding: 30px 18px;
+    }
+
+    .pact-declaration .pd-title {
+        font-size: 1.25em;
+        letter-spacing: 3px;
+    }
+
+    .pact-declaration .pd-signatories {
+        gap: 20px;
+    }
+
+    .ct-flow {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .ct-arrow {
+        transform: rotate(90deg);
+    }
+
+    .prose .incantation.trace {
+        font-size: 1.02em;
+        letter-spacing: 4px;
+        padding: 18px 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    .circuit-awakening .ca-command {
+        font-size: 1.2em;
+        letter-spacing: 3px;
+    }
+
+    .circuit-awakening {
+        padding: 24px 14px;
+    }
+
+    .pact-declaration .pd-title {
+        font-size: 1.05em;
+        letter-spacing: 2px;
+    }
+
+    .prose .incantation.trace {
+        font-size: 0.92em;
+        letter-spacing: 3px;
+        padding: 14px 16px;
+    }
+
+    .fb-header {
+        flex-direction: column;
+        gap: 4px;
+        text-align: center;
+    }
+       }

@@ -462,6 +462,26 @@
         el.classList.add('sb-revealed');
     }, { threshold: 0.4 });
 
+       // ── Circuit Awakening: reveal ──
+    observeOnce($$('.circuit-awakening'), el => {
+        el.classList.add('ca-revealed');
+    }, { threshold: 0.4 });
+
+    // ── Faction Board: reveal ──
+    observeOnce($$('.faction-board'), el => {
+        el.classList.add('fb-revealed');
+    }, { threshold: 0.3 });
+
+    // ── Pact Declaration: reveal ──
+    observeOnce($$('.pact-declaration'), el => {
+        el.classList.add('pact-revealed');
+    }, { threshold: 0.4 });
+
+    // ── Contract Transfer: reveal ──
+    observeOnce($$('.contract-transfer'), el => {
+        el.classList.add('ct-revealed');
+    }, { threshold: 0.4 });
+
     // ═══════════════════════════════════════════════
     //  10. READING PROGRESS SAVE
     //      Saves scroll position per chapter

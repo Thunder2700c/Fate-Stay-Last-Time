@@ -1877,3 +1877,985 @@ body.theme-avalon .prose .sound-effect.heavy {
         text-align: center;
     }
        }
+
+/* ===================================================
+   CHAPTER 9 — THE CLOCK TOWER DESCENT
+   Components: Tactical Comms, Bounded Field Alert,
+   Illusion Zone, Circuit Overload, Mortal Vitals,
+   Beast Reveal
+   =================================================== */
+
+/* ===================================================
+   1. TACTICAL COMMS — RADIO TRANSMISSION UI
+   Military/Sci-Fi · 4 Variants · Animated Static
+   =================================================== */
+.tactical-comms {
+    text-indent: 0 !important;
+    margin: 24px 0;
+    padding: 14px 20px;
+    background: linear-gradient(135deg,
+        rgba(8, 15, 30, 0.95),
+        var(--bg-dialogue),
+        rgba(8, 15, 30, 0.9));
+    border: 1px solid rgba(58, 123, 213, 0.15);
+    border-left: 3px solid rgba(58, 123, 213, 0.4);
+    border-radius: 0 4px 4px 0;
+    position: relative;
+    overflow: hidden;
+    opacity: 1;
+}
+
+/* Scan line overlay */
+.tactical-comms::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(58, 123, 213, 0.008) 3px,
+        rgba(58, 123, 213, 0.008) 4px
+    );
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+/* Signal strength indicator dot */
+.tactical-comms::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
+    animation: comms-signal 2s ease-in-out infinite;
+}
+
+@keyframes comms-signal {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+.comms-source {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.55em;
+    color: rgba(58, 123, 213, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+}
+
+.comms-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.88em;
+    color: #93c5fd;
+    font-style: normal;
+    letter-spacing: 0.5px;
+    line-height: 1.7;
+    text-indent: 0 !important;
+    margin: 0;
+}
+
+/* ── Variant: Archer Link (Dark Red) ── */
+.tactical-comms.archer-link {
+    background: linear-gradient(135deg,
+        rgba(20, 8, 10, 0.95),
+        var(--bg-dialogue),
+        rgba(20, 8, 10, 0.9));
+    border-color: rgba(212, 64, 84, 0.15);
+    border-left-color: rgba(212, 64, 84, 0.4);
+}
+
+.tactical-comms.archer-link::before {
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(212, 64, 84, 0.008) 3px,
+        rgba(212, 64, 84, 0.008) 4px
+    );
+}
+
+.tactical-comms.archer-link .comms-source {
+    color: rgba(212, 64, 84, 0.6);
+}
+
+.tactical-comms.archer-link .comms-text {
+    color: #fca5a5;
+}
+
+/* ── Variant: Critical Comms (Emergency Red Flash) ── */
+.tactical-comms.critical-comms {
+    background: linear-gradient(135deg,
+        rgba(30, 5, 5, 0.95),
+        rgba(20, 5, 8, 0.9),
+        rgba(30, 5, 5, 0.95));
+    border-color: rgba(239, 68, 68, 0.25);
+    border-left-color: rgba(239, 68, 68, 0.6);
+    animation: critical-comms-flash 1.5s ease-in-out infinite;
+}
+
+@keyframes critical-comms-flash {
+    0%, 100% {
+        border-left-color: rgba(239, 68, 68, 0.3);
+        box-shadow: none;
+    }
+    50% {
+        border-left-color: rgba(239, 68, 68, 0.8);
+        box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.03);
+    }
+}
+
+.tactical-comms.critical-comms::after {
+    background: #ef4444;
+    box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
+    animation: comms-signal-critical 0.5s ease-in-out infinite;
+}
+
+@keyframes comms-signal-critical {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+.tactical-comms.critical-comms .comms-source {
+    color: rgba(239, 68, 68, 0.7);
+}
+
+.tactical-comms.critical-comms .comms-text {
+    color: #fca5a5;
+    font-weight: bold;
+}
+
+/* ── Variant: Dead Link (Static / Disconnected) ── */
+.tactical-comms.dead-link {
+    background: linear-gradient(135deg,
+        rgba(10, 10, 12, 0.95),
+        rgba(8, 8, 10, 0.9),
+        rgba(10, 10, 12, 0.95));
+    border-color: rgba(100, 100, 100, 0.15);
+    border-left-color: rgba(100, 100, 100, 0.3);
+}
+
+.tactical-comms.dead-link::before {
+    background:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(150, 150, 150, 0.015) 2px,
+            rgba(150, 150, 150, 0.015) 3px
+        );
+    animation: static-noise 0.15s steps(3) infinite;
+}
+
+@keyframes static-noise {
+    0% { transform: translateY(0); }
+    33% { transform: translateY(-1px); }
+    66% { transform: translateY(1px); }
+    100% { transform: translateY(0); }
+}
+
+.tactical-comms.dead-link::after {
+    background: #6b7280;
+    box-shadow: none;
+    animation: none;
+    opacity: 0.3;
+}
+
+.tactical-comms.dead-link .comms-source {
+    color: rgba(107, 114, 128, 0.5);
+}
+
+.tactical-comms.dead-link .comms-text {
+    color: #6b7280;
+    font-style: italic;
+    letter-spacing: 2px;
+    animation: dead-text-glitch 4s ease-in-out infinite;
+}
+
+@keyframes dead-text-glitch {
+    0%, 92%, 100% { opacity: 0.4; transform: none; }
+    93% { opacity: 0.1; transform: translateX(2px); }
+    94% { opacity: 0.6; transform: translateX(-1px); }
+    95% { opacity: 0.2; transform: translateX(1px) skewX(1deg); }
+    96% { opacity: 0.5; transform: none; }
+}
+
+/* ── Avalon Theme — All Comms Variants ── */
+body.theme-avalon .tactical-comms {
+    background: linear-gradient(135deg,
+        rgba(225, 230, 240, 0.95),
+        var(--bg-dialogue));
+    border-color: rgba(42, 90, 170, 0.12);
+    border-left-color: rgba(42, 90, 170, 0.3);
+}
+
+body.theme-avalon .tactical-comms::before {
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(42, 90, 170, 0.008) 3px,
+        rgba(42, 90, 170, 0.008) 4px
+    );
+}
+
+body.theme-avalon .tactical-comms::after {
+    background: #15803d;
+    box-shadow: none;
+}
+
+body.theme-avalon .comms-source {
+    color: rgba(42, 90, 170, 0.5);
+}
+
+body.theme-avalon .comms-text {
+    color: #1e40af;
+}
+
+body.theme-avalon .tactical-comms.archer-link {
+    background: linear-gradient(135deg,
+        rgba(240, 225, 225, 0.95),
+        var(--bg-dialogue));
+    border-color: rgba(168, 56, 72, 0.12);
+    border-left-color: rgba(168, 56, 72, 0.3);
+}
+
+body.theme-avalon .tactical-comms.archer-link .comms-source {
+    color: rgba(168, 56, 72, 0.5);
+}
+
+body.theme-avalon .tactical-comms.archer-link .comms-text {
+    color: #9f1239;
+}
+
+body.theme-avalon .tactical-comms.critical-comms {
+    background: linear-gradient(135deg,
+        rgba(240, 220, 220, 0.95),
+        var(--bg-dialogue));
+    border-color: rgba(185, 28, 28, 0.15);
+    border-left-color: rgba(185, 28, 28, 0.4);
+    animation: none;
+}
+
+body.theme-avalon .tactical-comms.critical-comms::after {
+    background: #b91c1c;
+    box-shadow: none;
+}
+
+body.theme-avalon .tactical-comms.critical-comms .comms-source {
+    color: rgba(185, 28, 28, 0.5);
+}
+
+body.theme-avalon .tactical-comms.critical-comms .comms-text {
+    color: #b91c1c;
+}
+
+body.theme-avalon .tactical-comms.dead-link {
+    background: linear-gradient(135deg,
+        rgba(230, 228, 225, 0.95),
+        var(--bg-dialogue));
+    border-color: rgba(120, 113, 108, 0.15);
+    border-left-color: rgba(120, 113, 108, 0.25);
+}
+
+body.theme-avalon .tactical-comms.dead-link::before {
+    animation: none;
+}
+
+body.theme-avalon .tactical-comms.dead-link .comms-source {
+    color: rgba(120, 113, 108, 0.4);
+}
+
+body.theme-avalon .tactical-comms.dead-link .comms-text {
+    color: #78716c;
+    animation: none;
+    opacity: 0.5;
+}
+
+/* ===================================================
+   2. BOUNDED FIELD ALERT — SPATIAL ANOMALY
+   Warped Borders · Purple Glow · Perception Shift
+   =================================================== */
+.bounded-field-alert {
+    text-indent: 0 !important;
+    margin: 40px 0;
+    padding: 28px 24px;
+    background: linear-gradient(135deg,
+        rgba(15, 5, 25, 0.95),
+        rgba(10, 8, 20, 0.9),
+        rgba(20, 5, 25, 0.95));
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    position: relative;
+    overflow: hidden;
+    opacity: 1;
+    animation: bf-warp 6s ease-in-out infinite;
+}
+
+@keyframes bf-warp {
+    0%, 100% {
+        border-radius: 4px 12px 4px 12px;
+        border-color: rgba(168, 85, 247, 0.15);
+    }
+    25% {
+        border-radius: 12px 4px 12px 4px;
+        border-color: rgba(168, 85, 247, 0.3);
+    }
+    50% {
+        border-radius: 8px 16px 8px 4px;
+        border-color: rgba(168, 85, 247, 0.2);
+    }
+    75% {
+        border-radius: 4px 8px 16px 8px;
+        border-color: rgba(168, 85, 247, 0.35);
+    }
+}
+
+/* Warped grid overlay */
+.bounded-field-alert::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        conic-gradient(from 0deg at 30% 40%,
+            transparent 0deg,
+            rgba(168, 85, 247, 0.02) 45deg,
+            transparent 90deg,
+            rgba(168, 85, 247, 0.015) 135deg,
+            transparent 180deg,
+            rgba(168, 85, 247, 0.02) 225deg,
+            transparent 270deg,
+            rgba(168, 85, 247, 0.015) 315deg,
+            transparent 360deg);
+    animation: bf-conic-spin 12s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes bf-conic-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Glitch line */
+.bounded-field-alert::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(168, 85, 247, 0.4),
+        rgba(192, 132, 252, 0.6),
+        rgba(168, 85, 247, 0.4),
+        transparent);
+    animation: bf-scan-line 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes bf-scan-line {
+    0% { left: -50%; top: 20%; }
+    50% { left: 100%; top: 80%; }
+    100% { left: -50%; top: 20%; }
+}
+
+.bf-warning {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: #c084fc;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 8px rgba(192, 132, 252, 0.4);
+    animation: bf-warning-pulse 2s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes bf-warning-pulse {
+    0%, 100% { opacity: 0.5; letter-spacing: 4px; }
+    50% { opacity: 1; letter-spacing: 5px; }
+}
+
+.bounded-field-alert p {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.92em;
+    color: var(--text-secondary);
+    font-style: italic;
+    text-indent: 0 !important;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    line-height: 1.7;
+}
+
+/* Avalon */
+body.theme-avalon .bounded-field-alert {
+    background: linear-gradient(135deg,
+        rgba(240, 235, 248, 0.95),
+        rgba(235, 230, 245, 0.9),
+        rgba(240, 235, 248, 0.95));
+    border-color: rgba(107, 33, 168, 0.12);
+    animation: bf-warp-avalon 6s ease-in-out infinite;
+}
+
+@keyframes bf-warp-avalon {
+    0%, 100% { border-radius: 4px 12px 4px 12px; }
+    25% { border-radius: 12px 4px 12px 4px; }
+    50% { border-radius: 8px 16px 8px 4px; }
+    75% { border-radius: 4px 8px 16px 8px; }
+}
+
+body.theme-avalon .bounded-field-alert::before {
+    opacity: 0.5;
+}
+
+body.theme-avalon .bounded-field-alert::after {
+    background: linear-gradient(90deg,
+        transparent,
+        rgba(107, 33, 168, 0.15),
+        rgba(107, 33, 168, 0.25),
+        rgba(107, 33, 168, 0.15),
+        transparent);
+}
+
+body.theme-avalon .bf-warning {
+    color: #6b21a8;
+    text-shadow: none;
+}
+
+/* ===================================================
+   3. ILLUSION ZONE — DREAM / MEMORY SEQUENCE
+   Warm Haze · Golden Glow · Nostalgic
+   =================================================== */
+.illusion-zone {
+    text-indent: 0 !important;
+    margin: 45px 0;
+    padding: 30px 28px;
+    background: linear-gradient(135deg,
+        rgba(30, 20, 8, 0.9),
+        rgba(25, 18, 5, 0.85),
+        rgba(30, 20, 8, 0.9));
+    border: 1px solid rgba(245, 158, 11, 0.1);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    opacity: 1;
+}
+
+/* Warm haze overlay */
+.illusion-zone::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 30%,
+        rgba(245, 158, 11, 0.06) 0%,
+        rgba(245, 158, 11, 0.02) 40%,
+        transparent 70%);
+    animation: illusion-haze 5s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes illusion-haze {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+}
+
+/* Flickering candle edge */
+.illusion-zone::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg,
+        rgba(245, 158, 11, 0.3),
+        rgba(245, 158, 11, 0.1),
+        rgba(245, 158, 11, 0.4),
+        rgba(245, 158, 11, 0.1));
+    background-size: 100% 200%;
+    animation: illusion-candle 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes illusion-candle {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 0% 200%; }
+}
+
+.illusion-zone p {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.95em;
+    color: #d4a574;
+    font-style: italic;
+    text-indent: 0 !important;
+    margin: 0 0 10px 0;
+    position: relative;
+    z-index: 1;
+    line-height: 1.8;
+}
+
+.illusion-zone p:last-child {
+    margin-bottom: 0;
+}
+
+.illusion-voice {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 1.05em;
+    color: #fbbf24;
+    text-shadow: 0 0 12px rgba(251, 191, 36, 0.3);
+    text-align: center;
+    font-style: normal !important;
+    letter-spacing: 2px;
+    margin-top: 14px !important;
+}
+
+/* Avalon */
+body.theme-avalon .illusion-zone {
+    background: linear-gradient(135deg,
+        rgba(248, 242, 230, 0.95),
+        rgba(245, 238, 225, 0.9),
+        rgba(248, 242, 230, 0.95));
+    border-color: rgba(180, 83, 9, 0.1);
+}
+
+body.theme-avalon .illusion-zone::before {
+    background: radial-gradient(ellipse at 50% 30%,
+        rgba(180, 83, 9, 0.04) 0%,
+        transparent 60%);
+}
+
+body.theme-avalon .illusion-zone::after {
+    background: linear-gradient(180deg,
+        rgba(180, 83, 9, 0.15),
+        rgba(180, 83, 9, 0.05),
+        rgba(180, 83, 9, 0.2),
+        rgba(180, 83, 9, 0.05));
+    background-size: 100% 200%;
+}
+
+body.theme-avalon .illusion-zone p {
+    color: #78350f;
+}
+
+body.theme-avalon .illusion-voice {
+    color: #b45309;
+    text-shadow: none;
+}
+
+/* ===================================================
+   4. CIRCUIT OVERLOAD — SYSTEM FAILURE
+   Pulsing Red · Overheating Engine · Painful
+   =================================================== */
+.circuit-overload {
+    text-indent: 0 !important;
+    margin: 40px 0;
+    padding: 24px 22px;
+    background: linear-gradient(135deg,
+        rgba(30, 5, 5, 0.95),
+        rgba(20, 3, 3, 0.9),
+        rgba(30, 5, 5, 0.95));
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-left: 3px solid rgba(239, 68, 68, 0.5);
+    border-radius: 0 4px 4px 0;
+    position: relative;
+    overflow: hidden;
+    opacity: 1;
+    animation: co-pulse 2s ease-in-out infinite;
+}
+
+@keyframes co-pulse {
+    0%, 100% {
+        box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.02);
+        border-left-color: rgba(239, 68, 68, 0.3);
+    }
+    50% {
+        box-shadow: inset 0 0 30px rgba(239, 68, 68, 0.06);
+        border-left-color: rgba(239, 68, 68, 0.7);
+    }
+}
+
+/* Overheat lines */
+.circuit-overload::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(0deg,
+            transparent 49%,
+            rgba(239, 68, 68, 0.02) 49%,
+            rgba(239, 68, 68, 0.02) 51%,
+            transparent 51%),
+        linear-gradient(90deg,
+            transparent 49%,
+            rgba(239, 68, 68, 0.01) 49%,
+            rgba(239, 68, 68, 0.01) 51%,
+            transparent 51%);
+    background-size: 20px 20px;
+    pointer-events: none;
+    animation: co-grid-shift 1s steps(2) infinite;
+}
+
+@keyframes co-grid-shift {
+    0% { transform: translate(0, 0); }
+    50% { transform: translate(1px, -1px); }
+    100% { transform: translate(0, 0); }
+}
+
+.co-warning {
+    display: block;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: #ef4444;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    animation: co-warning-flash 0.8s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes co-warning-flash {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+}
+
+.circuit-overload p {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.82em;
+    color: #fca5a5;
+    text-indent: 0 !important;
+    margin: 0;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
+    line-height: 1.7;
+}
+
+/* Avalon */
+body.theme-avalon .circuit-overload {
+    background: linear-gradient(135deg,
+        rgba(240, 220, 220, 0.95),
+        var(--bg-dialogue));
+    border-color: rgba(185, 28, 28, 0.15);
+    border-left-color: rgba(185, 28, 28, 0.35);
+    animation: none;
+    box-shadow: none;
+}
+
+body.theme-avalon .circuit-overload::before {
+    animation: none;
+    opacity: 0.5;
+}
+
+body.theme-avalon .co-warning {
+    color: #b91c1c;
+    animation: none;
+    opacity: 0.8;
+}
+
+body.theme-avalon .circuit-overload p {
+    color: #991b1b;
+}
+
+/* ===================================================
+   5. MORTAL VITALS — BIOLOGICAL HUD
+   Clinical · Cold · Scientific Readout
+   =================================================== */
+.mortal-vitals {
+    text-indent: 0 !important;
+    margin: 35px 0;
+    padding: 18px 22px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-subtle);
+    border-left: 3px solid var(--saber-blue);
+    border-radius: 0 4px 4px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 1;
+    position: relative;
+}
+
+/* Heartbeat line across top */
+.mortal-vitals::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        transparent 40%,
+        rgba(58, 123, 213, 0.3) 42%,
+        rgba(58, 123, 213, 0.6) 44%,
+        transparent 46%,
+        transparent 48%,
+        rgba(58, 123, 213, 0.4) 50%,
+        rgba(58, 123, 213, 0.8) 51%,
+        rgba(58, 123, 213, 0.2) 53%,
+        transparent 55%,
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: mv-heartbeat 2s ease-in-out infinite;
+}
+
+@keyframes mv-heartbeat {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.mv-title {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.mv-stat {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7em;
+    color: var(--saber-blue);
+    letter-spacing: 1px;
+    padding: 4px 0;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.mv-stat:last-child {
+    border-bottom: none;
+}
+
+.mv-stat.alert {
+    color: #ef4444;
+    animation: mv-alert-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes mv-alert-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+.mv-stat.stable {
+    color: #4ade80;
+}
+
+.mv-stat.warning {
+    color: #f59e0b;
+}
+
+/* Avalon */
+body.theme-avalon .mortal-vitals::before {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        transparent 40%,
+        rgba(42, 90, 170, 0.2) 42%,
+        rgba(42, 90, 170, 0.4) 44%,
+        transparent 46%,
+        transparent 48%,
+        rgba(42, 90, 170, 0.3) 50%,
+        rgba(42, 90, 170, 0.5) 51%,
+        rgba(42, 90, 170, 0.15) 53%,
+        transparent 55%,
+        transparent 100%);
+    background-size: 200% 100%;
+}
+
+body.theme-avalon .mv-stat {
+    color: #1e40af;
+}
+
+body.theme-avalon .mv-stat.alert {
+    color: #b91c1c;
+    animation: none;
+    opacity: 0.8;
+}
+
+body.theme-avalon .mv-stat.stable {
+    color: #15803d;
+}
+
+body.theme-avalon .mv-stat.warning {
+    color: #b45309;
+}
+
+/* ===================================================
+   6. BEAST REVEAL — CINEMATIC CLIFFHANGER
+   Pitch Black · Floating Red Eyes · Dread
+   =================================================== */
+.beast-reveal {
+    text-indent: 0 !important;
+    text-align: center;
+    margin: 60px 0;
+    padding: 80px 24px;
+    background: linear-gradient(180deg,
+        rgba(2, 2, 4, 0.98) 0%,
+        rgba(4, 2, 6, 0.99) 40%,
+        rgba(2, 2, 4, 1) 100%);
+    border-top: 1px solid rgba(239, 68, 68, 0.08);
+    border-bottom: 1px solid rgba(239, 68, 68, 0.05);
+    position: relative;
+    overflow: hidden;
+    opacity: 1;
+    isolation: isolate;
+}
+
+/* Left Eye */
+.beast-reveal::before {
+    content: '';
+    position: absolute;
+    top: 35%;
+    left: 38%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow:
+        0 0 8px rgba(239, 68, 68, 0.8),
+        0 0 20px rgba(239, 68, 68, 0.4),
+        0 0 40px rgba(239, 68, 68, 0.15);
+    animation: beast-eye-left 5s ease-in-out infinite;
+    z-index: 2;
+}
+
+/* Right Eye */
+.beast-reveal::after {
+    content: '';
+    position: absolute;
+    top: 35%;
+    right: 38%;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ef4444;
+    box-shadow:
+        0 0 8px rgba(239, 68, 68, 0.8),
+        0 0 20px rgba(239, 68, 68, 0.4),
+        0 0 40px rgba(239, 68, 68, 0.15);
+    animation: beast-eye-right 5s ease-in-out infinite;
+    z-index: 2;
+}
+
+@keyframes beast-eye-left {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    15% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1) translateX(2px);
+    }
+    60% {
+        opacity: 0.8;
+        transform: scale(1) translateX(-1px);
+    }
+    85% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    90% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+}
+
+@keyframes beast-eye-right {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    15% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    40% {
+        opacity: 1;
+        transform: scale(1) translateX(-2px);
+    }
+    60% {
+        opacity: 0.8;
+        transform: scale(1) translateX(1px);
+    }
+    85% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    90% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+}
+
+.beast-reveal p {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: rgba(239, 68, 68, 0.6);
+    letter-spacing: 2px;
+    text-indent: 0 !important;
+    margin: 0;
+    position: relative;
+    z-index: 3;
+    text-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+    line-height: 1.8;
+}
+
+/* Darkness breathing */
+.beast-reveal .br-darkness {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 35%,
+        rgba(239, 68, 68, 0.02) 0%,
+        transparent 50%);
+    animation: beast-darkness-breathe 4s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes beast-darkness-breathe {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+/* Avalon */
+body.theme-avalon .beast-reveal {
+    background: linear-gradient(180deg,
+        rgba(20, 18, 22, 0.96) 0%,
+        rgba(15, 12, 18, 0.98) 40%,
+        rgba(20, 18, 22, 0.96) 100%);
+    border-top-color: rgba(185, 28, 28, 0.06);
+    border-bottom-color: rgba(185, 28, 28, 0.04);
+}
+
+body.theme-avalon .beast-reveal::before,
+body.theme-avalon .beast-reveal::after {
+    background: #991b1b;
+    box-shadow:
+        0 0 6px rgba(153, 27, 27, 0.6),
+        0 0 15px rgba(153, 27, 27, 0.3);
+}
+
+body.theme-avalon .beast-reveal p {
+    color: rgba(153, 27, 27, 0.5);
+    text-shadow: none;
+}

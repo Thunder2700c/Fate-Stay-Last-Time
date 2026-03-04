@@ -1,8 +1,8 @@
 /* ===================================================
-   FATE/STAY LAST TIME — INTERACTIVE ENGINE v2.2
+   FATE/STAY LAST TIME — INTERACTIVE ENGINE v2.3
    Modern ES2024 · RAF Delta · Async Sequences
    Single Observer Pool · Passive Scroll
-   FIXED: Section 9 moved inside IIFE
+   All Sections Inside IIFE
    =================================================== */
 
 ;(() => {
@@ -25,7 +25,6 @@
     const prefersReducedMotion =
         window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Callbacks that run when theme changes
     const themeChangeCallbacks = [];
 
     // ═══════════════════════════════════════════════
@@ -44,7 +43,6 @@
                 theme === 'void' ? 'Switch to Avalon' : 'Switch to Void'
             );
 
-            // Notify subscribers after CSS recalculates
             requestAnimationFrame(() => {
                 themeChangeCallbacks.forEach(fn => fn(theme));
             });
@@ -127,7 +125,6 @@
             resizeTimer = setTimeout(resizeCanvas, 100);
         }, { passive: true });
 
-        // ── Theme-aware colors ──
         const readColors = () => {
             const s = getComputedStyle(document.body);
             const c = prefix => ({
@@ -145,7 +142,6 @@
             pool.forEach(p => { p.color = pick(palette); });
         });
 
-        // ── Object Pool ──
         const createParticle = () => ({
             x: rand(0, W || innerWidth),
             y: rand(0, H || innerHeight),
@@ -172,7 +168,6 @@
             p.color = pick(palette);
         };
 
-        // ── Render Loop ──
         let lastTime = performance.now();
 
         const tick = now => {
@@ -201,13 +196,11 @@
                 const { r, g, b } = p.color;
                 const a = clamp(p.opacity, 0, 1);
 
-                // Glow halo
                 ctx.fillStyle = `rgba(${r},${g},${b},${a * 0.15})`;
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size * 3, 0, 6.2832);
                 ctx.fill();
 
-                // Core dot
                 ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, 6.2832);
@@ -418,116 +411,131 @@
     }
 
     // ═══════════════════════════════════════════════
-    //  9. CHAPTER 6+ BATTLE COMPONENTS
-    //     (NOW INSIDE THE IIFE — FIXED)
+    //  9. SCROLL-TRIGGERED COMPONENT REVEALS
+    //     All chapters — Battle UI, Story UI, etc.
     // ═══════════════════════════════════════════════
 
-    // ── Battle Status: animate HP bars on scroll ──
+    // ── Chapter 6 Components ──
     observeOnce($$('.battle-status'), el => {
         el.classList.add('bs-revealed');
     }, { threshold: 0.3 });
 
-    // ── Prana Gauge: animate depletion ──
     observeOnce($$('.prana-gauge'), el => {
         el.classList.add('pg-revealed');
     }, { threshold: 0.5 });
 
-    // ── Shadow Emergence: reveal ──
     observeOnce($$('.shadow-emergence'), el => {
         el.classList.add('se-revealed');
     }, { threshold: 0.4 });
 
-    // ── Golden Dissolution: reveal ──
     observeOnce($$('.golden-dissolution'), el => {
         el.classList.add('gd-revealed');
     }, { threshold: 0.4 });
 
-    // ── Breaking News: reveal ──
     observeOnce($$('.breaking-news'), el => {
         el.classList.add('bn-revealed');
     }, { threshold: 0.4 });
 
-    // ── Threat Grid: reveal ──
     observeOnce($$('.threat-grid'), el => {
         el.classList.add('tg-revealed');
     }, { threshold: 0.4 });
 
-    // ── Impact Line: reveal ──
     observeOnce($$('.impact-line'), el => {
         el.classList.add('il-revealed');
     }, { threshold: 0.5 });
 
-    // ── Saber Break Declaration: reveal ──
     observeOnce($$('.saber-break'), el => {
         el.classList.add('sb-revealed');
     }, { threshold: 0.4 });
 
-       // ── Circuit Awakening: reveal ──
+    // ── Chapter 8 Components ──
     observeOnce($$('.circuit-awakening'), el => {
         el.classList.add('ca-revealed');
     }, { threshold: 0.4 });
 
-    // ── Faction Board: reveal ──
     observeOnce($$('.faction-board'), el => {
         el.classList.add('fb-revealed');
     }, { threshold: 0.3 });
 
-    // ── Pact Declaration: reveal ──
     observeOnce($$('.pact-declaration'), el => {
         el.classList.add('pact-revealed');
     }, { threshold: 0.4 });
 
-    // ── Contract Transfer: reveal ──
     observeOnce($$('.contract-transfer'), el => {
         el.classList.add('ct-revealed');
     }, { threshold: 0.4 });
 
-       // ── Tactical Comms: reveal ──
+    // ── Chapter 9 — UI Components ──
     observeOnce($$('.tactical-comms'), el => {
         el.classList.add('comms-revealed');
     }, { threshold: 0.4 });
 
-    // ── Bounded Field Alert: reveal ──
     observeOnce($$('.bounded-field-alert'), el => {
         el.classList.add('bf-revealed');
     }, { threshold: 0.4 });
 
-    // ── Illusion Zone: reveal ──
     observeOnce($$('.illusion-zone'), el => {
         el.classList.add('iz-revealed');
     }, { threshold: 0.4 });
 
-    // ── Circuit Overload: reveal ──
     observeOnce($$('.circuit-overload'), el => {
         el.classList.add('co-revealed');
     }, { threshold: 0.4 });
 
-    // ── Mortal Vitals: reveal ──
     observeOnce($$('.mortal-vitals'), el => {
         el.classList.add('mv-revealed');
     }, { threshold: 0.4 });
 
-    // ── Beast Reveal: reveal ──
     observeOnce($$('.beast-reveal'), el => {
         el.classList.add('br-revealed');
     }, { threshold: 0.5 });
 
+    // ── Chapter 9 — Story UI Components ──
+    observeOnce($$('.memory-corridor'), el => {
+        el.classList.add('mc-revealed');
+    }, { threshold: 0.4 });
+
+    observeOnce($$('.enforcer-dossier'), el => {
+        el.classList.add('ed-revealed');
+    }, { threshold: 0.3 });
+
+    observeOnce($$('.projection-counter'), el => {
+        el.classList.add('pc-revealed');
+    }, { threshold: 0.4 });
+
+    observeOnce($$('.shield-projection'), el => {
+        el.classList.add('sp-revealed');
+    }, { threshold: 0.4 });
+
+    observeOnce($$('.negotiation-mode'), el => {
+        el.classList.add('nm-revealed');
+    }, { threshold: 0.3 });
+
+    observeOnce($$('.revelation-block'), el => {
+        el.classList.add('rv-revealed');
+    }, { threshold: 0.4 });
+
+    observeOnce($$('.dragon-core-burst'), el => {
+        el.classList.add('dcb-revealed');
+    }, { threshold: 0.4 });
+
+    observeOnce($$('.wound-aftermath'), el => {
+        el.classList.add('wa-revealed');
+    }, { threshold: 0.4 });
+
     // ═══════════════════════════════════════════════
     //  10. READING PROGRESS SAVE
-    //      Saves scroll position per chapter
     // ═══════════════════════════════════════════════
     const ReadingProgress = (() => {
         const SAVE_KEY = 'fate-reading-progress';
-        const SAVE_INTERVAL = 2000; // Save every 2 seconds while scrolling
+        const SAVE_INTERVAL = 2000;
 
-        // Get current chapter from URL
         const getChapterId = () => {
             const path = window.location.pathname;
             const match = path.match(/chapter-(\d+)/);
             return match ? `chapter-${match[1]}` : null;
         };
 
-        // Load all progress data
         const loadAll = () => {
             try {
                 return JSON.parse(localStorage.getItem(SAVE_KEY)) || {};
@@ -536,20 +544,17 @@
             }
         };
 
-        // Save progress for current chapter
         const save = (chapterId, data) => {
             const all = loadAll();
             all[chapterId] = { ...data, timestamp: Date.now() };
             localStorage.setItem(SAVE_KEY, JSON.stringify(all));
         };
 
-        // Get progress for a specific chapter
         const get = chapterId => {
             const all = loadAll();
             return all[chapterId] || null;
         };
 
-        // Mark chapter as completed
         const markComplete = chapterId => {
             save(chapterId, { complete: true, scrollPct: 100 });
         };
@@ -558,24 +563,18 @@
 
         if (chapterId) {
             let saveTimer = null;
-            let lastPct = 0;
 
-            // Restore scroll position on load
             const saved = get(chapterId);
             if (saved && !saved.complete && saved.scrollY) {
-                // Small delay to let page render
                 setTimeout(() => {
                     window.scrollTo({
                         top: saved.scrollY,
                         behavior: 'instant'
                     });
-
-                    // Show resume notification
                     showResumeToast(saved.scrollPct);
                 }, 300);
             }
 
-            // Save on scroll
             window.addEventListener('scroll', () => {
                 if (saveTimer) return;
 
@@ -585,8 +584,6 @@
                     const pct = Math.round(
                         (scrollTop / (scrollHeight - clientHeight)) * 100
                     );
-
-                    lastPct = pct;
 
                     if (pct >= 95) {
                         markComplete(chapterId);
@@ -603,7 +600,6 @@
             }, { passive: true });
         }
 
-        // Resume toast notification
         function showResumeToast(pct) {
             const toast = document.createElement('div');
             toast.className = 'resume-toast';
@@ -616,7 +612,6 @@
             `;
             document.body.appendChild(toast);
 
-            // Restart button
             toast.querySelector('.resume-restart')
                 .addEventListener('click', () => {
                     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -631,7 +626,6 @@
                     setTimeout(() => toast.remove(), 500);
                 });
 
-            // Auto-hide after 4 seconds
             requestAnimationFrame(() => toast.classList.add('toast-show'));
             setTimeout(() => {
                 toast.classList.add('toast-hide');
@@ -644,7 +638,6 @@
 
     // ═══════════════════════════════════════════════
     //  11. ESTIMATED READING TIME
-    //      Calculates and displays reading time
     // ═══════════════════════════════════════════════
     const ReadingTime = (() => {
         const prose = $('.prose');
@@ -655,9 +648,8 @@
             .trim()
             .split(/\s+/)
             .filter(w => w.length > 0).length;
-        const minutes = Math.ceil(wordCount / 230); // Average reading speed
+        const minutes = Math.ceil(wordCount / 230);
 
-        // Create reading time element
         const chapterHeader = $('.chapter-header');
         if (chapterHeader) {
             const timeEl = document.createElement('div');
@@ -674,20 +666,17 @@
 
     // ═══════════════════════════════════════════════
     //  12. READING STATS DASHBOARD (Homepage)
-    //      Shows read/unread chapters + progress
     // ═══════════════════════════════════════════════
     const Dashboard = (() => {
-        // Only run on homepage
         const chapterList = $('.chapter-list');
         const isHomepage = chapterList &&
             !window.location.pathname.includes('chapter');
         if (!isHomepage) return;
 
         const progress = ReadingProgress.loadAll();
-        const totalChapters = 6; // Update when adding chapters
+        const totalChapters = 9;
         let completedCount = 0;
 
-        // Add status indicators to chapter links
         $$('.chapter-list a:not(.locked)').forEach(link => {
             const href = link.getAttribute('href') || '';
             const match = href.match(/chapter-(\d+)/);
@@ -712,7 +701,6 @@
             }
         });
 
-        // Add overall stats bar above chapter list
         if (completedCount > 0 || Object.keys(progress).length > 0) {
             const statsEl = document.createElement('div');
             statsEl.className = 'reading-dashboard';
@@ -745,7 +733,6 @@
 
     // ═══════════════════════════════════════════════
     //  13. BACK TO TOP BUTTON
-    //      Appears on scroll, themed
     // ═══════════════════════════════════════════════
     const BackToTop = (() => {
         const btn = document.createElement('button');
@@ -776,4 +763,5 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     })();
-})(); // <-- IIFE closes AFTER Section 9 now ✅
+
+})();

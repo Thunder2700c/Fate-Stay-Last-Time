@@ -482,6 +482,36 @@
         el.classList.add('ct-revealed');
     }, { threshold: 0.4 });
 
+       // ── Tactical Comms: reveal ──
+    observeOnce($$('.tactical-comms'), el => {
+        el.classList.add('comms-revealed');
+    }, { threshold: 0.4 });
+
+    // ── Bounded Field Alert: reveal ──
+    observeOnce($$('.bounded-field-alert'), el => {
+        el.classList.add('bf-revealed');
+    }, { threshold: 0.4 });
+
+    // ── Illusion Zone: reveal ──
+    observeOnce($$('.illusion-zone'), el => {
+        el.classList.add('iz-revealed');
+    }, { threshold: 0.4 });
+
+    // ── Circuit Overload: reveal ──
+    observeOnce($$('.circuit-overload'), el => {
+        el.classList.add('co-revealed');
+    }, { threshold: 0.4 });
+
+    // ── Mortal Vitals: reveal ──
+    observeOnce($$('.mortal-vitals'), el => {
+        el.classList.add('mv-revealed');
+    }, { threshold: 0.4 });
+
+    // ── Beast Reveal: reveal ──
+    observeOnce($$('.beast-reveal'), el => {
+        el.classList.add('br-revealed');
+    }, { threshold: 0.5 });
+
     // ═══════════════════════════════════════════════
     //  10. READING PROGRESS SAVE
     //      Saves scroll position per chapter

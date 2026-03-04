@@ -2859,3 +2859,90 @@ body.theme-avalon .beast-reveal p {
     color: rgba(153, 27, 27, 0.5);
     text-shadow: none;
 }
+
+@media (max-width: 768px) {
+    /* Tactical Comms */
+    .tactical-comms {
+        padding: 12px 16px;
+    }
+
+    .comms-text {
+        font-size: 0.82em;
+    }
+
+    /* Bounded Field */
+    .bounded-field-alert {
+        padding: 22px 18px;
+        margin: 30px 0;
+    }
+
+    /* Illusion Zone */
+    .illusion-zone {
+        padding: 24px 20px;
+        margin: 35px 0;
+    }
+
+    /* Circuit Overload */
+    .circuit-overload {
+        padding: 20px 18px;
+    }
+
+    /* Beast Reveal */
+    .beast-reveal {
+        padding: 60px 18px;
+        margin: 45px 0;
+    }
+
+    .beast-reveal::before {
+        left: 32%;
+    }
+
+    .beast-reveal::after {
+        right: 32%;
+    }
+
+    .beast-reveal p {
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .tactical-comms {
+        padding: 10px 14px;
+    }
+
+    .comms-text {
+        font-size: 0.78em;
+    }
+
+    .bounded-field-alert {
+        padding: 18px 14px;
+    }
+
+    .illusion-zone {
+        padding: 20px 16px;
+    }
+
+    .beast-reveal {
+        padding: 50px 14px;
+        margin: 35px 0;
+    }
+
+    .beast-reveal::before {
+        left: 28%;
+    }
+
+    .beast-reveal::after {
+        right: 28%;
+    }
+
+    .beast-reveal p {
+        font-size: 0.85em;
+        letter-spacing: 1px;
+    }
+
+    .illusion-voice {
+        font-size: 0.92em;
+        letter-spacing: 1px;
+    }
+}

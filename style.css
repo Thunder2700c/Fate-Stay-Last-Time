@@ -2793,3 +2793,25 @@ body.theme-avalon .back-to-top:hover {
         right: 14px;
     }
 }
+
+/* ===== READING PROGRESS BAR ===== */
+.reading-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 3px;
+    background: linear-gradient(90deg, #e94560, #ff6b81, #e94560);
+    background-size: 200% 100%;
+    animation: progressGlow 2s ease infinite;
+    z-index: 99999;
+    transition: width 0.12s ease-out;
+    box-shadow: 0 0 8px rgba(233, 69, 96, 0.6);
+    pointer-events: none;
+}
+
+@keyframes progressGlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}

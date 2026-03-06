@@ -765,3 +765,208 @@
     })();
 
 })();
+
+// ============================================
+// 🔥 QoL FEATURES — PROGRESS BAR, KEYBOARD NAV, SAVE POSITION
+// ============================================
+
+(function () {
+    'use strict';
+
+    // --- Detect if we're on a chapter page ---
+    const isChapterPage = window.location.pathname.includes('/chapters/');
+
+    // =====================
+    // 📊 READING PROGRESS BAR (Chapter pages only)
+    // =====================
+    if (isChapterPage) {
+        const progressBar = document.createElement('div');
+        progressBar.classList.add('reading-progress-bar');
+        document.body.prepend(progressBar);
+
+        function updateProgress() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+            if (docHeight <= 0) {
+                progressBar.style.width = '100%';
+                return;
+            }
+
+            const progress = Math.min((scrollTop / docHeight) * 100, 100);
+            progressBar.style.width = progress + '%';
+        }
+
+        window.addEventListener('scroll', updateProgress, { passive: true });
+        window.addEventListener('resize', updateProgress, { passive: true });
+
+        // Initial call
+        updateProgress();
+    }
+
+    // =====================
+    // ⌨️ KEYBOARD NAVIGATION (Chapter pages only)
+    // =====================
+    if (isChapterPage) {
+        document.addEventListener('keydown', function (e) {
+            // Don't trigger if user is typing in an input/textarea
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            // Find navigation links
+            // Adjust these selectors to match YOUR actual nav structure
+            const allLinks = document.querySelectorAll('a[href*="chapter-"]');
+            const navContainer = document.querySelector('.chapter-nav, .nav-buttons, .story-navigation');
+
+            let prevLink = null;
+            let nextLink = null;
+
+            if (navContainer) {
+                // If you have a dedicated nav container, use its links
+                const navLinks = navContainer.querySelectorAll('a');
+                navLinks.forEach(function (link) {
+                    const text = link.textContent.toLowerCase();
+                    const href = link.getAttribute('href');
+                    if (!href || href === '#') return;
+
+                    if (text.includes('prev') || text.includes('←') || text.includes('back')) {
+                        prevLink = link;
+                    }
+                    if (text.includes('next') || text.includes('→') || text.includes('forward')) {
+                        nextLink = link;
+                    }
+                });
+            }
+
+            // Fallback: auto-detect from current chapter number
+            if (!prevLink || !nextLink) {
+                const match = window.location.pathname.match(/chapter-(\d+)/);
+                if (match) {
+                    const currentChapter = parseInt(match[1]);
+
+                    if (!prevLink && currentChapter > 1) {
+                        const prevHref = window.location.pathname.replace(
+                            'chapter-' + currentChapter,
+                            'chapter-' + (currentChapter - 1)
+                        );
+                        prevLink = { href: prevHref };
+                    }
+
+                    if (!nextLink) {
+                        const nextHref = window.location.pathname.replace(
+                            'chapter-' + currentChapter,
+                            'chapter-' + (currentChapter + 1)
+                        );
+                        nextLink = { href: nextHref };
+                    }
+                }
+            }
+
+            // Arrow Left = Previous Chapter
+            if (e.key === 'ArrowLeft' && prevLink) {
+                e.preventDefault();
+                window.location.href = prevLink.href;
+            }
+
+            // Arrow Right = Next Chapter
+            if (e.key === 'ArrowRight' && nextLink) {
+                e.preventDefault();
+                window.location.href = nextLink.href;
+            }
+        });
+    }
+
+    // =====================
+    // 💾 SAVE & RESTORE READING POSITION (Chapter pages only)
+    // =====================
+    if (isChapterPage) {
+        const chapterKey = 'readPos_' + window.location.pathname;
+        const lastChapterKey = 'lastChapterVisited';
+
+        // --- Save scroll position (debounced) ---
+        let saveTimer = null;
+
+        window.addEventListener('scroll', function () {
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(function () {
+                try {
+                    localStorage.setItem(chapterKey, window.scrollY.toString());
+                } catch (e) {
+                    // localStorage full or unavailable — fail silently
+                }
+            }, 400);
+        }, { passive: true });
+
+        // --- Save last visited chapter ---
+        try {
+            localStorage.setItem(lastChapterKey, window.location.href);
+        } catch (e) {
+            // fail silently
+        }
+
+        // --- Restore position on load ---
+        window.addEventListener('load', function () {
+            try {
+                const savedPos = localStorage.getItem(chapterKey);
+                if (savedPos && parseInt(savedPos) > 100) {
+                    // Small delay to let your VN components render first
+                    setTimeout(function () {
+                        window.scrollTo({
+                            top: parseInt(savedPos),
+                            behavior: 'smooth'
+                        });
+                    }, 500);
+                }
+            } catch (e) {
+                // fail silently
+            }
+        });
+    }
+
+    // =====================
+    // 🏠 "CONTINUE READING" — Homepage helper (Optional)
+    // =====================
+    // This runs on the homepage and can be used to show a "Continue Reading" button
+    if (!isChapterPage) {
+        try {
+            const lastChapter = localStorage.getItem('lastChapterVisited');
+            if (lastChapter) {
+                // You can use this to dynamically show a "Continue Reading" button
+                // Example: create a floating button
+                const continueBtn = document.createElement('a');
+                continueBtn.href = lastChapter;
+                continueBtn.textContent = '📖 Continue Reading';
+                continueBtn.style.cssText = [
+                    'position: fixed',
+                    'bottom: 25px',
+                    'right: 25px',
+                    'background: linear-gradient(135deg, #e94560, #c0392b)',
+                    'color: white',
+                    'padding: 12px 24px',
+                    'border-radius: 30px',
+                    'text-decoration: none',
+                    'font-size: 0.95rem',
+                    'font-weight: bold',
+                    'z-index: 9999',
+                    'box-shadow: 0 4px 15px rgba(233, 69, 96, 0.4)',
+                    'transition: transform 0.2s, box-shadow 0.2s',
+                    'font-family: inherit'
+                ].join(';');
+
+                continueBtn.addEventListener('mouseenter', function () {
+                    this.style.transform = 'translateY(-3px)';
+                    this.style.boxShadow = '0 6px 20px rgba(233, 69, 96, 0.6)';
+                });
+
+                continueBtn.addEventListener('mouseleave', function () {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 4px 15px rgba(233, 69, 96, 0.4)';
+                });
+
+                document.body.appendChild(continueBtn);
+            }
+        } catch (e) {
+            // fail silently
+        }
+    }
+
+})();

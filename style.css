@@ -2815,3 +2815,93 @@ body.theme-avalon .back-to-top:hover {
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
+
+/* ===================================================
+   FIXED UI REPOSITIONING — No Overlap
+   Stack: Theme Toggle (bottom), Back-to-Top (above),
+   Resume Toast (centered bottom, clear of buttons)
+   =================================================== */
+
+/* Theme toggle stays bottom-right — base position */
+.theme-toggle {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+}
+
+/* Back-to-top sits ABOVE the theme toggle */
+.back-to-top {
+    position: fixed;
+    bottom: 80px;  /* 24px (toggle bottom) + 48px (toggle height) + 8px gap */
+    right: 24px;
+    z-index: 9997;
+}
+
+/* Resume toast moves to bottom-LEFT to avoid all right-side buttons */
+.resume-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    right: auto;
+    transform: translateX(0) translateY(20px);
+    max-width: 360px;
+    z-index: 9998;
+}
+
+.resume-toast.toast-show {
+    transform: translateX(0) translateY(0);
+}
+
+.resume-toast.toast-hide {
+    transform: translateX(0) translateY(20px);
+}
+
+/* ── Mobile Responsive Fix ── */
+@media (max-width: 768px) {
+    .theme-toggle {
+        bottom: 18px;
+        right: 18px;
+        width: 42px;
+        height: 42px;
+    }
+
+    .back-to-top {
+        bottom: 68px;  /* 18px + 42px + 8px */
+        right: 18px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .resume-toast {
+        bottom: 18px;
+        left: 14px;
+        right: 80px;  /* Clear the right-side buttons */
+        max-width: none;
+        font-size: 0.65em;
+    }
+}
+
+@media (max-width: 480px) {
+    .theme-toggle {
+        bottom: 14px;
+        right: 14px;
+        width: 38px;
+        height: 38px;
+    }
+
+    .back-to-top {
+        bottom: 60px;
+        right: 14px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .resume-toast {
+        bottom: 14px;
+        left: 10px;
+        right: 62px;
+        font-size: 0.6em;
+        padding: 10px 12px;
+    }
+}

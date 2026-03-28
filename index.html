@@ -6,7 +6,7 @@
 
     <!-- Primary SEO -->
     <title>Fate/Stay Last Time — A Fate Fan Novel | Read Free Online</title>
-    <meta name="description" content="Read Fate/Stay Last Time, a free fan-written light novel set in the Fate universe. A broken shoe, a viral video, two Heroic Spirits, and 70 hours to prune a timeline. Read all chapters online.">
+    <meta name="description" content="Read Fate/Stay Last Time, a free fan-written light novel set in the Fate universe. A broken shoe, a viral video, two Heroic Spirits, and a world to burn. Read all chapters online.">
     <meta name="keywords" content="Fate Stay Night, fan novel, light novel, fate series, fate stay last time, free online novel, web novel, EMIYA, Saber, Gilgamesh, Holy Grail War, visual novel fan fiction">
     <meta name="author" content="Thunder">
     <meta name="robots" content="index, follow">
@@ -16,13 +16,13 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://fate-stay-last-time.vercel.app/">
     <meta property="og:title" content="Fate/Stay Last Time — A Fate Fan Novel">
-    <meta property="og:description" content="A broken shoe. A viral video. Two Heroic Spirits. 70 hours to prune a corrupted timeline. Read free online.">
+    <meta property="og:description" content="A broken shoe. A viral video. Two Heroic Spirits. A world that chose to laugh. Read free online.">
     <meta property="og:site_name" content="Fate/Stay Last Time">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Fate/Stay Last Time — A Fate Fan Novel">
-    <meta name="twitter:description" content="A broken shoe. A viral video. Two Heroic Spirits. 70 hours to prune a corrupted timeline.">
+    <meta name="twitter:description" content="A broken shoe. A viral video. Two Heroic Spirits. A world that chose to laugh.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
@@ -33,6 +33,7 @@
 </head>
 <body>
 
+    <!-- ===== LOADING SCREEN ===== -->
     <div class="summoning-loader">
         <div class="magic-circle-container gold">
             <img src="magic-circle.gif" alt="Summoning Circle Loading Animation">
@@ -40,88 +41,114 @@
         <span class="load-text">Summoning</span>
     </div>
 
+    <!-- ===== AMBIENT PARTICLES ===== -->
     <canvas id="prana-particles" aria-hidden="true"></canvas>
 
+    <!-- ===== SCROLL PROGRESS ===== -->
     <div class="command-seal-track" aria-hidden="true">
         <div class="command-seal-progress"></div>
     </div>
 
+    <!-- ===== MAIN CONTENT ===== -->
     <div class="container">
 
+        <!-- ===== HEADER ===== -->
         <header class="landing-header">
             <span class="fate-label">Type-Moon Fan Work</span>
             <h1>Fate/Stay<br>Last Time</h1>
             <p class="subtitle">The Chronicle of the Pruned Timeline</p>
-            <p class="tagline">70 Hours to Zero</p>
+            <p class="tagline">The Timer Has Started</p>
         </header>
 
+        <!-- ===== SYNOPSIS ===== -->
         <section class="synopsis">
             <h2>Synopsis</h2>
             <p>
-                A single broken shoe at a wedding. A viral video that burned a man's
-                dignity to ash. A summoning circle drawn in fury. Two legendary Servants
-                called forth to wage war — not against other Masters, but against an
-                entire world that chose to laugh.
+                A single broken shoe at a wedding. A viral video watched by a billion
+                laughing eyes. A summoning circle drawn in blood and fury. Two legendary
+                Servants called forth — not to fight other Masters, but to burn a world
+                that chose to laugh.
             </p>
             <p>
-                This is the story of Gurtej — a Master who decided that a timeline built
-                on cruelty deserves to be pruned from the Tree of Time.
+                This is the story of Gurtej — a Master without Command Seals, a mediator
+                turned warlord, and the man the internet named <em>Vardilord</em>. His mission:
+                prune this corrupted timeline from the Tree of Time.
+            </p>
+            <p>
+                But the deeper he descends into war, the more the line between righteous
+                fury and wounded ego begins to blur.
             </p>
         </section>
 
+        <!-- ===== READING DASHBOARD ===== -->
+        <section class="reading-dashboard" aria-label="Reading progress">
+            <div class="rd-header">
+                <span class="rd-title">Campaign Progress</span>
+                <span class="rd-stats">10 of 10 Chapters Published</span>
+            </div>
+            <div class="rd-bar">
+                <div class="rd-fill" style="width: 100%;"></div>
+            </div>
+            <span class="rd-label">Phase V — The Clock Tower Descent</span>
+        </section>
+
+        <!-- ===== TIMELINE ===== -->
         <section class="timeline-progress" aria-label="Story timeline progress">
             <div class="timeline-header">
                 <h2>Timeline</h2>
-                <span class="timeline-stats">Hour 65 of 70 — 92% Complete</span>
+                <span class="timeline-stats">Hour 89 — The Descent Continues</span>
             </div>
             <div class="timeline-bar">
-                <div class="timeline-fill" style="width: 92%;">
+                <div class="timeline-fill" style="width: 100%;">
                     <span class="timeline-marker" style="left: 0%;" data-label="0"></span>
-                    <span class="timeline-marker" style="left: 17%;" data-label="12"></span>
-                    <span class="timeline-marker" style="left: 34%;" data-label="24"></span>
-                    <span class="timeline-marker" style="left: 51%;" data-label="36"></span>
-                    <span class="timeline-marker" style="left: 68%;" data-label="48"></span>
-                    <span class="timeline-marker" style="left: 85%;" data-label="60"></span>
-                    <span class="timeline-marker" style="left: 92%;" data-label="65"></span>
+                    <span class="timeline-marker" style="left: 13%;" data-label="12"></span>
+                    <span class="timeline-marker" style="left: 27%;" data-label="24"></span>
+                    <span class="timeline-marker" style="left: 40%;" data-label="36"></span>
+                    <span class="timeline-marker" style="left: 54%;" data-label="48"></span>
+                    <span class="timeline-marker" style="left: 67%;" data-label="60"></span>
+                    <span class="timeline-marker" style="left: 81%;" data-label="72"></span>
+                    <span class="timeline-marker" style="left: 100%;" data-label="89"></span>
                 </div>
-                <span class="timeline-end">70</span>
             </div>
             <div class="timeline-labels">
-                <span>The Catalyst</span>
-                <span>The Summoning</span>
-                <span>War of the Grail</span>
-                <span>The Siege</span>
-                <span>The Pruning</span>
+                <span>Catalyst</span>
+                <span>Summoning</span>
+                <span>Grail War</span>
+                <span>Global War</span>
+                <span>Descent</span>
             </div>
         </section>
 
-        <section class="servant-roster" aria-label="Active servants in the story">
-            <h2>Active Servants</h2>
+        <!-- ===== SERVANT ROSTER ===== -->
+        <section class="servant-roster" aria-label="Active servants and allies">
+            <h2>Active Roster</h2>
             <div class="roster-grid">
                 <div class="roster-card saber-card">
                     <span class="roster-class">Saber</span>
                     <span class="roster-name">Artoria Pendragon</span>
-                    <span class="roster-title">King of Knights</span>
-                    <span class="roster-status active">Active</span>
+                    <span class="roster-title">King of Knights — Incarnated</span>
+                    <span class="roster-status active">Mortal</span>
                 </div>
                 <div class="roster-card archer-card">
                     <span class="roster-class">Archer</span>
                     <span class="roster-name">EMIYA</span>
-                    <span class="roster-title">Wrought Iron Hero</span>
-                    <span class="roster-status active">Active</span>
+                    <span class="roster-title">Wrought Iron Hero — Leyline Bound</span>
+                    <span class="roster-status active">Anchored</span>
                 </div>
-                <div class="roster-card gilgamesh-card">
-                    <span class="roster-class">Archer</span>
-                    <span class="roster-name">Gilgamesh</span>
-                    <span class="roster-title">King of Heroes</span>
-                    <span class="roster-status enemy">Defeated</span>
+                <div class="roster-card overseer-card">
+                    <span class="roster-class">Overseer</span>
+                    <span class="roster-name">Jaskaran</span>
+                    <span class="roster-title">Holy Church Executor</span>
+                    <span class="roster-status active">Allied</span>
                 </div>
             </div>
         </section>
 
+        <!-- ===== CHAPTER LIST ===== -->
         <nav class="chapter-list" aria-label="Chapter navigation">
             <h2>Chapters</h2>
 
+            <!-- PHASE I -->
             <div class="phase-divider">
                 <span class="phase-divider-label">Phase I — The Catalyst</span>
                 <span class="phase-divider-hours">Hours 0 – 12</span>
@@ -136,6 +163,7 @@
                 </li>
             </ul>
 
+            <!-- PHASE II -->
             <div class="phase-divider">
                 <span class="phase-divider-label">Phase II — The Summoning</span>
                 <span class="phase-divider-hours">Hours 13 – 24</span>
@@ -150,6 +178,7 @@
                 </li>
             </ul>
 
+            <!-- PHASE III -->
             <div class="phase-divider">
                 <span class="phase-divider-label">Phase III — War of the Grail</span>
                 <span class="phase-divider-hours">Hours 25 – 60</span>
@@ -165,7 +194,7 @@
                 <li>
                     <a href="chapters/chapter-4.html">
                         <span class="chapter-number">Chapter 04</span>
-                        <span class="chapter-title">The Price of Laughter</span>
+                        <span class="chapter-title">The Hunt and the High-Altitude Fortress</span>
                         <span class="phase">Hours 37 – 48</span>
                     </a>
                 </li>
@@ -178,57 +207,67 @@
                 </li>
             </ul>
 
+            <!-- PHASE IV -->
             <div class="phase-divider">
-                <span class="phase-divider-label">Phase IV — The Siege</span>
-                <span class="phase-divider-hours">Hours 61 – 65</span>
+                <span class="phase-divider-label">Phase IV — The Global War</span>
+                <span class="phase-divider-hours">Hours 61 – 77</span>
             </div>
             <ul>
                 <li>
                     <a href="chapters/chapter-6.html">
                         <span class="chapter-number">Chapter 06</span>
-                        <span class="chapter-title">The Fall of the Golden King</span>
-                        <span class="phase">Hours 61 – 65</span>
-                        <span class="latest-badge">Latest</span>
+                        <span class="chapter-title">The Broken Forge and the World's Betrayal</span>
+                        <span class="phase">Hours 61 – 67</span>
                     </a>
                 </li>
                 <li>
                     <a href="chapters/chapter-7.html">
                         <span class="chapter-number">Chapter 07</span>
                         <span class="chapter-title">The Blood of the Mountain and the Overseer's Secret</span>
-                        <span class="phase">Hours 65 – 67</span>
+                        <span class="phase">Hours 68 – 72</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="chapters/chapter-8.html">
+                        <span class="chapter-number">Chapter 08</span>
+                        <span class="chapter-title">The Psychopath Pact and the Planet's Immune System</span>
+                        <span class="phase">Hours 73 – 77</span>
                     </a>
                 </li>
             </ul>
 
+            <!-- PHASE V -->
             <div class="phase-divider">
-                <span class="phase-divider-label">Phase V — The Pruning</span>
-                <span class="phase-divider-hours">Hours 66 – 70</span>
+                <span class="phase-divider-label">Phase V — The Clock Tower Descent</span>
+                <span class="phase-divider-hours">Hours 84 – ???</span>
             </div>
             <ul>
                 <li>
-                    <a href="chapters/chapter-8.html">
-                        <span class="chapter-number">Chapter 08</span>
-                        <span class="chapter-title">The Conceptual Zero</span>
-                        <span class="phase">Hours 66 – 68</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="chapters/chapter-9.html" class="latest">
+                    <a href="chapters/chapter-9.html">
                         <span class="chapter-number">Chapter 09</span>
-                        <span class="chapter-title">Unlimited Blade Works — Inverted</span>
-                        <span class="phase">Hours 68 – 69</span>
+                        <span class="chapter-title">The Mortal King and the Memory Maze</span>
+                        <span class="phase">Hours 84 – 87</span>
                     </a>
                 </li>
                 <li>
-                    <a href="chapters/chapter-10.html" class="locked">
+                    <a href="chapters/chapter-10.html" class="latest">
                         <span class="chapter-number">Chapter 10</span>
-                        <span class="chapter-title">EX — CALIBUR</span>
-                        <span class="phase">Hour 70 — Zero</span>
+                        <span class="chapter-title">The Imperfect Strike</span>
+                        <span class="phase">Hours 87 – 89</span>
+                        <span class="latest-badge">Latest</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="locked">
+                        <span class="chapter-number">Chapter 11</span>
+                        <span class="chapter-title">The Spiritual Tomb of Albion</span>
+                        <span class="phase">Hours 89 – ???</span>
                     </a>
                 </li>
             </ul>
         </nav>
 
+        <!-- ===== FOOTER ===== -->
         <footer>
             <p>A fan work inspired by the Fate universe</p>
             <p class="footer-sub">No images. No illustrations. Only words and war.</p>
@@ -236,6 +275,7 @@
 
     </div>
 
+    <!-- ===== FIXED UI — REPOSITIONED ===== -->
     <button class="theme-toggle" data-tooltip="Switch to Avalon" aria-label="Toggle theme">
         <span class="icon-sun">🔆</span>
         <span class="icon-moon">🌙</span>
@@ -244,4 +284,4 @@
     <script src="script.js"></script>
 
 </body>
-    </html>
+</html>

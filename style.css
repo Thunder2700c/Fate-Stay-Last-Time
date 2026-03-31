@@ -2816,48 +2816,64 @@ body.theme-avalon .back-to-top:hover {
     100% { background-position: 0% 50%; }
 }
 
+
 /* ===================================================
-   FIXED UI REPOSITIONING — No Overlap
-   Stack: Theme Toggle (bottom), Back-to-Top (above),
-   Resume Toast (centered bottom, clear of buttons)
+   FIXED UI REPOSITIONING — ZERO OVERLAP
+   Layout:
+   Bottom-RIGHT: Theme Toggle (lowest) → Back-to-Top (above it)
+   Bottom-LEFT:  Resume Toast (full width, safe zone)
    =================================================== */
 
-/* Theme toggle stays bottom-right — base position */
+/* ── Theme Toggle — Bottom Right (Base) ── */
 .theme-toggle {
     position: fixed;
     bottom: 24px;
     right: 24px;
     z-index: 9999;
+    width: 48px;
+    height: 48px;
 }
 
-/* Back-to-top sits ABOVE the theme toggle */
+/* ── Back to Top — Above Theme Toggle ── */
 .back-to-top {
     position: fixed;
-    bottom: 80px;  /* 24px (toggle bottom) + 48px (toggle height) + 8px gap */
+    bottom: 84px;
     right: 24px;
     z-index: 9997;
+    width: 42px;
+    height: 42px;
 }
 
-/* Resume toast moves to bottom-LEFT to avoid all right-side buttons */
+/* ── Resume Toast — Bottom LEFT, never touches right buttons ── */
 .resume-toast {
     position: fixed;
     bottom: 24px;
     left: 24px;
     right: auto;
-    transform: translateX(0) translateY(20px);
-    max-width: 360px;
+    top: auto;
+    transform: none;
+    max-width: 320px;
+    width: auto;
     z-index: 9998;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    transform: translateY(20px);
 }
 
 .resume-toast.toast-show {
-    transform: translateX(0) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
 }
 
 .resume-toast.toast-hide {
-    transform: translateX(0) translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(20px);
 }
 
-/* ── Mobile Responsive Fix ── */
+/* ===== MOBILE 768px ===== */
 @media (max-width: 768px) {
     .theme-toggle {
         bottom: 18px;
@@ -2867,7 +2883,7 @@ body.theme-avalon .back-to-top:hover {
     }
 
     .back-to-top {
-        bottom: 68px;  /* 18px + 42px + 8px */
+        bottom: 70px;
         right: 18px;
         width: 38px;
         height: 38px;
@@ -2876,12 +2892,13 @@ body.theme-avalon .back-to-top:hover {
     .resume-toast {
         bottom: 18px;
         left: 14px;
-        right: 80px;  /* Clear the right-side buttons */
-        max-width: none;
+        right: auto;
+        max-width: calc(100vw - 90px);
         font-size: 0.65em;
     }
 }
 
+/* ===== MOBILE 480px ===== */
 @media (max-width: 480px) {
     .theme-toggle {
         bottom: 14px;
@@ -2891,7 +2908,7 @@ body.theme-avalon .back-to-top:hover {
     }
 
     .back-to-top {
-        bottom: 60px;
+        bottom: 62px;
         right: 14px;
         width: 34px;
         height: 34px;
@@ -2900,8 +2917,10 @@ body.theme-avalon .back-to-top:hover {
     .resume-toast {
         bottom: 14px;
         left: 10px;
-        right: 62px;
+        right: auto;
+        max-width: calc(100vw - 70px);
         font-size: 0.6em;
         padding: 10px 12px;
+        gap: 8px;
     }
 }
